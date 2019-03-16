@@ -1,0 +1,17 @@
+{
+    "compileOnSave": true,
+    "compilerOptions": {
+        "target": "es5",
+        "preserveConstEnums": true,
+        "sourceMap": false,
+        "removeComments": false,
+        "noImplicitAny": true,
+        "outDir": "ext/js"
+    },
+    "include": [
+        "src/*"
+    ],
+    "exclude": [
+        "node_modules"
+    ],
+}

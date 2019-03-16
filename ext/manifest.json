@@ -1,0 +1,14 @@
+{
+    "manifest_version": 2,
+    "name": "Wikichan",
+    "version": "1.0",
+
+    "description": "Displays Wikipedia info box pop-up on hover over phrase.",
+
+    "content_scripts": [
+        {
+            "matches": ["<all_urls>"],
+            "js": ["js/jquery/jquery-3.3.1.min.js", "js/bundle.js"]
+        }
+    ]
+}
