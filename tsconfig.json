@@ -1,6 +1,8 @@
 {
     "compileOnSave": true,
     "compilerOptions": {
+        "baseUrl": ".",
+        "paths": { "*": ["types/*"] },
         "target": "es5",
         "preserveConstEnums": true,
         "sourceMap": false,
@@ -9,7 +11,7 @@
         "outDir": "ext/js"
     },
     "include": [
-        "src/*"
+        "src/*", "src/api/wikiapi.ts"
     ],
     "exclude": [
         "node_modules"
