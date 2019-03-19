@@ -21,5 +21,8 @@ module.exports = {
     output: {
         filename: 'bundle.js',
         path: path.resolve(__dirname, 'ext/js')
+    },
+    externals: {
+        "isomorphic-fetch": "fetch"
     }
 };

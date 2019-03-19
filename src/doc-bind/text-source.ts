@@ -38,11 +38,11 @@ export class TextSource {
             }
         }
         end = i;
-        return this.cleanString(this.text.substring(begin, end).trim());
+        return this.cleanString(this.text.substring(begin, end));
     }
 
     cleanString(s: string): string {
-        return s.replace("/[.,\/#!$%\^&\*;:{}=\-_`~()]/g", "");
+        return s.replace("/[.,\/#!$%\^&\*;:{}=\-_`~()]/g", "").trim();
     }
 
     joinAfter(): void {

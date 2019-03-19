@@ -1,20 +1,27 @@
-export class WikiApiQuery {
+import { WikiQueryParams } from './params';
+
+export class WikiQuery {
 
     private endpoint: string;
-    private params: WikiApiQueryParams[];
+    private params: WikiQueryParams[];
+    private _type: WikiQueryType;
 
-    constructor(endpoint: string) {
+    constructor(endpoint: string, type?: WikiQueryType) {
         this.endpoint = endpoint;
-        this.params = new Array<WikiApiQueryParams>();
+        this.params = new Array<WikiQueryParams>();
+        this._type = type;
+
+        this.addParam('origin', '*')
+            .addParam('format', 'json');
     }
 
-    public addParam(key: string, value: string): WikiApiQuery {
-        const param = new WikiApiQueryParams(key, value);
+    addParam(key: string, value: string): WikiQuery {
+        const param = new WikiQueryParams(key, value);
         this.params.push(param);
         return this;
     }
 
-    public get url(): string {
+    get url(): string {
         let query: string = this.endpoint;
         this.params.forEach(p => {
             query += p.key + "=" + p.value + "&";
@@ -22,31 +29,13 @@ export class WikiApiQuery {
         return query;
     }
 
-}
-
-class WikiApiQueryParams {
-    
-    private _key: string;
-    private _value: string;
-
-    constructor(key: string, value: string) {
-        this._key = key;
-        this._value = value;
+    get type(): WikiQueryType {
+        return this._type;
     }
 
-	public get key(): string {
-		return this._key;
-	}
+}
 
-	public set key(value: string) {
-		this._key = value;
-	}
 
-	public get value(): string {
-		return this._value;
-	}
-
-	public set value(value: string) {
-		this._value = value;
-	}
+export enum WikiQueryType {
+    EXTRACT,
 }

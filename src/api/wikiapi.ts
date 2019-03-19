@@ -1,17 +1,11 @@
-import { WikiApiQuery } from './query';
-import { WikiApiResponse, WikiPage } from './response';
+import { WikiQueryType, WikiQuery } from './query';
+import { WikiResponse } from './response';
 
 export class WikiApi {
     private endpoint: string = 'https://en.wikipedia.org/w/api.php?';
 
-    public async fetchExtract(articleName: string) {
-        let query = new WikiApiQuery(this.endpoint);
-        query.addParam('action', 'query')
-            .addParam('prop', 'extracts&exintro&explaintext')
-            .addParam('redirects', '1')
-            .addParam('origin', '*')
-            .addParam('titles', articleName)
-            .addParam('format', 'json');
+    async fetchExtract(articleName: string) {
+        const query = this.constructQuery(articleName, WikiQueryType.EXTRACT);
         return new Promise(function (resolve: any, reject: any) {
             const xhr = new XMLHttpRequest();
             xhr.open('GET', query.url);
@@ -22,7 +16,8 @@ export class WikiApi {
                     if (Object.keys(json.pages).indexOf("-1") !== -1 && Object.keys(json.pages).length === 1) {
                         return;
                     }
-                    const response: WikiApiResponse = WikiApiResponse.fromJson(json);
+                    console.log(json.pages);
+                    const response: WikiResponse = WikiResponse.fromJson(json);
                     resolve(response);
                 } else {
                     reject({
@@ -35,9 +30,21 @@ export class WikiApi {
                 reject({
                     status: this.status,
                     statusText: this.statusText
-                })
+                });
             }
             xhr.send();
         });
     }
+
+    // TODO: Refactor for different types of queries
+    constructQuery(article: string, type: WikiQueryType) {
+        let query = new WikiQuery(this.endpoint, type);
+        query.addParam('action', 'query')
+            .addParam('prop', 'info|extracts')
+            .addParam('inprop', 'url')
+            .addParam('redirects', '1')
+            .addParam('titles', article);
+        return query;
+    }
+
 }

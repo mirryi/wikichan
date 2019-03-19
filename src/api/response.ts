@@ -1,5 +1,5 @@
-export class WikiApiResponse {
-    private _redirects: Redirect[];
+export class WikiResponse {
+    private _redirects: WikiRedirect[];
     private _pages: WikiPage[];
 
     constructor() {
@@ -7,7 +7,7 @@ export class WikiApiResponse {
         this._pages = [];
     }
 
-    addRedirect(r: Redirect) {
+    addRedirect(r: WikiRedirect) {
         this._redirects.push(r);
     }
 
@@ -15,7 +15,7 @@ export class WikiApiResponse {
         this._pages.push(p);
     }
 
-    get redirects(): Redirect[] {
+    get redirects(): WikiRedirect[] {
         return this._redirects;
     }
 
@@ -27,18 +27,18 @@ export class WikiApiResponse {
         normalized: { from: string, to: string }[],
         redirects: { from: string, to: string }[],
         pages: any
-    }): WikiApiResponse {
-        const res = new WikiApiResponse();
+    }): WikiResponse {
+        const res = new WikiResponse();
 
         if (json.normalized) {
             json.normalized.forEach(n => {
-                res.addRedirect(Redirect.fromJson(n));
+                res.addRedirect(WikiRedirect.fromJson(n));
             });
         }
 
         if (json.redirects) {
             json.redirects.forEach(r => {
-                res.addRedirect(Redirect.fromJson(r));
+                res.addRedirect(WikiRedirect.fromJson(r));
             });
         }
 
@@ -83,7 +83,7 @@ export class WikiPage {
 
 }
 
-class Redirect {
+class WikiRedirect {
     private _from: string;
     private _to: string;
 
@@ -98,7 +98,7 @@ class Redirect {
     }
 
     static fromJson(json: { from: string, to: string }) {
-        const res = new Redirect();
+        const res = new WikiRedirect();
         res._from = json.from;
         res._to = json.to;
         return res;
