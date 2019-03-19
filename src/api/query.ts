@@ -1,3 +1,29 @@
+export class WikiApiQuery {
+
+    private endpoint: string;
+    private params: WikiApiQueryParams[];
+
+    constructor(endpoint: string) {
+        this.endpoint = endpoint;
+        this.params = new Array<WikiApiQueryParams>();
+    }
+
+    public addParam(key: string, value: string): WikiApiQuery {
+        const param = new WikiApiQueryParams(key, value);
+        this.params.push(param);
+        return this;
+    }
+
+    public get url(): string {
+        let query: string = this.endpoint;
+        this.params.forEach(p => {
+            query += p.key + "=" + p.value + "&";
+        });
+        return query;
+    }
+
+}
+
 class WikiApiQueryParams {
     
     private _key: string;
@@ -23,30 +49,4 @@ class WikiApiQueryParams {
 	public set value(value: string) {
 		this._value = value;
 	}
-}
-
-export class WikiApiQuery {
-
-    private endpoint: string;
-    private params: WikiApiQueryParams[];
-
-    constructor(endpoint: string) {
-        this.endpoint = endpoint;
-        this.params = new Array<WikiApiQueryParams>();
-    }
-
-    public addParam(key: string, value: string): WikiApiQuery {
-        const param = new WikiApiQueryParams(key, value);
-        this.params.push(param);
-        return this;
-    }
-
-    public get url(): string {
-        let query: string = this.endpoint;
-        this.params.forEach(p => {
-            query += p.key + "=" + p.value + "&";
-        });
-        return query;
-    }
-
 }

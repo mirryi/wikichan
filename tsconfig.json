@@ -3,7 +3,7 @@
     "compilerOptions": {
         "baseUrl": ".",
         "paths": { "*": ["types/*"] },
-        "target": "es5",
+        "target": "es6",
         "preserveConstEnums": true,
         "sourceMap": false,
         "removeComments": false,
@@ -11,7 +11,7 @@
         "outDir": "ext/js"
     },
     "include": [
-        "src/*", "src/api/wikiapi.ts"
+        "src/*", "src/api/wikiapi.ts", "src/doc-bind/text-source.ts", "src/doc-bind/mouse-bind.ts", "src/doc-bind/display.ts"
     ],
     "exclude": [
         "node_modules"

@@ -1,19 +1,35 @@
-import { TextSource } from "./text-source";
+import { WikiApi } from "./api/wikiapi";
+import { getSourceUnderCursor } from "./doc-bind/mouse-bind";
+import { TextSource } from "./doc-bind/text-source";
+import { ResponseDisplay } from "./doc-bind/display";
 
-window.addEventListener("mousedown", getWordUnderCursor);
-
-function getWordUnderCursor(event: MouseEvent) {
-    const range: CaretPosition = document.caretPositionFromPoint(event.clientX, event.clientY);
-    const textNode: HTMLObjectElement = <HTMLObjectElement>range.offsetNode;
-    const offset: number = range.offset;
-
-    // console.log(getPreviousNode(textNode).textContent + data + getNextNode(textNode).textContent);
-
-    const source = new TextSource(textNode, offset);
-    console.log(source.phrase(2, 2));
-
-    // console.log(source.text);
-    // source.joinAfter();
-    // source.joinBefore();
-    // console.log(source.text);
+declare global {
+	interface Window {
+		wikiframe: ResponseDisplay;
+	}
 }
+
+class Wikichan {
+    private wikic: WikiApi;
+
+    constructor() {
+        this.wikic = new WikiApi();
+    }
+
+    prepare() {
+        window.addEventListener('mousedown', this.onMouseOver.bind(this));
+        window.wikiframe = new ResponseDisplay(0, 0, 0, 0);
+    }
+
+    onMouseOver(e: MouseEvent) {
+        const source: TextSource = getSourceUnderCursor(e);
+        this.wikic.fetchExtract(source.phrase(0, 0))
+            .then(function (res) {
+                console.log(res);
+            });
+    }
+
+}
+
+const wikichan = new Wikichan();
+wikichan.prepare();
