@@ -11,7 +11,7 @@
         "outDir": "ext/js"
     },
     "include": [
-        "src/*", "src/api/wikiapi.ts", "src/doc-bind/text-source.ts", "src/doc-bind/mouse-bind.ts", "src/doc-bind/display.ts"
+        "src/*"
     ],
     "exclude": [
         "node_modules"
