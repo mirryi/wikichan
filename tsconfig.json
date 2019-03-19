@@ -2,16 +2,24 @@
     "compileOnSave": true,
     "compilerOptions": {
         "baseUrl": ".",
-        "paths": { "*": ["types/*"] },
+        "paths": {
+            "*": ["types/*"]
+        },
+        "outDir": "ext/js",
+
         "target": "es6",
         "preserveConstEnums": true,
         "sourceMap": false,
         "removeComments": false,
         "noImplicitAny": true,
-        "outDir": "ext/js"
+
+        "typeRoots": [
+            "node_modules/@types",
+            "node_modules/web-ext-types"
+        ]
     },
     "include": [
-        "src/*"
+        "src/*", "src/ts/wikichan.ts"
     ],
     "exclude": [
         "node_modules"

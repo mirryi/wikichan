@@ -12,8 +12,7 @@ export class ResponseDisplay {
 
 	constructor() {
 		this._container = document.createElement('iframe');
-		this._container.src = 'data:text/html;charset=utf-8,'
-			+ encodeURI(`<body>Foo</body>`);
+		this._container.src = browser.runtime.getURL('frame.html');
 		this._container.style.visibility = 'hidden';
 
 		this._container.id = "wikichan";
