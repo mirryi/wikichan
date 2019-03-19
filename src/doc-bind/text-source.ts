@@ -21,7 +21,7 @@ export class TextSource {
                 i--;
                 if (this.text[i] === " ") break;
             }
-            if (i === 0) {
+            if (i < 0) {
                 this.joinBefore();
             }
         }
@@ -33,7 +33,7 @@ export class TextSource {
                 i++;
                 if (this.text[i] === " ") break;
             }
-            if (i === this.text.length) {
+            if (i > this.text.length) {
                 this.joinAfter();
             }
         }
