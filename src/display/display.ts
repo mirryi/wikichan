@@ -1,44 +1,41 @@
-import { WikiPage } from '../api/response';
+import { ResponseContainer } from './response-container';
 
 export class ResponseDisplay {
 
-    private _top: number;
-    private _left: number;
-    private _width: number;
-    private _height: number;
+	private _container: HTMLIFrameElement;
+	private _responses: ResponseContainer;
 
-	private _articles: WikiPage[];
-	
-	private _hidden: boolean;
+	private _top: number;
+	private _left: number;
+	private _width: number;
+	private _height: number;
 
-	constructor(top: number, left: number, width: number, height: number) {
-		this._top = top;
-		this._left = left;
-		this._width = width;
-        this._height = height;
-        this._articles = [];
+	constructor() {
+		this._container = document.createElement('iframe');
+		this._container.src = 'data:text/html;charset=utf-8,'
+			+ encodeURI(`<body>Foo</body>`);
+		this._container.style.visibility = 'hidden';
+
+		this._container.id = "wikichan";
+
+		this._container.style.width = '300px';
+		this._container.style.height = '300px';
+		this._container.style.position = 'fixed';
+
+		document.body.appendChild(this._container);
 	}
-	
+
 	show() {
-		const display: HTMLIFrameElement = document.createElement("iframe");
-		display.setAttribute("src", "../frame.html");
-
+		this._container.style.top = `${this.top}px`;
+		this._container.style.left = `${this.left}px`;
+		this._container.style.visibility = 'visible';
 	}
 
-    addArticle(page: WikiPage): void {
-        this._articles.push(page);
-    }
+	setLocation(x: number, y: number): void {
+		this.top = y;
+		this.left = x;
+	}
 
-    addArticles(...pages: WikiPage[]): void {
-        pages.forEach(p => {
-            this.addArticle(p);
-        });
-    }
-
-    clearArticles(): void {
-        this.articles = [];
-    }
-    
 	get top(): number {
 		return this._top;
 	}
@@ -69,15 +66,6 @@ export class ResponseDisplay {
 
 	set width(value: number) {
 		this._width = value;
-    }
-    
-	get articles(): WikiPage[] {
-		return this._articles;
 	}
 
-	set articles(value: WikiPage[]) {
-		this._articles = value;
-	}
-    
-    
 }
