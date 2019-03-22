@@ -9,14 +9,9 @@
 
         "target": "es6",
         "preserveConstEnums": true,
-        "sourceMap": false,
+        "sourceMap": true,
         "removeComments": false,
         "noImplicitAny": true,
-
-        "typeRoots": [
-            "node_modules/@types",
-            "node_modules/web-ext-types"
-        ]
     },
     "include": [
         "src/*", "src/ts/wikichan.ts"

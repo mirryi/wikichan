@@ -2,12 +2,13 @@ const path = require('path');
 const CopyPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
+const outdir = path.resolve(__dirname, 'ext');
+
 module.exports = {
-    entry: [ './src/ts/wikichan.ts', './src/css/frame.scss'],
-    devtool: 'inline-source-map',
-    performance: {
-        hints: false
-    },
+    entry: [
+        './src/ts/wikichan.ts',
+        './src/scss/frame.scss',
+    ],
     module: {
         rules: [
             {
@@ -27,7 +28,7 @@ module.exports = {
     },
     plugins: [
         new CopyPlugin([
-            { from: './src/frame.html', to: './frame.html'}
+            { from: './src/frame.html', to: './frame.html' }
         ]),
         new MiniCssExtractPlugin({
             filename: "css/[name].css",
@@ -38,10 +39,20 @@ module.exports = {
         extensions: ['.tsx', '.ts', '.js']
     },
     output: {
-        path: path.resolve(__dirname, 'ext'),
+        path: outdir,
         filename: 'js/bundle.js',
     },
+
+    performance: {
+        hints: false
+    },
+    devtool: 'inline-source-map',
+
     externals: {
         "isomorphic-fetch": "fetch"
-    }
+    },
+    node: {
+        fs: 'empty',
+        cluster: 'empty'
+    },
 };
