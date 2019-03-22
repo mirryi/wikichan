@@ -60,7 +60,9 @@ export class TextSource {
         k += 2;
         begin = k;
 
-        return this.text.substring(begin, end).trim();
+        let segment = this.text.substring(begin, end).trim();
+        segment = clean(segment);
+        return segment;
     }
 
     private joinAfter(): void {
@@ -134,6 +136,6 @@ function matchBreak(c: string): boolean {
     return c === " " || /(\\n)/.test(JSON.stringify(c));
 }
 
-function cleanString(s: string): string {
+function clean(s: string): string {
     return s.replace(/([.,\/#!$%\^&\*;:{}=\-_`~()])/, "").trim();
 }
