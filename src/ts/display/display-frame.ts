@@ -2,7 +2,6 @@ import { TemplateHandler } from './template-handler';
 import { WikiPage } from '../api/page';
 import { Set } from '../util/set';
 
-// TODO: maintain articles with id as unique key
 export class WikiFrame {
 
 	private _frame: HTMLIFrameElement;
@@ -35,7 +34,6 @@ export class WikiFrame {
 		this.clean();
 		this.articles.elements.forEach(a => {
 			const rep = document.createElement('div');
-			//rep.innerText = a.title;
 			rep.innerHTML = this.handler.compile(a);
 			this.responseContainer.appendChild(rep);
 		});
