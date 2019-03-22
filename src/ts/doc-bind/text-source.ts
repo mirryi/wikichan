@@ -12,54 +12,72 @@ export class TextSource {
     }
 
     phrase(before: number, after: number): string {
-        let i: number = this.offset;
-        let begin: number;
-        let end: number;
 
-        for (let k = 0; k < before + 1; k++) {
-            while (i > 0) {
-                i--;
-                if (this.text[i] === " ") break;
-            }
-            if (i < 0) {
-                this.joinBefore();
-            }
-        }
-        begin = i;
+        let begin: number = 0;
+        let end: number = 0;
 
-        i = this.offset;
-        for (let k = 0; k < after + 1; k++) {
-            while (i < this.text.length) {
-                i++;
-                if (this.text[i] === " ") break;
-            }
-            if (i > this.text.length) {
-                this.joinAfter();
-            }
+        if (matchBreak(this.text[this.offset])) {
+            return "";
         }
-        end = i;
-        return this.cleanString(this.text.substring(begin, end));
+
+        // Find the index of the end of the phrase
+        let k: number = this.offset;
+        for (let i = 0; i <= after; i++) {
+            // Find the end of the word
+            while (matchBreak(this.text[k]) === false) {
+                if (k >= this.text.length - 1) {
+                    if (!getNextNode(this.rightNode)) {
+                        break;
+                    }
+                    this.joinAfter();
+                    k--;
+                }
+                k++;
+            }
+            k++;
+        }
+        end = k;
+
+        let oldOffset: number = this.offset.valueOf();
+        k = this.offset;
+        for (let i = 0; i <= before; i++) {
+            while (matchBreak(this.text[k]) === false) {
+                if (k <= 0) {
+                    if (!getPreviousNode(this.leftNode)) {
+                        break;
+                    }
+                    const adjustOffset = (v: number) => v + this.offset - oldOffset;
+                    this.joinBefore();
+                    k = adjustOffset(k);
+                    end = adjustOffset(end);
+                    oldOffset = this.offset;
+                    k++;
+                }
+                k--;
+            }
+            k--;
+        }
+        k += 2;
+        begin = k;
+
+        return this.text.substring(begin, end).trim();
     }
 
-    cleanString(s: string): string {
-        return s.replace("/[.,\/#!$%\^&\*;:{}=\-_`~()]/g", "").trim();
-    }
-
-    joinAfter(): void {
+    private joinAfter(): void {
         this.rightNode = getNextNode(this.rightNode);
         this.addAfter(this.rightNode.textContent);
     }
 
-    joinBefore(): void {
+    private joinBefore(): void {
         this.leftNode = getPreviousNode(this.leftNode);
         this.addBefore(this.leftNode.textContent);
     }
 
-    addAfter(text: string): void {
+    private addAfter(text: string): void {
         this.text += text;
     }
 
-    addBefore(text: string): void {
+    private addBefore(text: string): void {
         this.text = text + this.text;
         this.offset += text.length;
     }
@@ -103,4 +121,19 @@ function getNextNode(node: Node): Node {
 
 function getPreviousNode(node: Node): Node {
     return node.previousSibling === null ? node.parentNode.previousSibling : node.previousSibling;
+}
+
+function splitText(s: string) {
+    return s.split(/([\s.,\/#!$%\^&\*;:{}=\-_`~()])/)
+        .filter((v, i, arr) => {
+            return v.trim().length != 0
+        });
+}
+
+function matchBreak(c: string): boolean {
+    return c === " " || /(\\n)/.test(JSON.stringify(c));
+}
+
+function cleanString(s: string): string {
+    return s.replace(/([.,\/#!$%\^&\*;:{}=\-_`~()])/, "").trim();
 }
