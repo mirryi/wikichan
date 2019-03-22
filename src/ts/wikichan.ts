@@ -1,12 +1,13 @@
 import { WikiApi } from "./api/wikiapi";
-import { WikiResponse } from './api/response';
-import { TextSelector } from "./doc-bind/text-selector";
-import { TextSource } from "./doc-bind/text-source";
-import { ResponseDisplay } from "./display/display";
+import { TextSelector } from "./text/text-selector";
+import { TextSource } from "./text/text-source";
+import { WikiFrame } from "./display/display-frame";
+// import * as _ from 'underscore';
 
 declare global {
     interface Window {
-        wikiframe: ResponseDisplay;
+        wikichan: Wikichan;
+        wikiframe: WikiFrame;
     }
 }
 
@@ -21,28 +22,29 @@ class Wikichan {
 
     prepare() {
         window.addEventListener('mousedown', this.onMouseOver.bind(this));
-        window.wikiframe = new ResponseDisplay();
     }
 
     onMouseOver(e: MouseEvent) {
         const source: TextSource = this.selector.getSourceUnderCursor(e);
 
+        if (!window.wikiframe) {
+            window.wikiframe = new WikiFrame();
+        }
         window.wikiframe.setLocation(e.clientX, e.clientY);
-        window.wikiframe.show();
+        window.wikiframe.open();
 
         for (let before = 0; before < 4; before++) {
             for (let after = 0; after < 4; after++) {
                 this.wikic.fetchExtract(source.phrase(before, after))
-                    .then(function (res: WikiResponse) {
-                    }, function (e: Error) {
-                        console.log(e.stack);
+                    .then(rep => {
+                        window.wikiframe.addArticles(rep.pages);
+                        window.wikiframe.update();
                     });
             }
         }
-
     }
-
 }
 
-const wikichan = new Wikichan();
+window.wikichan = new Wikichan();
+const wikichan = window.wikichan;
 wikichan.prepare();

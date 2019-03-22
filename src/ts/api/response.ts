@@ -1,3 +1,6 @@
+import { WikiPage, WikiRedirect } from './page';
+
+// TODO: refactor redirects into WikiPage
 export class WikiResponse {
     private _redirects: WikiRedirect[];
     private _pages: WikiPage[];
@@ -52,55 +55,4 @@ export class WikiResponse {
         return res;
     }
 
-}
-
-export class WikiPage {
-    private _id: number;
-    private _title: string;
-    private _summary: string;
-
-    constructor() { }
-
-    get id(): number {
-        return this._id;
-    }
-
-    get title(): string {
-        return this._title;
-    }
-
-    get summary(): string {
-        return this._summary;
-    }
-
-    static fromJson(json: { pageid: number, title: string, extract: string, ns: number }) {
-        const res = new WikiPage();
-        res._id = json.pageid;
-        res._title = json.title;
-        res._summary = json.extract;
-        return res;
-    }
-
-}
-
-class WikiRedirect {
-    private _from: string;
-    private _to: string;
-
-    constructor() { }
-
-    get from(): string {
-        return this._from;
-    }
-
-    get to(): string {
-        return this._to;
-    }
-
-    static fromJson(json: { from: string, to: string }) {
-        const res = new WikiRedirect();
-        res._from = json.from;
-        res._to = json.to;
-        return res;
-    }
 }

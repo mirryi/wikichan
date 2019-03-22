@@ -4,9 +4,9 @@ import { WikiResponse } from './response';
 export class WikiApi {
     private endpoint: string = 'https://en.wikipedia.org/w/api.php?';
 
-    async fetchExtract(articleName: string) {
+    fetchExtract(articleName: string) {
         const query = this.constructQuery(articleName, WikiQueryType.EXTRACT);
-        return new Promise(function (resolve: any, reject: any) {
+        return new Promise<WikiResponse>(function (resolve: any, reject: any) {
             const xhr = new XMLHttpRequest();
             xhr.open('GET', query.url);
             xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
@@ -16,7 +16,6 @@ export class WikiApi {
                     if (Object.keys(json.pages).indexOf("-1") !== -1 && Object.keys(json.pages).length === 1) {
                         return;
                     }
-                    console.log(json.pages);
                     const response: WikiResponse = WikiResponse.fromJson(json);
                     resolve(response);
                 } else {
