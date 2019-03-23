@@ -1,4 +1,5 @@
 import { EqualityChecker } from "../util/set";
+import { Redir } from "../util/type-alias";
 
 export class WikiPage implements EqualityChecker {
   private _id: number;
@@ -64,7 +65,7 @@ export class WikiPage implements EqualityChecker {
   }
 
   static fromJson(json: {
-    redirects: { from: string; to: string }[];
+    redirects: Redir[];
     page: any;
   }): WikiPage {
     const res = new WikiPage();
@@ -95,7 +96,7 @@ export class WikiPage implements EqualityChecker {
     }
 
     if (page.redirects) {
-      page.redirects.forEach((r: { from: string; to: string }) => {
+      page.redirects.forEach((r: Redir) => {
         res._redirects.push(WikiRedirect.fromJson(r));
       });
     }
@@ -117,7 +118,7 @@ export class WikiRedirect {
     return this._to;
   }
 
-  static fromJson(json: { from: string; to: string }) {
+  static fromJson(json: Redir) {
     console.log(json);
     const res = new WikiRedirect();
     res._from = json.from;

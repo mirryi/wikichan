@@ -1,6 +1,6 @@
+import {Redir} from '../util/type-alias';
 import { WikiPage } from './page';
 import { WikiQueryType, WikiQuery } from './query';
-import { WikiResponse } from './response';
 
 export class WikiApi {
     private endpoint: string = 'https://en.wikipedia.org/w/api.php?';
@@ -49,14 +49,14 @@ export class WikiApi {
     }
 
     static parseResponse(json: {
-        normalized: { from: string, to: string }[],
-        redirects: { from: string, to: string }[],
+        normalized: Redir[],
+        redirects: Redir[],
         pages: any;
     }): {
-        redirects: { to: string, from: string }[],
+        redirects: Redir[],
         page: object
     } {
-        const redirects: { from: string, to: string }[] = [];
+        const redirects: Redir[] = [];
         if (json.normalized) {
             redirects.concat(json.normalized);
         }
