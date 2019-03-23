@@ -1,3 +1,4 @@
+import { WikiPage } from './page';
 import { WikiQueryType, WikiQuery } from './query';
 import { WikiResponse } from './response';
 
@@ -6,7 +7,7 @@ export class WikiApi {
 
     fetchExtract(articleName: string) {
         const query = this.constructQuery(articleName, WikiQueryType.EXTRACT);
-        return new Promise<WikiResponse>(function (resolve: any, reject: any) {
+        return new Promise<WikiPage>(function (resolve: any, reject: any) {
             const xhr = new XMLHttpRequest();
             xhr.open('GET', query.url);
             xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
@@ -16,7 +17,8 @@ export class WikiApi {
                     if (Object.keys(json.pages).indexOf("-1") !== -1 && Object.keys(json.pages).length === 1) {
                         return;
                     }
-                    const response: WikiResponse = WikiResponse.fromJson(json);
+                    const parsed = WikiApi.parseResponse(json);
+                    const response = WikiPage.fromJson(parsed);
                     resolve(response);
                 } else {
                     reject({
@@ -39,11 +41,34 @@ export class WikiApi {
     constructQuery(article: string, type: WikiQueryType) {
         let query = new WikiQuery(this.endpoint, type);
         query.addParam('action', 'query')
-            .addParam('prop', 'info|extracts')
+            .addParam('prop', 'info|extracts|description|extlinks|pageterms')
             .addParam('inprop', 'url')
             .addParam('redirects', '1')
             .addParam('titles', article);
         return query;
+    }
+
+    static parseResponse(json: {
+        normalized: { from: string, to: string }[],
+        redirects: { from: string, to: string }[],
+        pages: any;
+    }): {
+        redirects: { to: string, from: string }[],
+        page: object
+    } {
+        const redirects: { from: string, to: string }[] = [];
+        if (json.normalized) {
+            redirects.concat(json.normalized);
+        }
+        if (json.redirects) {
+            redirects.concat(json.redirects);
+        }
+
+        const key: string = Object.keys(json.pages)[0];
+        return {
+            redirects: redirects,
+            page: json.pages[key]
+        };
     }
 
 }

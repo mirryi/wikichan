@@ -2,6 +2,7 @@ import { WikiApi } from "./api/wikiapi";
 import { TextSelector } from "./text/text-selector";
 import { TextSource } from "./text/text-source";
 import { WikiFrame } from "./display/display-frame";
+import { WikiPage } from "./api/page";
 // import * as _ from 'underscore';
 
 declare global {
@@ -36,8 +37,8 @@ class Wikichan {
         for (let before = 0; before < 4; before++) {
             for (let after = 0; after < 4; after++) {
                 this.wikic.fetchExtract(source.phrase(before, after))
-                    .then(rep => {
-                        window.wikiframe.addArticles(rep.pages);
+                    .then((p: WikiPage) => {
+                        window.wikiframe.addArticle(p)
                         window.wikiframe.update();
                     });
             }
