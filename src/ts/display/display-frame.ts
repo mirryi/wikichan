@@ -4,26 +4,33 @@ import { Set } from '../util/set';
 
 export class WikiFrame {
 
+	private static DEFAULT_WIDTH = 400;
+	private static DEFAULT_HEIGHT = 250;
+
 	private _frame: HTMLIFrameElement;
 	private _articles: Set<WikiPage>;
-	
+
 	private handler: TemplateHandler;
 
 	private _top: number;
 	private _left: number;
+	private _width: number;
+	private _height: number;
 
 	constructor() {
 		this.handler = new TemplateHandler();
-
 		this._articles = new Set<WikiPage>();
+
+		this._width = WikiFrame.DEFAULT_WIDTH;
+		this._height = WikiFrame.DEFAULT_HEIGHT;
 
 		this._frame = document.createElement('iframe');
 		this.frame.id = "wikichan";
 		this.frame.name = "wikichan";
 		this.frame.src = browser.runtime.getURL('frame.html');
 
-		this.frame.style.width = '300px';
-		this.frame.style.height = '300px';
+		this.frame.style.width = `${this.width}px`;
+		this.frame.style.height = `${this.height}px`;
 		this.frame.style.position = 'fixed';
 		this.frame.style.visibility = 'hidden';
 
@@ -33,9 +40,10 @@ export class WikiFrame {
 	update(): void {
 		this.clean();
 		this.articles.elements.forEach(a => {
-			const rep = document.createElement('div');
-			rep.innerHTML = this.handler.compile(a);
-			this.responseContainer.appendChild(rep);
+			const div = document.createElement('div');
+			div.classList.add("entry");
+			div.innerHTML = this.handler.compile(a);
+			this.responseContainer.appendChild(div);
 		});
 	}
 
@@ -57,8 +65,13 @@ export class WikiFrame {
 	}
 
 	setLocation(x: number, y: number): void {
-		this.top = y;
-		this.left = x;
+		const offset = this.calculateOffset(x, y);
+		this.top = y + offset.y;
+		this.left = x + offset.x;
+	}
+
+	calculateOffset(x: number, y: number): { x: number, y: number } {
+		return { x: 5, y: 5 };
 	}
 
 	addArticle(page: WikiPage): void {
@@ -69,6 +82,11 @@ export class WikiFrame {
 		pages.forEach(p => {
 			this.addArticle(p);
 		})
+	}
+
+	containsPoint(x: number, y: number) {
+		return x > this.left && x < this.left + this.width
+			&& y > this.top && y < this.top + this.height;
 	}
 
 	get documentContainer(): Document {
@@ -93,6 +111,22 @@ export class WikiFrame {
 
 	set left(value: number) {
 		this._left = value;
+	}
+
+	get height(): number {
+		return this._height;
+	}
+
+	set height(value: number) {
+		this._height = value;
+	}
+
+	get width(): number {
+		return this._width;
+	}
+
+	set width(value: number) {
+		this._width = value;
 	}
 
 	get frame(): HTMLIFrameElement {
