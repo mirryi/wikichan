@@ -3,6 +3,7 @@ import { TextSelector } from "./text/text-selector";
 import { TextSource } from "./text/text-source";
 import { WikiFrame } from "./display/display-frame";
 import { WikiPage } from "./api/page";
+import * as logger from "loglevel";
 // import * as _ from 'underscore';
 
 declare global {
@@ -22,7 +23,9 @@ class Wikichan {
     }
 
     prepare() {
-        window.addEventListener('mousedown', this.onMouseOver.bind(this));
+        const eventType = 'mousedown'
+        window.addEventListener(eventType, this.onMouseOver.bind(this));
+        logger.info("Added " + eventType + " listener for Wikichan");
     }
 
     onMouseOver(e: MouseEvent) {
@@ -46,6 +49,7 @@ class Wikichan {
     }
 }
 
+logger.enableAll();
 window.wikichan = new Wikichan();
 const wikichan = window.wikichan;
 wikichan.prepare();
