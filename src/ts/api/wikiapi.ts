@@ -2,6 +2,7 @@ import { Redir } from "../util/type-alias";
 import { WikiPage } from "./page";
 import { WikiQueryType, WikiQuery } from "./query";
 
+// TODO: implement flexibility for different languages 
 export class WikiApi {
     private endpoint: string = "https://en.wikipedia.org/w/api.php?";
 
@@ -43,7 +44,7 @@ export class WikiApi {
         });
     }
 
-    // TODO: Refactor for different types of queries
+    // TODO: refactor for different types of queries
     constructQuery(article: string, type: WikiQueryType) {
         let query = new WikiQuery(this.endpoint, type);
         query
