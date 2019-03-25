@@ -35,8 +35,7 @@ module.exports = {
             { from: './src/frame.html', to: './frame.html' }
         ]),
         new MiniCssExtractPlugin({
-            filename: "css/[name].css",
-            chunkFilename: "css/[id].css"
+            filename: "css/[name].css"
         }),
     ],
     resolve: {
