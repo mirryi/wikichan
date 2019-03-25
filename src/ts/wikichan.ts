@@ -33,6 +33,7 @@ class Wikichan {
 
         if (!window.wikiframe) {
             window.wikiframe = new WikiFrame();
+            window.wikiframe.prepare();
         }
         window.wikiframe.setLocation(e.clientX, e.clientY);
         window.wikiframe.open();

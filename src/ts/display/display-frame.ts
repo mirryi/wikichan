@@ -4,8 +4,8 @@ import { Set } from '../util/set';
 
 export class WikiFrame {
 
-	private static DEFAULT_WIDTH = 400;
-	private static DEFAULT_HEIGHT = 250;
+	private static DEFAULT_WIDTH = 500;
+	private static DEFAULT_HEIGHT = 300;
 
 	private _frame: HTMLIFrameElement;
 	private _articles: Set<WikiPage>;
@@ -25,16 +25,26 @@ export class WikiFrame {
 		this._height = WikiFrame.DEFAULT_HEIGHT;
 
 		this._frame = document.createElement('iframe');
+	}
+
+	prepare(): void {
 		this.frame.id = "wikichan";
 		this.frame.name = "wikichan";
 		this.frame.src = browser.runtime.getURL('frame.html');
 
+		this.frame.frameBorder = "0";
 		this.frame.style.width = `${this.width}px`;
 		this.frame.style.height = `${this.height}px`;
 		this.frame.style.position = 'fixed';
 		this.frame.style.visibility = 'hidden';
 
 		document.body.appendChild(this._frame);
+
+		const injectedStyles = document.createElement("link");
+		injectedStyles.rel = "stylesheet";
+		injectedStyles.type = "text/css";
+		injectedStyles.href = browser.runtime.getURL('css/injected.css');
+		document.head.appendChild(injectedStyles);
 	}
 
 	update(): void {
@@ -43,7 +53,7 @@ export class WikiFrame {
 			const div = document.createElement('div');
 			div.classList.add("entry");
 			div.innerHTML = this.handler.compile(a);
-			this.responseContainer.appendChild(div);
+			this.responseContainer.prepend(div);
 		});
 	}
 
@@ -59,6 +69,7 @@ export class WikiFrame {
 		this.frame.style.visibility = 'visible';
 	}
 
+	// TODO: implement closing if click outside frame
 	close(): void {
 		this.frame.style.visibility = 'hidden';
 		this.clean();

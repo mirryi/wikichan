@@ -1,13 +1,60 @@
-$font-stack: Helvetica, sans-serif;
-
-* {
+$font-stack: Helvetica,
+sans-serif;
+:root {
     background: rgb(248, 248, 248);
+    font-size: 12px;
+    font-family: $font-stack;
+    box-sizing: border-box;
 }
 
-body {
-    font: 100% $font-stack;
+%button {
+    font-size: 0.9rem;
+    font-weight: bold;
+    padding: 3px;
+    line-height: 3px;
+    background-color: #eeeeee;
+    border-radius: 5px;
 }
 
-h2 {
-    font-size: 18px;
+.header {
+    display: flex;
+    justify-content: space-between;
+    margin: 7px 2px;
+    .title {
+        font-size: 1.5rem;
+        font-weight: bold;
+    }
+
+    .id {
+        @extend %button;
+        background-color: #ebebeb;
+        font-weight: normal;
+        font-style: italic;
+        color: #888888
+    }
+    .url {
+        @extend %button;
+        a {
+            text-decoration: none;
+        }
+    }
+}
+
+.content {
+    margin: 15px 35px;
+    .details {
+        .description {
+            font-size: 1em;
+        }
+        .extract {
+            font-size: 1em;
+        }
+    }
+}
+
+hr {
+    padding: 0px;
+    margin: 0px;
+    border: 0px;
+    border-top: 1px solid #eeeeee;
 }
