@@ -42,12 +42,6 @@ export class WikiFrame {
 		this._visible = false;
 
 		document.body.appendChild(this._frame);
-
-		const injectedStyles = document.createElement("link");
-		injectedStyles.rel = "stylesheet";
-		injectedStyles.type = "text/css";
-		injectedStyles.href = browser.runtime.getURL('css/injected.css');
-		document.head.appendChild(injectedStyles);
 	}
 
 	update(): void {
