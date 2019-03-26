@@ -4,8 +4,8 @@ import { Set } from '../util/set';
 
 export class WikiFrame {
 
-	private static DEFAULT_WIDTH = 500;
-	private static DEFAULT_HEIGHT = 300;
+	private static DEFAULT_WIDTH = 450;
+	private static DEFAULT_HEIGHT = 275;
 
 	private _frame: HTMLIFrameElement;
 	private _articles: Set<WikiPage>;
@@ -42,6 +42,12 @@ export class WikiFrame {
 		this._visible = false;
 
 		document.body.appendChild(this._frame);
+
+		const injectedStyles = document.createElement('link');
+		injectedStyles.rel = 'stylesheet';
+		injectedStyles.type = 'text/css';
+		injectedStyles.href = browser.runtime.getURL('css/wikichan.css');
+		document.head.appendChild(injectedStyles);
 	}
 
 	update(): void {

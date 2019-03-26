@@ -5,10 +5,10 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const outdir = path.resolve(__dirname, 'ext');
 
 module.exports = {
-    entry: [
-        './src/ts/wikichan.ts',
-        './src/scss/frame.scss',
-    ],
+    entry: {
+        wikichan: ['./src/ts/wikichan.ts', './src/scss/injected.scss'],
+        frame: ['./src/ts/frame/frame.ts', './src/scss/frame.scss'],
+    },
     module: {
         rules: [
             {
@@ -43,7 +43,7 @@ module.exports = {
     },
     output: {
         path: outdir,
-        filename: 'js/bundle.js',
+        filename: 'js/[name].js',
     },
 
     performance: {
