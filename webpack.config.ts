@@ -51,9 +51,6 @@ module.exports = {
     },
     devtool: 'inline-source-map',
 
-    externals: {
-        "isomorphic-fetch": "fetch"
-    },
     node: {
         fs: 'empty',
         cluster: 'empty'
