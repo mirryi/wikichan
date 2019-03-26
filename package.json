@@ -13,7 +13,6 @@
     "handlebars": "^4.1.1",
     "handlebars-loader": "^1.7.1",
     "loglevel": "^1.6.1",
-    "perfect-scrollbar": "^1.4.0",
     "underscore": "^1.9.1"
   },
   "devDependencies": {
