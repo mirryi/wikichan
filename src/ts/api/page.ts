@@ -12,8 +12,9 @@ export class WikiPage implements EqualityChecker {
     private _url: string;
     private _editUrl: string;
     private _extlinks: string[];
-
     private _redirects: WikiRedirect[];
+
+    private _searchPhrase: string;
 
     constructor() {
         this._aliases = [];
@@ -60,6 +61,14 @@ export class WikiPage implements EqualityChecker {
     
     get redirects(): WikiRedirect[] {
         return this._redirects;
+    }
+
+    get searchPhrase(): string {
+        return this._searchPhrase;
+    }
+
+    set searchPhrase(value: string) {
+        this._searchPhrase = value;
     }
 
     addRedirect(r: WikiRedirect) {

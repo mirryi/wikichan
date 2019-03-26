@@ -1,10 +1,15 @@
 <div class="header">
-    <span class="title">{{title}}</span>
-    <div class="labels">
-        <span class="id">{{id}}</span>
-        <span class="url"><a target="_blank" href={{url}}>full url</a></span>
-        <span class="url"><a target="_blank" href={{editUrl}}>edit url</a></span>
+    <div class="top">
+        <span class="title">{{title}}</span>
+        <div class="labels">
+            <span class="id">{{id}}</span>
+            <span class="url"><a target="_blank" href={{url}}>full url</a></span>
+            <span class="url"><a target="_blank" href={{editUrl}}>edit url</a></span>
+        </div>
     </div>
+    <span class="search">result of:
+        <span class="search-term">{{searchPhrase}}</span>
+    </span>
 </div>
 
 <div class="content">
@@ -13,6 +18,15 @@
     </div>
     <div class="extract">
         {{{summary}}}
+    </div>
+</div>
+
+<div class="links">
+    <button class="extlinks-button">External Links</button>
+    <div class="extlinks">
+        {{#each extlinks}}
+            <a href={{this}}>{{this}}</a>
+        {{/each}}
     </div>
 </div>
 

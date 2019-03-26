@@ -40,8 +40,10 @@ class Wikichan {
 
         for (let before = 0; before < 4; before++) {
             for (let after = 0; after < 4; after++) {
-                this.wikic.fetchExtract(source.phrase(before, after))
+                const search = source.phrase(before, after);
+                this.wikic.fetchExtract(search)
                     .then((p: WikiPage) => {
+                        p.searchPhrase = search;
                         window.wikiframe.addArticle(p)
                         window.wikiframe.update();
                     });
