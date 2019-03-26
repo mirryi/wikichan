@@ -16,6 +16,7 @@ export class WikiFrame {
 	private _left: number;
 	private _width: number;
 	private _height: number;
+	private _visible: boolean;
 
 	constructor() {
 		this.handler = new TemplateHandler();
@@ -36,7 +37,9 @@ export class WikiFrame {
 		this.frame.style.width = `${this.width}px`;
 		this.frame.style.height = `${this.height}px`;
 		this.frame.style.position = 'fixed';
+		
 		this.frame.style.visibility = 'hidden';
+		this._visible = false;
 
 		document.body.appendChild(this._frame);
 
@@ -67,11 +70,13 @@ export class WikiFrame {
 		this.frame.style.top = `${this.top}px`;
 		this.frame.style.left = `${this.left}px`;
 		this.frame.style.visibility = 'visible';
+		this._visible = true;
 	}
 
 	// TODO: implement closing if click outside frame
 	close(): void {
 		this.frame.style.visibility = 'hidden';
+		this._visible = false;
 		this.clean();
 	}
 
@@ -82,7 +87,16 @@ export class WikiFrame {
 	}
 
 	calculateOffset(x: number, y: number): { x: number, y: number } {
-		return { x: 5, y: 5 };
+		let offset = { x: 10, y: 10 };
+		if (x + offset.x + this.width > window.innerWidth) {
+			offset.x = -(offset.x + this.width);
+		}
+
+		if (y + offset.y + this.height > window.innerHeight) {
+			offset.y = -(offset.y + this.height);
+		}
+
+		return offset;
 	}
 
 	addArticle(page: WikiPage): void {
@@ -146,6 +160,10 @@ export class WikiFrame {
 
 	get articles(): Set<WikiPage> {
 		return this._articles;
+	}
+
+	get visible(): boolean {
+		return this._visible;
 	}
 
 }
