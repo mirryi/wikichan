@@ -76,8 +76,23 @@ export class WikiPage implements EqualityChecker {
             + "profile=advanced&fulltext=1&search=" + this.searchPhrase;
     }
 
-    addRedirect(r: WikiRedirect) {
+    addRedirect(r: WikiRedirect): void {
         this._redirects.push(r);
+    }
+
+    isDisambiguation(): boolean {
+        const templates: string[] = [
+            "Category:All article disambiguation pages",
+            "Category:All disambiguation pages",
+            "Category:Disambiguation pages"
+        ];
+
+        for (let i = 0; i < this.categories.length; i++) {
+            if (templates.indexOf(this.categories[i]) != -1) {
+                return true;
+            }
+        }
+        return false;
     }
 
     equals(other: WikiPage): boolean {

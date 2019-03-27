@@ -52,9 +52,11 @@ class Wikichan {
                 const search = source.phrase(before, after);
                 this.wikic.fetchExtract(search)
                     .then((p: WikiPage) => {
-                        p.searchPhrase = search;
-                        window.wikiframe.addArticle(p)
-                        window.wikiframe.update();
+                        if (!p.isDisambiguation()) {
+                            p.searchPhrase = search;
+                            window.wikiframe.addArticle(p)
+                            window.wikiframe.update();
+                        }
                     });
             }
         }

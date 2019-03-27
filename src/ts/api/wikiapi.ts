@@ -51,7 +51,7 @@ export class WikiApi {
             .addParam("action", "query")
             .addParam(
                 "prop",
-                "info|description|categories|extlinks|pageterms|extracts&exsentences=2"
+                "info|description|categories|extlinks|pageterms|extracts&exintro"
             )
             .addParam("inprop", "url")
             .addParam("redirects", "1")
