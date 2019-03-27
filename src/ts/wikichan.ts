@@ -17,13 +17,15 @@ class Wikichan {
     private wikic: WikiApi;
     private selector: TextSelector;
 
+    private currentPhrase: string;
+
     constructor() {
         this.wikic = new WikiApi();
         this.selector = new TextSelector();
     }
 
     prepare() {
-        const eventType = 'mousedown'
+        const eventType = 'mousedown';
         window.addEventListener(eventType, this.onMouseOver.bind(this));
         logger.info("Added " + eventType + " listener for Wikichan");
     }
@@ -35,6 +37,8 @@ class Wikichan {
             window.wikiframe = new WikiFrame();
             window.wikiframe.prepare();
         }
+
+        window.wikiframe.clean();
         window.wikiframe.setLocation(e.clientX, e.clientY);
         window.wikiframe.open();
 
