@@ -17,8 +17,6 @@ class Wikichan {
     private wikic: WikiApi;
     private selector: TextSelector;
 
-    private currentPhrase: string;
-
     constructor() {
         this.wikic = new WikiApi();
         this.selector = new TextSelector();
@@ -31,14 +29,21 @@ class Wikichan {
     }
 
     onMouseOver(e: MouseEvent) {
+        if (!e.altKey) {
+            if (window.wikiframe) {
+                window.wikiframe.close();
+            }
+            return;
+        }
+
         const source: TextSource = this.selector.getSourceUnderCursor(e);
 
         if (!window.wikiframe) {
             window.wikiframe = new WikiFrame();
             window.wikiframe.prepare();
+        } else {
+            window.wikiframe.clean();
         }
-
-        window.wikiframe.clean();
         window.wikiframe.setLocation(e.clientX, e.clientY);
         window.wikiframe.open();
 
