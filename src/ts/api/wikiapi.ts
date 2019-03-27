@@ -1,10 +1,18 @@
 import { Redir } from "../util/type-alias";
 import { WikiPage } from "./page";
 import { WikiQueryType, WikiQuery } from "./query";
+import { WikiLang } from "./lang";
 
 // TODO: implement flexibility for different languages 
 export class WikiApi {
-    private endpoint: string = "https://en.wikipedia.org/w/api.php?";
+    private endpoint: string;
+    private lang: WikiLang;
+
+    constructor(lang: WikiLang) {
+        this.lang = lang;
+        this.endpoint = "https://" + WikiLang.toString(this.lang) + ".wikipedia.org/w/api.php?";
+        console.log(this.endpoint);
+    }
 
     fetchExtract(articleName: string) {
         const query = this.constructQuery(articleName, WikiQueryType.EXTRACT);

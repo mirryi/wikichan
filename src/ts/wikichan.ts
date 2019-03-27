@@ -4,6 +4,7 @@ import { TextSource } from "./text/text-source";
 import { WikiFrame } from "./display/display-frame";
 import { WikiPage } from "./api/page";
 import * as logger from "loglevel";
+import { WikiLang } from "./api/lang";
 // import * as _ from 'underscore';
 
 declare global {
@@ -18,7 +19,7 @@ class Wikichan {
     private selector: TextSelector;
 
     constructor() {
-        this.wikic = new WikiApi();
+        this.wikic = new WikiApi(WikiLang.EN);
         this.selector = new TextSelector();
     }
 
