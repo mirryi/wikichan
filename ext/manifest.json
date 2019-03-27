@@ -10,5 +10,9 @@
             "matches": ["<all_urls>"],
             "js": ["js/wikichan.js"]
         }
+    ],
+
+    "permissions": [
+        "*://*.wikipedia.org/*"
     ]
 }
