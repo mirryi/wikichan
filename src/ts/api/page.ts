@@ -1,5 +1,6 @@
 import { EqualityChecker } from "../util/set";
 import { Redir } from "../util/type-alias";
+import { WikiLang } from "./lang";
 
 export class WikiPage implements EqualityChecker {
     private _id: number;
@@ -9,6 +10,7 @@ export class WikiPage implements EqualityChecker {
     private _aliases: string[];
     private _categories: string[];
 
+    private _lang: WikiLang;
     private _url: string;
     private _editUrl: string;
     private _extlinks: string[];
@@ -47,6 +49,10 @@ export class WikiPage implements EqualityChecker {
         return this._categories;
     }
 
+    get lang(): WikiLang {
+        return this._lang;
+    }
+
     get url(): string {
         return this._url;
     }
@@ -81,14 +87,8 @@ export class WikiPage implements EqualityChecker {
     }
 
     isDisambiguation(): boolean {
-        const templates: string[] = [
-            "Category:All article disambiguation pages",
-            "Category:All disambiguation pages",
-            "Category:Disambiguation pages"
-        ];
-
         for (let i = 0; i < this.categories.length; i++) {
-            if (templates.indexOf(this.categories[i]) != -1) {
+            if (this.categories[i] === this.lang.disambiguationId) {
                 return true;
             }
         }
@@ -99,7 +99,8 @@ export class WikiPage implements EqualityChecker {
         return this.id === other.id;
     }
 
-    static fromJson(json: { redirects: Redir[]; page: any }): WikiPage {
+    static fromJson(json: { lang: WikiLang, redirects: Redir[]; page: any }): WikiPage {
+        console.log(json);
         const res = new WikiPage();
 
         if (json.redirects) {
@@ -115,6 +116,7 @@ export class WikiPage implements EqualityChecker {
         res._description = page.description;
         res._url = page.fullurl;
         res._editUrl = page.editurl;
+        res._lang = json.lang;
 
         if (page.extlinks) {
             page.extlinks.forEach((e: any) => {

@@ -10,12 +10,13 @@ export class WikiApi {
 
     constructor(lang: WikiLang) {
         this.lang = lang;
-        this.endpoint = "https://" + WikiLang.toString(this.lang) + ".wikipedia.org/w/api.php?";
+        this.endpoint = "https://" + this.lang.id.toLowerCase() + ".wikipedia.org/w/api.php?";
         console.log(this.endpoint);
     }
 
     fetchExtract(articleName: string) {
         const query = this.constructQuery(articleName, WikiQueryType.EXTRACT);
+        const lang = this.lang;
         return new Promise<WikiPage>(function(resolve: any, reject: any) {
             const xhr = new XMLHttpRequest();
             xhr.open("GET", query.url);
@@ -32,7 +33,7 @@ export class WikiApi {
                     ) {
                         return;
                     }
-                    const parsed = WikiApi.parseResponse(json);
+                    const parsed = WikiApi.parseResponse(lang, json);
                     const response = WikiPage.fromJson(parsed);
                     resolve(response);
                 } else {
@@ -67,11 +68,12 @@ export class WikiApi {
         return query;
     }
 
-    static parseResponse(json: {
+    static parseResponse(lang: WikiLang, json: {
         normalized: Redir[];
         redirects: Redir[];
         pages: any;
     }): {
+        lang: WikiLang;
         redirects: Redir[];
         page: object;
     } {
@@ -85,6 +87,7 @@ export class WikiApi {
 
         const key: string = Object.keys(json.pages)[0];
         return {
+            lang: lang,
             redirects: redirects,
             page: json.pages[key]
         };
