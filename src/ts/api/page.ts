@@ -58,7 +58,7 @@ export class WikiPage implements EqualityChecker {
     get extlinks(): string[] {
         return this._extlinks;
     }
-    
+
     get redirects(): WikiRedirect[] {
         return this._redirects;
     }
@@ -69,6 +69,11 @@ export class WikiPage implements EqualityChecker {
 
     set searchPhrase(value: string) {
         this._searchPhrase = value;
+    }
+
+    get searchLink(): string {
+        return "https://en.wikipedia.org/w/index.php?"
+            + "profile=advanced&fulltext=1&search=" + this.searchPhrase;
     }
 
     addRedirect(r: WikiRedirect) {
@@ -116,7 +121,6 @@ export class WikiPage implements EqualityChecker {
                 res._redirects.push(WikiRedirect.fromJson(r));
             });
         }
-        console.log(res);
         return res;
     }
 }
@@ -125,7 +129,7 @@ export class WikiRedirect {
     private _from: string;
     private _to: string;
 
-    constructor() {}
+    constructor() { }
 
     get from(): string {
         return this._from;
@@ -136,7 +140,6 @@ export class WikiRedirect {
     }
 
     static fromJson(json: Redir) {
-        console.log(json);
         const res = new WikiRedirect();
         res._from = json.from;
         res._to = json.to;

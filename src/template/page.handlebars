@@ -3,12 +3,18 @@
         <span class="title">{{title}}</span>
         <div class="labels">
             <span class="id">{{id}}</span>
-            <span class="url"><a target="_blank" href={{url}}>full url</a></span>
-            <span class="url"><a target="_blank" href={{editUrl}}>edit url</a></span>
+            <span class="full-url">
+                <a target="_blank" href={{url}}>full url</a>
+            </span>
+            <span class="edit-url">
+                <a target="_blank" href={{editUrl}}>edit url</a>
+            </span>
         </div>
     </div>
     <span class="search">result of:
-        <span class="search-term">{{searchPhrase}}</span>
+        <span class="search-term">
+            <a target="_blank" href={{searchLink}}>{{searchPhrase}}</a>
+        </span>
     </span>
 </div>
 
@@ -19,15 +25,20 @@
     <div class="extract">
         {{{summary}}}
     </div>
-</div>
 
-<div class="links">
-    <button class="extlinks-button">External Links</button>
-    <div class="extlinks">
-        {{#each extlinks}}
-            <a href={{this}}>{{this}}</a>
-        {{/each}}
+    <div class="links-section">
+        {{#if extlinks}}
+        <details class="links">
+            <summary>External links</summary>
+            <ul class="link-list">
+                {{#each extlinks}}
+                <li><a target="_blank" href={{this}} class="link">{{this}}</a></li>
+                {{/each}}
+            </ul>
+        </details>
+        {{/if}}
     </div>
 </div>
+
 
 <hr>

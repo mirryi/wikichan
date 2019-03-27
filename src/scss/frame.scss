@@ -1,5 +1,7 @@
 $font-stack: Helvetica,
 sans-serif;
+$layer-1-color: #f8f8f8;
+
 :root {
     background: rgb(253, 253, 253);
     font-size: 12px;
@@ -17,15 +19,18 @@ sans-serif;
 }
 
 .header {
-    margin: 7px 2px;
+    margin: 7px 5px;
+
     .top {
         display: flex;
         justify-content: space-between;
         margin-bottom: 3px;
+
         .title {
             font-size: 1.5rem;
             font-weight: bold;
         }
+
         .id {
             @extend %button;
             background-color: #ebebeb;
@@ -33,13 +38,27 @@ sans-serif;
             font-style: italic;
             color: #888888
         }
-        .url {
+
+        %url {
             @extend %button;
+            margin: 2px;
+
             a {
                 text-decoration: none;
             }
         }
+
+        .full-url {
+            @extend %url;
+            background-color: #c4d2ff;
+        }
+
+        .edit-url {
+            @extend %url;
+            background-color: #ffd6be;
+        }
     }
+
     .search {
         .search-term {
             @extend %button;
@@ -50,35 +69,41 @@ sans-serif;
 }
 
 .content {
-    margin: 15px 35px;
+    margin: 15px 30px;
+
     .details {
         .description {
             font-size: 1em;
         }
+
         .extract {
             font-size: 1em;
         }
     }
+
+    .links-section {
+        .links {
+            background-color: $layer-1-color;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .link-list {
+            padding-left: 15px;
+            list-style-type: none;
+
+            .link {
+                display: block;
+                margin-bottom: 3px;
+                width: 25em;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+        }
+    }
 }
 
-.links {
-    .extlinks-button {
-        &:hover {
-            background-color: #888888;
-        }
-        background-color: #ebebeb;
-        width: 100%;
-        padding: 5px;
-        text-align: left;
-        transition: 0.4s;
-    }
-    .extlinks {
-        padding: 0 18px;
-        background-color: white;
-        display: none;
-        overflow: hidden;
-    }
-}
 
 hr {
     padding: 0px;
