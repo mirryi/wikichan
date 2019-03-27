@@ -71,34 +71,37 @@ $layer-1-color: #f8f8f8;
 .content {
     margin: 15px 30px;
 
-    .details {
-        .description {
-            font-size: 1em;
-        }
-
-        .extract {
-            font-size: 1em;
-        }
+    .description {
+        font-size: 1em;
+        font-style: italic;
     }
 
-    .links-section {
-        .links {
+    .extract {
+        font-size: 1em;
+    }
+
+    .extras-section {
+        .extra {
             background-color: $layer-1-color;
-            padding: 10px;
+            padding: 5px;
             border-radius: 5px;
-        }
 
-        .link-list {
-            padding-left: 15px;
-            list-style-type: none;
+            .extra-summary {
+                font-weight: bold;
+            }
 
-            .link {
-                display: block;
-                margin-bottom: 3px;
-                width: 25em;
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
+            .extras-list {
+                padding-left: 15px;
+                list-style-type: none;
+
+                .extras-item {
+                    display: block;
+                    margin-bottom: 3px;
+                    width: 25em;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
             }
         }
     }

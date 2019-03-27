@@ -20,19 +20,32 @@
 
 <div class="content">
     <div class="description">
-        {{description}}
+        <span>{{description}}</span>
     </div>
     <div class="extract">
         {{{summary}}}
     </div>
 
-    <div class="links-section">
+    <div class="extras-section">
+        {{#if aliases}}
+        <details class="extra">
+            <summary class="extra-summary">aliases</summary>
+            <ul class="extras-list">
+                {{#each aliases}}
+                <li class="extras-item">{{this}}</li>
+                {{/each}}
+            </ul>
+        </details>
+        {{/if}}
+
         {{#if extlinks}}
-        <details class="links">
-            <summary>External links</summary>
-            <ul class="link-list">
+        <details class="extra">
+            <summary class="extra-summary">external links</summary>
+            <ul class="extras-list">
                 {{#each extlinks}}
-                <li><a target="_blank" href={{this}} class="link">{{this}}</a></li>
+                <li class="extras-item">
+                    <a target="_blank" href={{this}} class="link">{{this}}</a>
+                </li>
                 {{/each}}
             </ul>
         </details>
