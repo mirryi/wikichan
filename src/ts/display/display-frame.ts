@@ -75,7 +75,6 @@ export class WikiFrame {
 		this.articles.clear();
 	}
 
-	// TODO: implement closing if click outside frame
 	close(): void {
 		this.frame.style.visibility = 'hidden';
 		this._visible = false;

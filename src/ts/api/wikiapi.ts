@@ -3,7 +3,6 @@ import { WikiPage } from "./page";
 import { WikiQueryType, WikiQuery } from "./query";
 import { WikiLang } from "./lang";
 
-// TODO: implement flexibility for different languages 
 export class WikiApi {
     private endpoint: string;
     private lang: WikiLang;
@@ -53,7 +52,6 @@ export class WikiApi {
         });
     }
 
-    // TODO: refactor for different types of queries
     constructQuery(article: string, type: WikiQueryType) {
         let query = new WikiQuery(this.endpoint, type);
         query
