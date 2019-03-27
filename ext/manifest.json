@@ -12,6 +12,10 @@
         }
     ],
 
+    "options_ui": {
+        "page": "options.html"
+    },
+
     "permissions": [
         "*://*.wikipedia.org/*"
     ]
