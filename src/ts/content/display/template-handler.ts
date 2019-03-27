@@ -1,5 +1,5 @@
 import { WikiPage } from '../api/page';
-const pageTemplate = require('./../../template/page.handlebars');
+const pageTemplate = require('./../../../template/page.handlebars');
 
 export class TemplateHandler {
 

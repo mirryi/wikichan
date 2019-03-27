@@ -23,7 +23,11 @@
         <span>{{description}}</span>
     </div>
     <div class="extract">
-        {{{summary}}}
+        {{#if summary}}
+        <span>{{{summary}}}</span>
+        {{else}}
+        <span>No summary available.</span>
+        {{/if}}
     </div>
 
     <div class="extras-section">
