@@ -31,7 +31,8 @@ export class WikiLang implements EqualityChecker {
 }
 
 export module WikiLang {
-    export const 
-        EN = new WikiLang("EN", "English", "Category:Disambiguation"),
-        FR = new WikiLang("FR", "French", "Cat\u00e9gorie:Homonymie");
+    export const
+        EN = new WikiLang("EN", "English", "Category:All article disambiguation pages"),
+        FR = new WikiLang("FR", "French", "Cat\u00e9gorie:Homonymie"),
+        DE = new WikiLang("DE", "German", "Kategorie:Begriffskl\u00e4rung");
 }

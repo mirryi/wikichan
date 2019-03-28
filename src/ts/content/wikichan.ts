@@ -15,12 +15,16 @@ declare global {
 }
 
 class Wikichan {
-    private wikic: WikiApi;
+    private wikis: WikiApi[];
     private selector: TextSelector;
 
     constructor() {
-        this.wikic = new WikiApi(WikiLang.EN);
         this.selector = new TextSelector();
+
+        this.wikis = [];
+        this.wikis.push(new WikiApi(WikiLang.EN));
+        this.wikis.push(new WikiApi(WikiLang.FR));
+        this.wikis.push(new WikiApi(WikiLang.DE));
     }
 
     prepare() {
@@ -58,11 +62,14 @@ class Wikichan {
         for (let before = 0; before < 4; before++) {
             for (let after = 0; after < 4; after++) {
                 const search = source.phrase(before, after);
-                this.wikic.fetchExtract(search)
-                    .then((p: WikiPage) => {
-                        p.searchPhrase = search;
-                        this.put(p);
-                    });
+                for (let w = 0; w < this.wikis.length; w++) {
+                    this.wikis[w].fetchExtract(search)
+                        .then((p: WikiPage) => {
+                            console.log(p);
+                            p.searchPhrase = search;
+                            this.put(p);
+                        });
+                }
             }
         }
     }
