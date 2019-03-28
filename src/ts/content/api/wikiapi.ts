@@ -10,7 +10,6 @@ export class WikiApi {
     constructor(lang: WikiLang) {
         this.lang = lang;
         this.endpoint = "https://" + this.lang.id.toLowerCase() + ".wikipedia.org/w/api.php?";
-        console.log(this.endpoint);
     }
 
     fetchExtract(articleName: string) {

@@ -100,7 +100,6 @@ export class WikiPage implements EqualityChecker {
     }
 
     static fromJson(json: { lang: WikiLang, redirects: Redir[]; page: any }): WikiPage {
-        console.log(json);
         const res = new WikiPage();
 
         if (json.redirects) {
