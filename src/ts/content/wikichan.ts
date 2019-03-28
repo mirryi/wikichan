@@ -29,6 +29,13 @@ class Wikichan {
         logger.info("Added " + eventType + " listener for Wikichan");
     }
 
+    put(p: WikiPage): void {
+        if (!p.isDisambiguation()) {
+            window.wikiframe.addArticle(p)
+            window.wikiframe.update();
+        }
+    }
+
     onMouseOver(e: MouseEvent) {
         if (!e.altKey) {
             if (window.wikiframe) {
@@ -53,11 +60,8 @@ class Wikichan {
                 const search = source.phrase(before, after);
                 this.wikic.fetchExtract(search)
                     .then((p: WikiPage) => {
-                        if (!p.isDisambiguation()) {
-                            p.searchPhrase = search;
-                            window.wikiframe.addArticle(p)
-                            window.wikiframe.update();
-                        }
+                        p.searchPhrase = search;
+                        this.put(p);
                     });
             }
         }
