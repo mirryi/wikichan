@@ -31,6 +31,13 @@ $layer-1-color: #f8f8f8;
             font-weight: bold;
         }
 
+        .lang {
+            @extend %button;
+            background: #ececec;
+            font-weight: normal;
+            font-style: italic;
+        }
+
         .id {
             @extend %button;
             background-color: #ebebeb;
