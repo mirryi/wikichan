@@ -1,8 +1,8 @@
-import { EqualityChecker } from "../util/set";
+import { EqualityChecker, Comparable } from "../util/interfaces";
 import { Redir } from "../util/type-alias";
 import { WikiLang } from "./lang";
 
-export class WikiPage implements EqualityChecker {
+export class WikiPage implements EqualityChecker, Comparable {
     private _id: number;
     private _title: string;
     private _summary: string;
@@ -96,7 +96,23 @@ export class WikiPage implements EqualityChecker {
     }
 
     equals(other: WikiPage): boolean {
-        return this.id === other.id;
+        return this.id === other.id
+            && this.lang.id === other.lang.id;
+    }
+
+    compareTo(other: WikiPage): number {
+        if (this.lang.value < other.lang.value) {
+            return -1;
+        } else if (this.lang.value > other.lang.value) {
+            return 1;
+        } else {
+            if (this.title.length < other.title.length) {
+                return -1;
+            } else if (this.title.length > other.title.length) {
+                return 1;
+            }
+        }
+        return 0;
     }
 
     static fromJson(json: { lang: WikiLang, redirects: Redir[]; page: any }): WikiPage {
@@ -140,7 +156,6 @@ export class WikiPage implements EqualityChecker {
         return res;
     }
 }
-
 export class WikiRedirect {
     private _from: string;
     private _to: string;

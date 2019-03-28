@@ -1,6 +1,6 @@
 import { TemplateHandler } from './template-handler';
 import { WikiPage } from '../api/page';
-import { Set } from '../util/set';
+import { Set, SortedSet } from '../util/set';
 
 export class WikiFrame {
 
@@ -8,7 +8,7 @@ export class WikiFrame {
 	private static DEFAULT_HEIGHT = 275;
 
 	private _frame: HTMLIFrameElement;
-	private _articles: Set<WikiPage>;
+	private _articles: SortedSet<WikiPage>;
 
 	private handler: TemplateHandler;
 
@@ -20,7 +20,7 @@ export class WikiFrame {
 
 	constructor() {
 		this.handler = new TemplateHandler();
-		this._articles = new Set<WikiPage>();
+		this._articles = new SortedSet<WikiPage>();
 
 		this._width = WikiFrame.DEFAULT_WIDTH;
 		this._height = WikiFrame.DEFAULT_HEIGHT;
@@ -52,11 +52,12 @@ export class WikiFrame {
 
 	update(): void {
 		this.clean();
+		this.articles.sort();
 		this.articles.elements.forEach(a => {
 			const div = document.createElement('div');
 			div.classList.add("entry");
 			div.innerHTML = this.handler.compile(a);
-			this.responseContainer.prepend(div);
+			this.responseContainer.appendChild(div);
 		});
 	}
 
@@ -159,7 +160,7 @@ export class WikiFrame {
 		return this._frame;
 	}
 
-	get articles(): Set<WikiPage> {
+	get articles(): SortedSet<WikiPage> {
 		return this._articles;
 	}
 
