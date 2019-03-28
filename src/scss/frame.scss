@@ -13,7 +13,6 @@ $layer-1-color: #f8f8f8;
     font-size: 0.9rem;
     font-weight: bold;
     padding: 3px;
-    line-height: 3px;
     background-color: #eeeeee;
     border-radius: 5px;
 }
@@ -29,6 +28,9 @@ $layer-1-color: #f8f8f8;
         .title {
             font-size: 1.5rem;
             font-weight: bold;
+
+            width: 45%;
+            overflow: auto;
         }
 
         .lang {
