@@ -19,7 +19,7 @@ class Wikichan {
     private selector: TextSelector;
 
     constructor() {
-        this.wikic = new WikiApi(WikiLang.FR);
+        this.wikic = new WikiApi(WikiLang.EN);
         this.selector = new TextSelector();
     }
 

@@ -2,19 +2,22 @@
     "manifest_version": 2,
     "name": "Wikichan",
     "version": "1.0",
-
     "description": "Displays Wikipedia info box pop-up on hover over phrase.",
-
+    "browser_specific_settings": {
+        "gecko": {
+            "id": "{b0711da5-a98d-427f-bde2-37dd05e35c12}"
+        }
+    },
     "content_scripts": [
         {
-            "matches": ["<all_urls>"],
-            "js": ["js/wikichan.js"]
+            "matches": [
+                "<all_urls>"
+            ],
+            "js": [
+                "js/wikichan.js"
+            ]
         }
     ],
-
-    "options_ui": {
-        "page": "options.html"
-    },
 
     "permissions": [
         "*://*.wikipedia.org/*"
