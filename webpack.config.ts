@@ -7,7 +7,7 @@ const outdir = path.resolve(__dirname, 'ext');
 module.exports = {
     entry: {
         wikichan: ['./src/ts/content/wikichan.ts', './src/scss/injected.scss'],
-        frame: ['./src/ts/content/frame/frame.ts', './src/scss/frame.scss']
+        frame: ['./src/ts/frame/frame.ts', './src/scss/frame.scss']
     },
     module: {
         rules: [
