@@ -50,7 +50,6 @@ sans-serif;
 
         %url {
             @extend %button;
-            margin: 2px;
 
             a {
                 text-decoration: none;
@@ -60,6 +59,7 @@ sans-serif;
         .full-url {
             @extend %url;
             background-color: #c4d2ff;
+            margin-right: 3px;
         }
 
         .edit-url {
@@ -72,6 +72,7 @@ sans-serif;
             background: #e0e0e0;
             width: 16px;
             padding: auto auto;
+            margin-left: 10px;
 
             &:hover {
                 background: #c2c2c2;
