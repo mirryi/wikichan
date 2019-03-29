@@ -2,9 +2,6 @@
     "compileOnSave": true,
     "compilerOptions": {
         "baseUrl": ".",
-        "paths": {
-            "*": ["types/*"]
-        },
         "outDir": "ext/js",
 
         "target": "es6",
