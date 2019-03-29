@@ -1,14 +1,12 @@
-Features:
-	☐ Tabs for different languages
+  ☐ Tabs for different languages
   ☐ Query WikiData and Wiktionary
   ☐ Speech synthesis of word
   ☐ Dark and light themes
 
-Fixes:
-  ☐ Flexible formatting for oversized titles
-  ☐ Fallback for lack of summary or description
-
 Archive:
+  ✔ Button for hide/unhide entry @done(19-03-28 21:04)
+  ✔ Fallback for lack of summary or description @done(19-03-28 19:54) @project(Fixes)
+  ✔ Flexible formatting for oversized titles @done(19-03-28 19:47) @project(Fixes)
   ✔ Set z-index of iframe to 9999 @started(19-03-28 10:54) @done(19-03-28 10:58) @lasted(4m4s) @project(Fixes)
   ✘ Options page @started(19-03-27 18:39) @cancelled(19-03-28 10:53) @wasted(16h14m51s) @project(Features)
   ✔ Hide disambiguation results @done(19-03-27 16:55) @project(Fixes)

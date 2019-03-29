@@ -37,7 +37,7 @@ export class WikiFrame {
 		this.frame.style.width = `${this.width}px`;
 		this.frame.style.height = `${this.height}px`;
 		this.frame.style.position = 'fixed';
-		
+
 		this.frame.style.visibility = 'hidden';
 		this._visible = false;
 
@@ -57,6 +57,15 @@ export class WikiFrame {
 			const div = document.createElement('div');
 			div.classList.add("entry");
 			div.innerHTML = this.handler.compile(a);
+			div.getElementsByClassName("hide-button")[0]
+				.addEventListener("click", (event) => {
+					const button: HTMLElement = <HTMLElement>event.srcElement;
+					const header: HTMLElement = button.parentElement.parentElement.parentElement;
+					const content: HTMLElement = <HTMLElement>header.nextElementSibling;
+					content.style.display = content.style.display === 'none' ? 'block' : 'none';
+					button.innerText = button.innerText === '+' ? '–' : '+'
+
+				});
 			this.responseContainer.appendChild(div);
 		});
 	}
@@ -72,7 +81,7 @@ export class WikiFrame {
 		this.frame.style.left = `${this.left}px`;
 		this.frame.style.visibility = 'visible';
 		this._visible = true;
-		
+
 		this.articles.clear();
 	}
 

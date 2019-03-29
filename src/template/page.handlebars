@@ -10,6 +10,7 @@
             <span class="edit-url">
                 <a target="_blank" href={{editUrl}}>edit url</a>
             </span>
+            <button class="hide-button">–</button>
         </div>
     </div>
     <span class="search">result of:
@@ -48,8 +49,8 @@
             <summary class="extra-summary">external links</summary>
             <ul class="extras-list">
                 {{#each extlinks}}
-                <li class="extras-item">
-                    <a target="_blank" href={{this}} class="link">{{this}}</a>
+                <li class="extras-item link">
+                    <a target="_blank" href={{this}}>{{this}}</a>
                 </li>
                 {{/each}}
             </ul>
