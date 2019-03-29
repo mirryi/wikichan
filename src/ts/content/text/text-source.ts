@@ -130,5 +130,5 @@ function matchBreak(c: string): boolean {
 }
 
 function clean(s: string): string {
-    return s.replace(/([.,\/#!$%\^&\*;:{}=\-_`~()])/, "").trim();
+    return s.replace(/([.,\'\"\/#!$%\^&\*;:{}=\-_`~()])/, "").trim();
 }
