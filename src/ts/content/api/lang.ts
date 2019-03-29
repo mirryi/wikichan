@@ -26,6 +26,10 @@ export class WikiLang implements EqualityChecker {
         return this._name;
     }
 
+    get url(): string {
+        return "https://" + this.id.toLowerCase() + ".wikipedia.org"
+    }
+
     get disambiguationId(): string {
         return this._disambiguationId;
     }

@@ -78,7 +78,7 @@ export class WikiPage implements EqualityChecker, Comparable {
     }
 
     get searchLink(): string {
-        return "https://en.wikipedia.org/w/index.php?"
+        return this.lang.url + "/w/index.php?"
             + "profile=advanced&fulltext=1&search=" + this.searchPhrase;
     }
 
