@@ -1,9 +1,9 @@
-$font-stack: Helvetica,
+$font-stack: "Segoe UI",
 sans-serif;
 
 :root {
     background: rgb(253, 253, 253);
-    font-size: 12px;
+    font-size: 13px;
     font-family: $font-stack;
     box-sizing: border-box;
 }
@@ -26,7 +26,7 @@ sans-serif;
         margin-bottom: 3px;
 
         .title {
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             font-weight: bold;
 
             width: 45%;
@@ -143,4 +143,10 @@ hr {
     margin: 0px;
     border: 0px;
     border-top: 1px solid #eeeeee;
+}
+
+.end-message {
+    font-size: 1rem;
+    text-align: center;
+    color: #818181;
 }
