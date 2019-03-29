@@ -125,13 +125,6 @@ function getPreviousNode(node: Node): Node {
     return node.previousSibling === null ? node.parentNode.previousSibling : node.previousSibling;
 }
 
-function splitText(s: string) {
-    return s.split(/([\s.,\/#!$%\^&\*;:{}=\-_`~()])/)
-        .filter((v, i, arr) => {
-            return v.trim().length != 0
-        });
-}
-
 function matchBreak(c: string): boolean {
     return c === " " || /(\\n)/.test(JSON.stringify(c));
 }
