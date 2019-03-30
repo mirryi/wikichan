@@ -34,10 +34,8 @@ class Wikichan {
     }
 
     put(p: WikiPage): void {
-        if (!p.isDisambiguation()) {
-            window.wikiframe.addArticle(p)
-            window.wikiframe.update();
-        }
+        window.wikiframe.addArticle(p)
+        window.wikiframe.update();
     }
 
     onMouseOver(e: MouseEvent) {

@@ -9,6 +9,7 @@ export class WikiFrame {
 
 	private _frame: HTMLIFrameElement;
 	private _articles: SortedSet<WikiPage>;
+	private _disambiguations: SortedSet<WikiPage>;
 
 	private handler: TemplateHandler;
 
@@ -21,6 +22,7 @@ export class WikiFrame {
 	constructor() {
 		this.handler = new TemplateHandler();
 		this._articles = new SortedSet<WikiPage>();
+		this._disambiguations = new SortedSet<WikiPage>();
 
 		this._width = WikiFrame.DEFAULT_WIDTH;
 		this._height = WikiFrame.DEFAULT_HEIGHT;
@@ -52,11 +54,25 @@ export class WikiFrame {
 
 	update(): void {
 		this.clean();
+
+		if (this.disambiguations.elements.length > 0) {
+			this.disambiguationsCountContainer.innerText =
+				this.disambiguations.elements.length + " disambiguation(s) hidden";
+
+			this.disambiguations.sort();
+			this.disambiguations.elements.forEach(d => {
+				const div = document.createElement('div');
+				div.classList.add('disambiguation');
+				div.innerHTML = this.handler.compileDisambiguation(d);
+				this.disambiguationsContainer.appendChild(div);
+			});
+		}
+
 		this.articles.sort();
 		this.articles.elements.forEach(a => {
 			const div = document.createElement('div');
 			div.classList.add("entry");
-			div.innerHTML = this.handler.compile(a);
+			div.innerHTML = this.handler.compilePage(a);
 			div.getElementsByClassName("hide-button")[0]
 				.addEventListener("click", (event) => {
 					const button: HTMLElement = <HTMLElement>event.srcElement;
@@ -71,6 +87,11 @@ export class WikiFrame {
 	}
 
 	clean(): void {
+		this.disambiguationsCountContainer.innerText = "";
+		while (this.disambiguationsContainer.lastChild) {
+			this.disambiguationsContainer.removeChild(this.disambiguationsContainer.lastChild);
+		}
+
 		while (this.responseContainer.lastChild) {
 			this.responseContainer.removeChild(this.responseContainer.lastChild);
 		}
@@ -83,6 +104,7 @@ export class WikiFrame {
 		this._visible = true;
 
 		this.articles.clear();
+		this.disambiguations.clear();
 	}
 
 	close(): void {
@@ -111,13 +133,11 @@ export class WikiFrame {
 	}
 
 	addArticle(page: WikiPage): void {
-		this._articles.add(page);
-	}
-
-	addArticles(pages: WikiPage[]): void {
-		pages.forEach(p => {
-			this.addArticle(p);
-		})
+		if (!page.isDisambiguation()) {
+			this._articles.add(page);
+		} else {
+			this._disambiguations.add(page);
+		}
 	}
 
 	containsPoint(x: number, y: number) {
@@ -131,6 +151,14 @@ export class WikiFrame {
 
 	get responseContainer(): HTMLElement {
 		return this.documentContainer.getElementById('results');
+	}
+
+	get disambiguationsCountContainer(): HTMLElement {
+		return this.documentContainer.getElementById('disambiguations-count');
+	}
+
+	get disambiguationsContainer(): HTMLElement {
+		return this.documentContainer.getElementById('disambiguations-list');
 	}
 
 	get top(): number {
@@ -171,6 +199,10 @@ export class WikiFrame {
 
 	get articles(): SortedSet<WikiPage> {
 		return this._articles;
+	}
+
+	get disambiguations(): SortedSet<WikiPage> {
+		return this._disambiguations;
 	}
 
 	get visible(): boolean {
