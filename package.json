@@ -5,7 +5,8 @@
   "scripts": {
     "build": "webpack -p",
     "watch": "webpack --watch",
-    "pack": "web-ext build -s ext -a artifacts"
+    "test": "web-ext run -s ext  -u en.wikipedia.org --verbose",
+    "pack": "web-ext build -s ext -a artifacts --config-discovery=false --overwrite-dest --verbose"
   },
   "author": "",
   "license": "ISC",
