@@ -11,9 +11,28 @@ sans-serif;
     box-sizing: border-box;
 }
 
-#disambiguations-list {
-    display: none;
-    margin: 7px 0px;
+#disambiguations {
+
+    #disambiguations-list {
+        display: none;
+        margin: 0px 7px;
+        margin-bottom: 10px;
+    }
+
+    #disambiguations-count {
+        margin: 0px;
+        margin-bottom: 5px;
+
+        &:hover {
+            cursor: pointer;
+        }
+    }
+
+    &:hover {
+        & > #disambiguations-list {
+            display: block;
+        }
+    }
 }
 
 #disambiguations-count,
@@ -23,13 +42,4 @@ sans-serif;
     color: #818181;
 
     padding: 0px;
-}
-
-#disambiguations-count {
-    margin: 0px;
-    margin-bottom: 5px;
-
-    &:hover {
-        cursor: pointer;
-    }
 }
