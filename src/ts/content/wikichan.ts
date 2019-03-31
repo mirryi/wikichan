@@ -5,7 +5,6 @@ import { WikiFrame } from "./display/display-frame";
 import { WikiPage } from "./api/page";
 import * as logger from "loglevel";
 import { WikiLang } from "./api/lang";
-// import * as _ from 'underscore';
 
 declare global {
     interface Window {
@@ -25,6 +24,8 @@ class Wikichan {
         this.wikis.push(new WikiApi(WikiLang.EN));
         this.wikis.push(new WikiApi(WikiLang.FR));
         this.wikis.push(new WikiApi(WikiLang.DE));
+        this.wikis.push(new WikiApi(WikiLang.ES));
+        this.wikis.push(new WikiApi(WikiLang.SV));
     }
 
     prepare() {

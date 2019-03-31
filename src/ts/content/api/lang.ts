@@ -44,5 +44,7 @@ export module WikiLang {
     export const
         EN = new WikiLang("EN", "English", 1, "Category:All article disambiguation pages"),
         FR = new WikiLang("FR", "French", 2, "Cat\u00e9gorie:Homonymie"),
-        DE = new WikiLang("DE", "German", 3, "Kategorie:Begriffskl\u00e4rung");
+        DE = new WikiLang("DE", "German", 3, "Kategorie:Begriffskl\u00e4rung"),
+        ES = new WikiLang("ES", "Spanish", 4, "Categoría:Wikipedia:Desambiguación"),
+        SV = new WikiLang("SV", "Swedish", 5, "Kategori:Förgreningssidor");
 }
