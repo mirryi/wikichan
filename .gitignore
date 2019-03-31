@@ -1,6 +1,9 @@
 .vscode
 
 node_modules 
+
+artifacts
+
 ext/css
 ext/js
 ext/template
