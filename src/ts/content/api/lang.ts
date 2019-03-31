@@ -47,5 +47,11 @@ export module WikiLang {
         DE = new WikiLang("DE", "German", 3, "Kategorie:Begriffskl\u00e4rung"),
         ES = new WikiLang("ES", "Spanish", 4, "Categoría:Wikipedia:Desambiguación"),
         RU = new WikiLang("RU", "Russian", 5, "Категория:Страницы значений по алфавиту"),
-        SV = new WikiLang("SV", "Swedish", 6, "Kategori:Förgreningssidor");
+
+        JA = new WikiLang("JA", "Japanese", 10, "Category:すべての曖昧さ回避"),
+        ZH = new WikiLang("ZH", "Chinese", 11, "");
+
+        // SV = new WikiLang("SV", "Swedish", 20, "Kategori:Förgreningssidor");
+
+    export const ALL_LANGS: WikiLang[] = [ EN, FR, DE, ES, RU, JA, ZH ];
 }

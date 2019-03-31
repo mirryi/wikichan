@@ -12,53 +12,58 @@ export class TextSource {
     }
 
     phrase(before: number, after: number): string {
-
         let begin: number = 0;
         let end: number = 0;
 
-        if (matchBreak(this.text[this.offset])) {
-            return "";
-        }
+        if (isChar(this.text.charAt(this.offset))) {
+            begin = this.offset - before;
+            end = this.offset + after + 1;
 
-        // Find the index of the end of the phrase
-        let k: number = this.offset;
-        for (let i = 0; i <= after; i++) {
-            // Find the end of the word
-            while (matchBreak(this.text[k]) === false) {
-                if (k >= this.text.length - 1) {
-                    if (!getNextNode(this.rightNode)) {
-                        break;
+        } else {
+            if (matchBreak(this.text[this.offset])) {
+                return "";
+            }
+
+            // Find the index of the end of the phrase
+            let k: number = this.offset;
+            for (let i = 0; i <= after; i++) {
+                // Find the end of the word
+                while (matchBreak(this.text[k]) === false) {
+                    if (k >= this.text.length - 1) {
+                        if (!getNextNode(this.rightNode)) {
+                            break;
+                        }
+                        this.joinAfter();
+                        k--;
                     }
-                    this.joinAfter();
-                    k--;
+                    k++;
                 }
                 k++;
             }
-            k++;
-        }
-        end = k;
+            end = k;
 
-        let oldOffset: number = this.offset.valueOf();
-        k = this.offset;
-        for (let i = 0; i <= before; i++) {
-            while (matchBreak(this.text[k]) === false) {
-                if (k <= 0) {
-                    if (!getPreviousNode(this.leftNode)) {
-                        break;
+            let oldOffset: number = this.offset.valueOf();
+            k = this.offset;
+            for (let i = 0; i <= before; i++) {
+                while (matchBreak(this.text[k]) === false) {
+                    if (k <= 0) {
+                        if (!getPreviousNode(this.leftNode)) {
+                            break;
+                        }
+                        const adjustOffset = (v: number) => v + this.offset - oldOffset;
+                        this.joinBefore();
+                        k = adjustOffset(k);
+                        end = adjustOffset(end);
+                        oldOffset = this.offset;
+                        k++;
                     }
-                    const adjustOffset = (v: number) => v + this.offset - oldOffset;
-                    this.joinBefore();
-                    k = adjustOffset(k);
-                    end = adjustOffset(end);
-                    oldOffset = this.offset;
-                    k++;
+                    k--;
                 }
                 k--;
             }
-            k--;
+            k += 2;
+            begin = k;
         }
-        k += 2;
-        begin = k;
 
         let segment = this.text.substring(begin, end).trim();
         segment = clean(segment);
@@ -130,5 +135,14 @@ function matchBreak(c: string): boolean {
 }
 
 function clean(s: string): string {
-    return s.replace(/([.,\'\"\/#!$%\^&\*;:{}=\-_`~()])/, "").trim();
+    return s.replace(/([.,\'\"\/#!$%\^&\*;:{}=\-_`~()]、。)/, "").trim();
+}
+
+function isChar(s: string): boolean {
+    const code: number = s.charCodeAt(0);
+    return (code >= 12288 && code <= 12543) ||
+        (code >= 65280 && code <= 65519) ||
+        (code >= 19968 && code <= 40879) ||
+        (code >= 13312 && code <= 19903);
+
 }

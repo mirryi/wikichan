@@ -18,7 +18,7 @@ export class WikiPage implements EqualityChecker, Comparable {
 
     private _searchPhrase: string;
 
-    constructor() {
+    private constructor() {
         this._aliases = [];
         this._categories = [];
         this._extlinks = [];

@@ -21,12 +21,9 @@ class Wikichan {
         this.selector = new TextSelector();
 
         this.wikis = [];
-        this.wikis.push(new WikiApi(WikiLang.EN));
-        this.wikis.push(new WikiApi(WikiLang.FR));
-        this.wikis.push(new WikiApi(WikiLang.DE));
-        this.wikis.push(new WikiApi(WikiLang.ES));
-        this.wikis.push(new WikiApi(WikiLang.RU));
-        this.wikis.push(new WikiApi(WikiLang.SV));
+        WikiLang.ALL_LANGS.forEach((lang: WikiLang) => {
+            this.wikis.push(new WikiApi(lang));
+        })
     }
 
     prepare() {
