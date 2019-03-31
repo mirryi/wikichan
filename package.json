@@ -14,10 +14,8 @@
   },
   "devDependencies": {
     "@types/firefox-webext-browser": "^65.0.2",
-    "@types/jquery": "^3.3.29",
     "@types/loglevel": "^1.5.4",
     "@types/node": "^11.11.3",
-    "@types/underscore": "^1.8.13",
     "copy-webpack-plugin": "^5.0.1",
     "css-loader": "^2.1.1",
     "handlebars-loader": "^1.7.1",
