@@ -1,7 +1,7 @@
 {
     "manifest_version": 2,
     "name": "Wikichan",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "description": "Displays Wikipedia info box pop-up on hover over phrase.",
     "browser_specific_settings": {
         "gecko": {
