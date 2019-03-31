@@ -13,6 +13,14 @@ sans-serif;
 
 #disambiguations {
 
+    #list-control {
+        display: none;
+
+        &:checked+label+#disambiguations-list {
+            display: block;
+        }
+    }
+
     #disambiguations-list {
         display: none;
         margin: 0px 7px;
@@ -25,12 +33,6 @@ sans-serif;
 
         &:hover {
             cursor: pointer;
-        }
-    }
-
-    &:hover {
-        & > #disambiguations-list {
-            display: block;
         }
     }
 }
