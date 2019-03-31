@@ -25,6 +25,7 @@ class Wikichan {
         this.wikis.push(new WikiApi(WikiLang.FR));
         this.wikis.push(new WikiApi(WikiLang.DE));
         this.wikis.push(new WikiApi(WikiLang.ES));
+        this.wikis.push(new WikiApi(WikiLang.RU));
         this.wikis.push(new WikiApi(WikiLang.SV));
     }
 

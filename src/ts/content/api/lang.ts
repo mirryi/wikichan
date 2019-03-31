@@ -46,5 +46,6 @@ export module WikiLang {
         FR = new WikiLang("FR", "French", 2, "Cat\u00e9gorie:Homonymie"),
         DE = new WikiLang("DE", "German", 3, "Kategorie:Begriffskl\u00e4rung"),
         ES = new WikiLang("ES", "Spanish", 4, "Categoría:Wikipedia:Desambiguación"),
-        SV = new WikiLang("SV", "Swedish", 5, "Kategori:Förgreningssidor");
+        RU = new WikiLang("RU", "Russian", 5, "Категория:Страницы значений по алфавиту"),
+        SV = new WikiLang("SV", "Swedish", 6, "Kategori:Förgreningssidor");
 }
