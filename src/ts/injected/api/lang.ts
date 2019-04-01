@@ -43,15 +43,15 @@ export class WikiLang implements EqualityChecker {
 export module WikiLang {
     export const
         EN = new WikiLang("EN", "English", 1, "Category:All article disambiguation pages"),
-        FR = new WikiLang("FR", "French", 2, "Cat\u00e9gorie:Homonymie"),
-        DE = new WikiLang("DE", "German", 3, "Kategorie:Begriffskl\u00e4rung"),
-        ES = new WikiLang("ES", "Spanish", 4, "Categoría:Wikipedia:Desambiguación"),
-        RU = new WikiLang("RU", "Russian", 5, "Категория:Страницы значений по алфавиту"),
+        FR = new WikiLang("FR", "Français", 2, "Cat\u00e9gorie:Homonymie"),
+        DE = new WikiLang("DE", "Deutsch", 3, "Kategorie:Begriffskl\u00e4rung"),
+        ES = new WikiLang("ES", "Español", 4, "Categoría:Wikipedia:Desambiguación"),
+        RU = new WikiLang("RU", "русский язык", 5, "Категория:Страницы значений по алфавиту"),
 
-        JA = new WikiLang("JA", "Japanese", 10, "Category:すべての曖昧さ回避"),
-        ZH = new WikiLang("ZH", "Chinese", 11, "Category:全部消歧義頁面");
+        JA = new WikiLang("JA", "日本語", 10, "Category:すべての曖昧さ回避"),
+        ZH = new WikiLang("ZH", "中文", 11, "Category:全部消歧義頁面");
 
-        // SV = new WikiLang("SV", "Swedish", 20, "Kategori:Förgreningssidor");
+        // SV = new WikiLang("SV", "Svenska", 20, "Kategori:Förgreningssidor");
 
     export const ALL_LANGS: WikiLang[] = [ EN, FR, DE, ES, RU, JA, ZH ];
 }
