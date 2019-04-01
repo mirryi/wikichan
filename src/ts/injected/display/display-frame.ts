@@ -5,8 +5,8 @@ import { WikiLang } from '../api/lang';
 
 export class WikiFrame {
 
-	private static DEFAULT_WIDTH = 450;
-	private static DEFAULT_HEIGHT = 275;
+	private static DEFAULT_WIDTH = 475;
+	private static DEFAULT_HEIGHT = 300;
 
 	private _frame: HTMLIFrameElement;
 	private _articles: SortedSet<WikiPage>;
