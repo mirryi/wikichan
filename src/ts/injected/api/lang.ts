@@ -49,7 +49,7 @@ export module WikiLang {
         RU = new WikiLang("RU", "Russian", 5, "Категория:Страницы значений по алфавиту"),
 
         JA = new WikiLang("JA", "Japanese", 10, "Category:すべての曖昧さ回避"),
-        ZH = new WikiLang("ZH", "Chinese", 11, "");
+        ZH = new WikiLang("ZH", "Chinese", 11, "Category:全部消歧義頁面");
 
         // SV = new WikiLang("SV", "Swedish", 20, "Kategori:Förgreningssidor");
 
