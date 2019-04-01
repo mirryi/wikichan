@@ -8,10 +8,9 @@ Support for more languages may come later.
 ## Getting Started
 
 ### Installation
-Releases can be found in the `dist` folder. Download the latest and install in Firefox (Install Add-on 
-from File...). This addon is only supported on Firefox versions 57+.
+Build from source or download via AMO:
 
-[![](img/marketplace.png)](https://addons.mozilla.org/en-US/)
+[![](img/marketplace.png)](https://addons.mozilla.org/en-US/firefox/addon/wikichan/)
 
 ### Usage
 While holding the `alt` key, click on a word in any webpage. A popup will appear with information from 
