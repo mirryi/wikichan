@@ -1,6 +1,7 @@
 import { TemplateHandler } from './template-handler';
 import { WikiPage } from '../api/page';
 import { Set, SortedSet } from '../util/set';
+import { WikiLang } from '../api/lang';
 
 export class WikiFrame {
 
@@ -44,12 +45,6 @@ export class WikiFrame {
 		this._visible = false;
 
 		document.body.appendChild(this._frame);
-
-		const injectedStyles = document.createElement('link');
-		injectedStyles.rel = 'stylesheet';
-		injectedStyles.type = 'text/css';
-		injectedStyles.href = browser.runtime.getURL('css/wikichan.css');
-		document.head.appendChild(injectedStyles);
 	}
 
 	update(): void {
@@ -68,10 +63,12 @@ export class WikiFrame {
 			});
 		}
 
+		const langs: Set<WikiLang> = new Set<WikiLang>();
+
 		this.articles.sort();
-		this.articles.elements.forEach(a => {
+		this.articles.elements.forEach((a: WikiPage) => {
 			const div = document.createElement('div');
-			div.classList.add("entry");
+			div.classList.add("entry", a.lang.id);
 			div.innerHTML = this.handler.compilePage(a);
 			div.getElementsByClassName("hide-button")[0]
 				.addEventListener("click", (event) => {
@@ -82,14 +79,34 @@ export class WikiFrame {
 					button.innerText = button.innerText === '+' ? '–' : '+'
 
 				});
+			langs.add(a.lang);
 			this.responseContainer.appendChild(div);
 		});
+
+		langs.elements.forEach((la: WikiLang) => {
+			const div = document.createElement('div');
+			div.classList.add("lang-filter");
+			div.innerHTML = this.handler.compileLangFilter(la);
+			div.getElementsByClassName("filter")[0].addEventListener("change", (event) => {
+				Array.from(this.responseContainer.getElementsByClassName(la.id))
+					.forEach((elem: HTMLElement) => {
+						elem.style.display = elem.style.display === 'none' ? 'block' : 'none';
+					});
+			});
+
+			this.filtersContainer.appendChild(div);
+		});
+
 	}
 
 	clean(): void {
 		this.disambiguationsCountContainer.innerText = "";
 		while (this.disambiguationsContainer.lastChild) {
 			this.disambiguationsContainer.removeChild(this.disambiguationsContainer.lastChild);
+		}
+
+		while (this.filtersContainer.lastChild) {
+			this.filtersContainer.removeChild(this.filtersContainer.lastChild);
 		}
 
 		while (this.responseContainer.lastChild) {
@@ -159,6 +176,10 @@ export class WikiFrame {
 
 	get disambiguationsContainer(): HTMLElement {
 		return this.documentContainer.getElementById('disambiguations-list');
+	}
+
+	get filtersContainer(): HTMLElement {
+		return this.documentContainer.getElementById('filters');
 	}
 
 	get top(): number {

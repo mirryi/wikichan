@@ -50,6 +50,12 @@ class Wikichan {
         if (!window.wikiframe) {
             window.wikiframe = new WikiFrame();
             window.wikiframe.prepare();
+            
+            const injectedStyles = document.createElement('link');
+            injectedStyles.rel = 'stylesheet';
+            injectedStyles.type = 'text/css';
+            injectedStyles.href = browser.runtime.getURL('css/wikichan.css');
+            document.head.appendChild(injectedStyles);
         } else {
             window.wikiframe.clean();
         }

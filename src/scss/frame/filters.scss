@@ -1,0 +1,20 @@
+#filters {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 5px;
+
+    .filter {
+        @extend %button;
+        margin-right: 5px;
+        font-weight: bold;
+        cursor: pointer;
+
+        input {
+            display: none;
+            &:checked+span {
+                color: #a5a5a5;
+            }
+        }
+    }
+
+}
