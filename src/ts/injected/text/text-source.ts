@@ -65,7 +65,7 @@ export class TextSource {
             begin = k;
         }
 
-        let segment = this.text.substring(begin, end).trim();
+        let segment = this.text.substring(begin, end);
         segment = clean(segment);
         return segment;
     }
@@ -135,7 +135,7 @@ function matchBreak(c: string): boolean {
 }
 
 function clean(s: string): string {
-    return s.replace(/([.,\'\"\/#!$%\^&\*;:{}=\-_`~()]、。)/, "").trim();
+    return s.replace(/([.,\'\"\/#!$%\^&\*;:{}=\-_`~()、。])/, "").trim();
 }
 
 function isChar(s: string): boolean {
