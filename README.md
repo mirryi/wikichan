@@ -27,7 +27,8 @@ In development, Wikichan is written in Typescript 2.0, HTML 5, and SCSS, which a
 with Webpack 4.
 
 ### Credits
-This project was inspired heavily by the extension [Yomichan](https://foosoft.net/projects/yomichan), 
+This project was inspired heavily by the extension [Yomichan](https://foosoft.net/projects/yomichan),
+a Japanese-learning tool.
 
 ### License
 This project is licensed under the MIT License. See [LICENSE.md](LICENSE.md) for more details.
