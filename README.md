@@ -11,6 +11,8 @@ Support for more languages may come later.
 Releases can be found in the `dist` folder. Download the latest and install in Firefox (Install Add-on 
 from File...). This addon is only supported on Firefox versions 57+.
 
+[![](img/marketplace.png)](https://addons.mozilla.org/en-US/)
+
 ### Usage
 While holding the `alt` key, click on a word in any webpage. A popup will appear with information from 
 the Wikipedia articles of that word and groups of words around it.
