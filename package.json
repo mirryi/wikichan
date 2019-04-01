@@ -6,7 +6,7 @@
     "build": "webpack -p",
     "watch": "webpack --watch",
     "test": "web-ext run -s ext  -u en.wikipedia.org --verbose",
-    "pack": "web-ext build -s ext -a artifacts --config-discovery=false --overwrite-dest --verbose"
+    "pack": "web-ext build -s ext -a dist --config-discovery=false --overwrite-dest --verbose"
   },
   "author": "",
   "license": "ISC",
