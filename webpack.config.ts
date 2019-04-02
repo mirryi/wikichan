@@ -1,10 +1,13 @@
 const path = require('path');
+
+const TerserPlugin = require('terser-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const outdir = path.resolve(__dirname, 'ext');
 
 module.exports = {
+    mode: 'production',
     entry: {
         wikichan: ['./src/ts/injected/wikichan.ts', './src/scss/injected.scss'],
         frame: ['./src/ts/frame/frame.ts', './src/scss/frame.scss']
@@ -32,7 +35,7 @@ module.exports = {
     },
     plugins: [
         new CopyPlugin([
-            { from: './src/html/frame.html',    to: './frame.html'  }
+            { from: './src/html/frame.html', to: './frame.html' }
         ]),
         new MiniCssExtractPlugin({
             filename: "css/[name].css"
@@ -46,8 +49,12 @@ module.exports = {
         filename: 'js/[name].js',
     },
 
-    performance: {
-        hints: false
+    optimization: {
+        minimizer: [
+            new TerserPlugin({
+                
+            })
+        ]
     },
     devtool: 'inline-source-map',
 
