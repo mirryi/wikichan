@@ -2,7 +2,7 @@
 
 node_modules 
 
-artifacts
+dist
 
 ext/css
 ext/js
