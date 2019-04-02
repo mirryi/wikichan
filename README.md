@@ -14,7 +14,15 @@ Build from source or download via AMO:
 
 ### Usage
 While holding the `alt` key, click on a word in any webpage. A popup will appear with information from 
-the Wikipedia articles of that word and groups of words around it.
+the Wikipedia articles of that word and groups of words around it. 
+
+Any of the buttons at the top with language IDs may be used to filter out results for that language.
+Filter settings do not persist when a new popup is opened.
+
+Since Wikipedia has disambiguation pages to handle topics with the same or similar names and an effective
+way of handling disambiguations has not been implemented, the message 'x disambiguation(s) hidden' may 
+appear at the top of the popup. Click on this text to show the titles and links for these disambiguation
+pages.
 
 ## Contributing
 Uses npm version 6.4.1; run `npm install` and then `npm run build` in root. The built extensions will 
