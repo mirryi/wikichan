@@ -1,10 +1,12 @@
-  ☐ Tabs for different languages
-  ☐ Query WikiData and Wiktionary
-  ☐ Speech synthesis of word
+Support:
+	☐ Google Chrome port
+
+Features:
   ☐ Dark and light themes
 
 Archive:
-  ✔ Button for hide/unhide entry @done(19-03-28 21:04)
+  ✔ Notify hidden disambiguation pages @done(19-03-31 13:47) @project(Features) 
+  ✔ Button for hide/unhide entry @done(19-03-28 21:04) @project(Features)
   ✔ Fallback for lack of summary or description @done(19-03-28 19:54) @project(Fixes)
   ✔ Flexible formatting for oversized titles @done(19-03-28 19:47) @project(Fixes)
   ✔ Set z-index of iframe to 9999 @started(19-03-28 10:54) @done(19-03-28 10:58) @lasted(4m4s) @project(Fixes)
