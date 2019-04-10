@@ -50,7 +50,7 @@ class Wikichan {
         if (!window.wikiframe) {
             window.wikiframe = new WikiFrame();
             window.wikiframe.prepare();
-            
+
             const injectedStyles = document.createElement('link');
             injectedStyles.rel = 'stylesheet';
             injectedStyles.type = 'text/css';
@@ -62,16 +62,15 @@ class Wikichan {
         window.wikiframe.setLocation(e.clientX, e.clientY);
         window.wikiframe.open();
 
-        for (let before = 0; before < 4; before++) {
-            for (let after = 0; after < 4; after++) {
+        for (let before = 0; before < 7; before++) {
+            for (let after = 0; after < 7; after++) {
                 const search = source.phrase(before, after);
                 for (let w = 0; w < this.wikis.length; w++) {
-                    this.wikis[w].fetchExtract(search)
-                        .then((p: WikiPage) => {
-                            console.log(p);
-                            p.searchPhrase = search;
-                            this.put(p);
-                        });
+                    const fetch = this.wikis[w].fetchExtract(search);
+                    fetch.then((p: WikiPage) => {
+                        p.searchPhrase = search;
+                        this.put(p);
+                    });
                 }
             }
         }
