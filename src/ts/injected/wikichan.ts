@@ -62,8 +62,8 @@ class Wikichan {
         window.wikiframe.setLocation(e.clientX, e.clientY);
         window.wikiframe.open();
 
-        for (let before = 0; before < 7; before++) {
-            for (let after = 0; after < 7; after++) {
+        for (let before = 0; before < 4; before++) {
+            for (let after = 0; after < 4; after++) {
                 const search = source.phrase(before, after);
                 for (let w = 0; w < this.wikis.length; w++) {
                     const fetch = this.wikis[w].fetchExtract(search);
