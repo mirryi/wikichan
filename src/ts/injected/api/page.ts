@@ -107,9 +107,9 @@ export class WikiPage implements EqualityChecker, Comparable {
             return 1;
         } else {
             if (this.title.length < other.title.length) {
-                return -1;
-            } else if (this.title.length > other.title.length) {
                 return 1;
+            } else if (this.title.length > other.title.length) {
+                return -1;
             }
         }
         return 0;
