@@ -25,7 +25,7 @@ appear at the top of the popup. Click on this text to show the titles and links 
 pages.
 
 ## Contributing
-Uses npm version 6.4.1; run `npm install` and then `npm run build` in root. The built extensions will 
+Uses yarn version 1.15.2; run `yarn install` and then `yarn run build` in root. The built extensions will 
 be located in the `ext` directory.
 
 ### Dependencies
