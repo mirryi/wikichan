@@ -1,34 +1,35 @@
 {
-  "name": "firefox-extensions-demo",
-  "version": "1.0.0",
-  "description": "",
-  "scripts": {
-    "build": "webpack -p",
-    "watch": "webpack --watch",
-    "test": "web-ext run -s ext  -u en.wikipedia.org --verbose",
-    "pack": "web-ext build -s ext -a dist --config-discovery=false --overwrite-dest --verbose"
-  },
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "handlebars": "^4.1.1",
-    "loglevel": "^1.6.1"
-  },
-  "devDependencies": {
-    "@types/firefox-webext-browser": "^65.0.2",
-    "@types/loglevel": "^1.5.4",
-    "@types/node": "^11.11.3",
-    "copy-webpack-plugin": "^5.0.1",
-    "css-loader": "^2.1.1",
-    "handlebars-loader": "^1.7.1",
-    "mini-css-extract-plugin": "^0.5.0",
-    "node-sass": "^4.11.0",
-    "sass-loader": "^7.1.0",
-    "style-loader": "^0.23.1",
-    "terser-webpack-plugin": "^1.2.3",
-    "ts-loader": "^5.3.3",
-    "typescript": "^3.3.3333",
-    "webpack": "^4.29.5",
-    "webpack-cli": "^3.3.0"
-  }
+    "name": "wikichan",
+    "version": "1.0.0",
+    "main": "index.js",
+    "repository": "https://gitlab.com/Dophin2009/wikichan.git",
+    "author": "Eric Zhao <21zhaoe@gmail.com>",
+    "license": "MIT",
+    "scripts": {
+        "build": "webpack -p",
+        "watch": "webpack --watch",
+        "test": "web-ext run -s ext  -u en.wikipedia.org --verbose",
+        "pack": "web-ext build -s ext -a dist --config-discovery=false --overwrite-dest --verbose"
+    },
+    "dependencies": {
+        "handlebars": "^4.1.2",
+        "loglevel": "^1.6.1"
+    },
+    "devDependencies": {
+        "@types/firefox-webext-browser": "^65.0.2",
+        "@types/loglevel": "^1.5.4",
+        "@types/node": "^11.11.3",
+        "copy-webpack-plugin": "^5.0.1",
+        "css-loader": "^2.1.1",
+        "handlebars-loader": "^1.7.1",
+        "mini-css-extract-plugin": "^0.5.0",
+        "node-sass": "^4.11.0",
+        "sass-loader": "^7.1.0",
+        "style-loader": "^0.23.1",
+        "terser-webpack-plugin": "^1.2.3",
+        "ts-loader": "^5.3.3",
+        "typescript": "^3.3.3333",
+        "webpack": "^4.29.5",
+        "webpack-cli": "^3.3.0"
+    }
 }
