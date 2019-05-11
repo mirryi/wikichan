@@ -1,8 +1,9 @@
-import { WikiPage } from '../api/page';
-import { WikiLang } from '../api/lang';
-const pageTemplate = require('./../../../template/page.handlebars');
-const disambiguationTemplate = require('./../../../template/disambiguation.handlebars');
-const langFilterTemplate = require('./../../../template/filter.handlebars');
+import { WikiPage } from "src/model/page";
+import { WikiLang } from "src/model/lang";
+
+const pageTemplate = require('./page.handlebars');
+const disambiguationTemplate = require('./disambiguation.handlebars');
+const langFilterTemplate = require('./filter.handlebars');
 
 export class TemplateHandler {
 

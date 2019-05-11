@@ -1,6 +1,6 @@
-import { EqualityChecker, Comparable } from "./interfaces";
+import { Equals, Comparable } from "./interfaces";
 
-export class Set<T extends EqualityChecker> {
+export class Set<T extends Equals> {
 
     private _set: T[];
 
@@ -53,7 +53,7 @@ export class Set<T extends EqualityChecker> {
 
 }
 
-export class SortedSet<T extends Comparable & EqualityChecker> extends Set<T> {
+export class SortedSet<T extends Comparable & Equals> extends Set<T> {
 
     sort(): void {
         this.terms = this.elements.sort(function(a: T, b: T): number {

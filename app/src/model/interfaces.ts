@@ -1,4 +1,4 @@
-export interface EqualityChecker {
+export interface Equals {
     equals(other: object): boolean;
 }
 

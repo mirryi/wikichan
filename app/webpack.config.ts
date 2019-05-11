@@ -4,20 +4,18 @@ const TerserPlugin = require('terser-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
-const outdir = path.resolve(__dirname, 'ext');
-
 module.exports = {
     mode: 'production',
     entry: {
-        wikichan: ['./src/ts/injected/wikichan.ts', './src/scss/injected.scss'],
-        frame: ['./src/ts/frame/frame.ts', './src/scss/frame.scss']
+        wikichan: ['./src/wikichan.ts', './src/view/styles/inject.scss'],
+        frame: ['./src/view/component/frame.ts', './src/view/styles/view.scss']
     },
     module: {
         rules: [
             {
                 test: /\.tsx?$/,
                 use: 'ts-loader',
-                include: path.resolve(__dirname, 'src/ts'),
+                include: path.resolve(__dirname, 'src'),
             },
             {
                 test: /\.scss$/,
@@ -35,7 +33,7 @@ module.exports = {
     },
     plugins: [
         new CopyPlugin([
-            { from: './src/html/frame.html', to: './frame.html' }
+            { from: path.resolve(__dirname, 'src/view/frame.html'), to: path.resolve(__dirname, 'ext/frame.html') }
         ]),
         new MiniCssExtractPlugin({
             filename: "css/[name].css"
@@ -45,7 +43,7 @@ module.exports = {
         extensions: ['.tsx', '.ts', '.js']
     },
     output: {
-        path: outdir,
+        path: path.resolve(__dirname, 'ext'),
         filename: 'js/[name].js',
     },
 

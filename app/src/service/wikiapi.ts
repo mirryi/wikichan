@@ -1,7 +1,7 @@
-import { Redir } from "../util/type-alias";
-import { WikiPage } from "./page";
+import { WikiLang } from "./../model/lang";
+import { WikiPage } from "./../model/page";
+import { Redir } from "../model/type-alias";
 import { WikiQueryType, WikiQuery } from "./query";
-import { WikiLang } from "./lang";
 
 export class WikiApi {
     private endpoint: string;
@@ -18,10 +18,7 @@ export class WikiApi {
         return new Promise<WikiPage>(function(resolve: any, reject: any) {
             const xhr = new XMLHttpRequest();
             xhr.open("GET", query.url);
-            xhr.setRequestHeader(
-                "Content-Type",
-                "application/json; charset=UTF-8"
-            );
+            xhr.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
             xhr.onloadend = function() {
                 if (this.status >= 200 && this.status < 300) {
                     const json = JSON.parse(this.responseText).query;
@@ -55,21 +52,21 @@ export class WikiApi {
         let query = new WikiQuery(this.endpoint, type);
         query
             .addParam("action", "query")
-            .addParam(
-                "prop",
-                "info|description|categories|extlinks|pageterms|extracts&exintro"
-            )
+            .addParam("prop", "info|description|categories|extlinks|pageterms|extracts&exintro")
             .addParam("inprop", "url")
             .addParam("redirects", "1")
             .addParam("titles", article);
         return query;
     }
 
-    static parseResponse(lang: WikiLang, json: {
-        normalized: Redir[];
-        redirects: Redir[];
-        pages: any;
-    }): {
+    static parseResponse(
+        lang: WikiLang,
+        json: {
+            normalized: Redir[];
+            redirects: Redir[];
+            pages: any;
+        }
+    ): {
         lang: WikiLang;
         redirects: Redir[];
         page: object;

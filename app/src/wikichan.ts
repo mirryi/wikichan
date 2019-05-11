@@ -1,15 +1,16 @@
-import { WikiApi } from "./api/wikiapi";
-import { TextSelector } from "./text/text-selector";
-import { TextSource } from "./text/text-source";
-import { WikiFrame } from "./display/display-frame";
-import { WikiPage } from "./api/page";
 import * as logger from "loglevel";
-import { WikiLang } from "./api/lang";
+
+import { TextSelector } from "./selector/text-selector";
+import { TextSource } from "./selector/text-source";
+import { WikichanFrame } from "./view/component/display-frame";
+import { WikiApi } from "./service/wikiapi";
+import { WikiLang } from "./model/lang";
+import { WikiPage } from "./model/page";
 
 declare global {
     interface Window {
         wikichan: Wikichan;
-        wikiframe: WikiFrame;
+        wikiframe: WikichanFrame;
     }
 }
 
@@ -48,7 +49,7 @@ class Wikichan {
         const source: TextSource = this.selector.getSourceUnderCursor(e);
 
         if (!window.wikiframe) {
-            window.wikiframe = new WikiFrame();
+            window.wikiframe = new WikichanFrame();
             window.wikiframe.prepare();
 
             const injectedStyles = document.createElement('link');

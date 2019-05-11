@@ -1,8 +1,8 @@
-import { EqualityChecker, Comparable } from "../util/interfaces";
-import { Redir } from "../util/type-alias";
 import { WikiLang } from "./lang";
+import { Equals, Comparable } from "./interfaces";
+import { Redir } from "./type-alias";
 
-export class WikiPage implements EqualityChecker, Comparable {
+export class WikiPage implements Equals, Comparable {
     private _id: number;
     private _title: string;
     private _summary: string;
@@ -78,8 +78,12 @@ export class WikiPage implements EqualityChecker, Comparable {
     }
 
     get searchLink(): string {
-        return this.lang.url + "/w/index.php?"
-            + "profile=advanced&fulltext=1&search=" + this.searchPhrase;
+        return (
+            this.lang.url +
+            "/w/index.php?" +
+            "profile=advanced&fulltext=1&search=" +
+            this.searchPhrase
+        );
     }
 
     addRedirect(r: WikiRedirect): void {
@@ -96,8 +100,7 @@ export class WikiPage implements EqualityChecker, Comparable {
     }
 
     equals(other: WikiPage): boolean {
-        return this.id === other.id
-            && this.lang.id === other.lang.id;
+        return this.id === other.id && this.lang.id === other.lang.id;
     }
 
     compareTo(other: WikiPage): number {
@@ -115,7 +118,11 @@ export class WikiPage implements EqualityChecker, Comparable {
         return 0;
     }
 
-    static fromJson(json: { lang: WikiLang, redirects: Redir[]; page: any }): WikiPage {
+    static fromJson(json: {
+        lang: WikiLang;
+        redirects: Redir[];
+        page: any;
+    }): WikiPage {
         const res = new WikiPage();
 
         if (json.redirects) {
@@ -144,9 +151,9 @@ export class WikiPage implements EqualityChecker, Comparable {
             });
         }
         if (page.categories) {
-            page.categories.forEach((c: { ns: number, title: string }) => {
-                res._categories.push(c.title)
-            })
+            page.categories.forEach((c: { ns: number; title: string }) => {
+                res._categories.push(c.title);
+            });
         }
         if (page.redirects) {
             page.redirects.forEach((r: Redir) => {
@@ -160,7 +167,7 @@ export class WikiRedirect {
     private _from: string;
     private _to: string;
 
-    constructor() { }
+    constructor() {}
 
     get from(): string {
         return this._from;

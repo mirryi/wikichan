@@ -1,6 +1,6 @@
-import { EqualityChecker } from "../util/interfaces";
+import { Equals } from "./interfaces"
 
-export class WikiLang implements EqualityChecker {
+export class WikiLang implements Equals {
 
     private _id: string;
     private _value: number;
