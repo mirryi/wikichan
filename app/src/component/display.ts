@@ -1,14 +1,13 @@
 import { Page } from "../model/page";
 import { Set } from "../util/set";
+import { Callbacks } from "./callbacks";
 
 const rivets = require("rivets");
 
 export class Display {
-    static DEFAULT_WIDTH: number = 475;
-    static DEFAULT_HEIGHT: number = 300;
+    static DEFAULT_WIDTH: number = 525;
+    static DEFAULT_HEIGHT: number = 325;
 
-    top: number;
-    left: number;
     width: number;
     height: number;
 
@@ -31,15 +30,35 @@ export class Display {
     }
 
     open(top: number, left: number, pages: Set<Page>): void {
-        this.frame.style.top = `${top}px`;
-        this.frame.style.left = `${left}px`;
+        const offset = this.calculateOffset(left, top);
+        const x = left + offset.x;
+        const y = top + offset.y;
+
+        this.frame.style.top = `${y}px`;
+        this.frame.style.left = `${x}px`;
         this.frame.style.visibility = "visible";
 
-        rivets.bind(this.resultsContainer, pages);
+        rivets.bind(this.resultsContainer, {
+            pages: pages,
+            hide: Callbacks.hide
+        });
     }
 
     close(): void {
         this.frame.style.visibility = "hidden";
+    }
+
+    calculateOffset(x: number, y: number): { x: number; y: number } {
+        let offset = { x: 10, y: 10 };
+        if (x + offset.x + this.width > window.innerWidth) {
+            offset.x = -(offset.x + this.width);
+        }
+
+        if (y + offset.y + this.height > window.innerHeight) {
+            offset.y = -(offset.y + this.height);
+        }
+
+        return offset;
     }
 
     get documentContainer(): Document {

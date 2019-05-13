@@ -2,7 +2,7 @@ import { Wikichan } from "./controller/controller";
 import { Display } from "./component/display";
 
 const controller = new Wikichan();
-window.addEventListener("mousedown", controller.get.bind(controller));
+window.addEventListener("mousedown", controller.open.bind(controller));
 
 const injectedStyles = document.createElement("link");
 injectedStyles.rel = "stylesheet";

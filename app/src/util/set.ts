@@ -1,4 +1,4 @@
-import { Equals, Comparable } from "./interface";
+import { Equals, Comparable, Comparator } from "./interface";
 
 export class Set<T extends Equals<T>> {
     elements: T[];
@@ -45,19 +45,32 @@ export class Set<T extends Equals<T>> {
         return false;
     }
 
-    protected override(value: T[]) {
-        this.elements = value;
+    sort(comparator: ((a: T, b: T) => number)): void {
+        this.elements = this.elements.sort(comparator);
     }
 }
 
 export class SortedSet<T extends Equals<T> & Comparable<T>> extends Set<T> {
-    sort(): void {
-        this.override(
-            this.elements.sort(
-                (a: T, b: T): number => {
-                    return a.compareTo(b);
-                }
-            )
-        );
+    constructor(set?: T[]) {
+        super(set);
+        this.sort();
+    }
+
+    add(t: T, comparator?: Comparator<T>): boolean {
+        for (let i = 0; i < this.elements.length; i++) {
+            if (comparator(t, this.elements[i]) < 0) {
+                this.elements.splice(i, 0, t);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    sort(comparator?: Comparator<T>): void {
+        if (!comparator) {
+            super.sort(comparator);
+        } else {
+            this.elements.sort((a: T, b: T) => a.compareTo(b));
+        }
     }
 }

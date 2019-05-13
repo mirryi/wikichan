@@ -13,7 +13,7 @@ export class Page implements Equals<Page> {
     url: string;
     editUrl: string;
     extlinks: string[];
-    redirects: WikiRedirect[];
+    redirects: Redirect[];
 
     searchPhrase: string;
 
@@ -40,10 +40,9 @@ export class Page implements Equals<Page> {
 
         return this.id === other.id;
     }
-
 }
 
-export class WikiRedirect {
+export class Redirect {
     from: string;
     to: string;
 
@@ -53,6 +52,6 @@ export class WikiRedirect {
     }
 
     static fromJson(json: { from: string; to: string }) {
-        return new WikiRedirect(json.from, json.to);
+        return new Redirect(json.from, json.to);
     }
 }
