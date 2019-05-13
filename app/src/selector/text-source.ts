@@ -18,7 +18,6 @@ export class TextSource {
         if (isChar(this.text.charAt(this.offset))) {
             begin = this.offset - before;
             end = this.offset + after + 1;
-
         } else {
             if (matchBreak(this.text[this.offset])) {
                 return "";
@@ -140,9 +139,10 @@ function clean(s: string): string {
 
 function isChar(s: string): boolean {
     const code: number = s.charCodeAt(0);
-    return (code >= 12288 && code <= 12543) ||
+    return (
+        (code >= 12288 && code <= 12543) ||
         (code >= 65280 && code <= 65519) ||
         (code >= 19968 && code <= 40879) ||
-        (code >= 13312 && code <= 19903);
-
+        (code >= 13312 && code <= 19903)
+    );
 }

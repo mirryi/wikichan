@@ -1,18 +1,12 @@
-import { WikiQueryParams } from './params';
-
 export class WikiQuery {
-
     private endpoint: string;
     private params: WikiQueryParams[];
-    private _type: WikiQueryType;
 
-    constructor(endpoint: string, type?: WikiQueryType) {
+    constructor(endpoint: string) {
         this.endpoint = endpoint;
         this.params = new Array<WikiQueryParams>();
-        this._type = type;
 
-        this.addParam('origin', '*')
-            .addParam('format', 'json');
+        this.addParam("origin", "*").addParam("format", "json");
     }
 
     addParam(key: string, value: string): WikiQuery {
@@ -28,14 +22,31 @@ export class WikiQuery {
         });
         return query;
     }
-
-    get type(): WikiQueryType {
-        return this._type;
-    }
-
+    
 }
 
+class WikiQueryParams {
+    private _key: string;
+    private _value: string;
 
-export enum WikiQueryType {
-    EXTRACT,
+    constructor(key: string, value: string) {
+        this._key = key;
+        this._value = value;
+    }
+
+    get key(): string {
+        return this._key;
+    }
+
+    set key(value: string) {
+        this._key = value;
+    }
+
+    get value(): string {
+        return this._value;
+    }
+
+    set value(value: string) {
+        this._value = value;
+    }
 }
