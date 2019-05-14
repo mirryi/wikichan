@@ -3,6 +3,7 @@ const path = require("path");
 const TerserPlugin = require("terser-webpack-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const PrettierPlugin = require("prettier-webpack-plugin");
 
 module.exports = {
     mode: "production",
@@ -30,6 +31,10 @@ module.exports = {
         ]),
         new MiniCssExtractPlugin({
             filename: "css/[name].css"
+        }),
+        new PrettierPlugin({
+            configFile: "./.prettierrc",
+            extensions: [".ts", ".json", ".html", ".scss"]
         })
     ],
     resolve: {
