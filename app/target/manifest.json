@@ -10,16 +10,10 @@
     },
     "content_scripts": [
         {
-            "matches": [
-                "<all_urls>"
-            ],
-            "js": [
-                "js/wikichan.js"
-            ]
+            "matches": ["<all_urls>"],
+            "js": ["js/wikichan.js"]
         }
     ],
 
-    "permissions": [
-        "*://*.wikipedia.org/*"
-    ]
+    "permissions": ["*://*.wikipedia.org/*"]
 }
