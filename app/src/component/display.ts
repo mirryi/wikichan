@@ -46,6 +46,7 @@ export class Display {
 
     close(): void {
         this.frame.style.visibility = "hidden";
+        this.searchBox.value = "";
     }
 
     calculateOffset(x: number, y: number): { x: number; y: number } {
@@ -67,5 +68,9 @@ export class Display {
 
     get resultsContainer(): HTMLElement {
         return this.documentContainer.getElementById("results");
+    }
+
+    get searchBox(): HTMLInputElement {
+        return <HTMLInputElement>this.documentContainer.getElementById("search-box");
     }
 }

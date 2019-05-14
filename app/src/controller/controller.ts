@@ -23,10 +23,10 @@ export class Wikichan {
     }
 
     open(e: MouseEvent): void {
+        this.display.close();
         this.pages.clear();
 
         if (!e.altKey) {
-            this.display.close();
             return;
         }
 
@@ -43,12 +43,9 @@ export class Wikichan {
         }
 
         this.display.open(e.clientY, e.clientX, this.pages);
-        const search: HTMLInputElement = <HTMLInputElement>(
-            this.display.documentContainer.getElementById("search-box")
-        );
-        search.addEventListener("input", event => {
+        this.display.searchBox.addEventListener("input", event => {
             this.pages.clear();
-            this.search(search.value);
+            this.search(this.display.searchBox.value);
         });
     }
 
@@ -79,7 +76,7 @@ export class Wikichan {
                 if (a.title.length < b.title.length) {
                     return 1;
                 } else if (a.title.length > b.title.length) {
-                    return -1
+                    return -1;
                 }
                 return 0;
             }
