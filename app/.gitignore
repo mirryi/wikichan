@@ -1,7 +1,2 @@
 node_modules 
-
-target/css
-target/js
-target/template
-target/frame.html
-target/options.html
+target

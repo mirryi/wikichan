@@ -24,7 +24,10 @@ module.exports = {
         ]
     },
     plugins: [
-        new CopyPlugin([{ from: "./src/static/frame.html", to: "./frame.html" }]),
+        new CopyPlugin([
+            { from: "./src/static/frame.html", to: "./frame.html" },
+            { from: "./manifest.json", to: "./manifest.json" }
+        ]),
         new MiniCssExtractPlugin({
             filename: "css/[name].css"
         })
