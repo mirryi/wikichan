@@ -26,7 +26,7 @@ export class Display {
         this.frame.style.height = `${this.height}px`;
         this.frame.style.position = "fixed";
         this.frame.style.visibility = "hidden";
-        document.body.appendChild(this.frame);  
+        document.body.appendChild(this.frame);
     }
 
     open(top: number, left: number, pages: Set<Page>): void {

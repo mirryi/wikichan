@@ -45,7 +45,7 @@ export class Set<T extends Equals<T>> {
         return false;
     }
 
-    sort(comparator: ((a: T, b: T) => number)): void {
+    sort(comparator: (a: T, b: T) => number): void {
         this.elements = this.elements.sort(comparator);
     }
 }

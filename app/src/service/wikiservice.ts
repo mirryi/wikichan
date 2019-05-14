@@ -42,17 +42,17 @@ export class WikiService {
                 if (entry.categories) {
                     entry.categories.forEach(c => {
                         page.categories.push(c.title);
-                    })
+                    });
                 }
                 if (entry.extlinks) {
                     entry.extlinks.forEach(link => {
                         page.extlinks.push(link["*"]);
-                    })
+                    });
                 }
                 if (entry.terms.alias) {
                     entry.terms.alias.forEach(alias => {
                         page.aliases.push(alias);
-                    })
+                    });
                 }
 
                 page.id = entry.pageid;
@@ -73,7 +73,10 @@ export class WikiService {
         let query = new WikiQuery(endpoint);
         query
             .addParam("action", "query")
-            .addParam("prop", "info|description|categories|extlinks|pageterms|extracts&exintro")
+            .addParam(
+                "prop",
+                "info|description|categories|extlinks|pageterms|extracts&exintro"
+            )
             .addParam("inprop", "url")
             .addParam("redirects", "1")
             .addParam("titles", article);
@@ -82,27 +85,27 @@ export class WikiService {
 }
 
 type MediaWikiPage = {
-    canonicalurl: string,
-    categories: { ns: number, title: string}[],
-    contentmodel: string,
-    description: string,
-    descriptionsource: string,
-    editurl: string,
-    extlinks: { "*": string}[],
-    extract: string,
-    fullurl: string,
-    lastrevid: number,
-    length: number,
-    ns: number,
-    pageid: number,
-    pagelanguage: string,
-    pagelanguagedir: string, 
-    pagelanguagehtmlcode: string,
+    canonicalurl: string;
+    categories: { ns: number; title: string }[];
+    contentmodel: string;
+    description: string;
+    descriptionsource: string;
+    editurl: string;
+    extlinks: { "*": string }[];
+    extract: string;
+    fullurl: string;
+    lastrevid: number;
+    length: number;
+    ns: number;
+    pageid: number;
+    pagelanguage: string;
+    pagelanguagedir: string;
+    pagelanguagehtmlcode: string;
     terms: {
-        alias: string[],
-        description: string[],
-        label: string[]
-    },
-    title: string,
-    touched: string
-}
+        alias: string[];
+        description: string[];
+        label: string[];
+    };
+    title: string;
+    touched: string;
+};

@@ -126,7 +126,9 @@ function getNextNode(node: Node): Node {
 }
 
 function getPreviousNode(node: Node): Node {
-    return node.previousSibling === null ? node.parentNode.previousSibling : node.previousSibling;
+    return node.previousSibling === null
+        ? node.parentNode.previousSibling
+        : node.previousSibling;
 }
 
 function matchBreak(c: string): boolean {

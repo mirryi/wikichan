@@ -17,5 +17,10 @@ export class Language {
 }
 
 export module Language {
-    export const EN = new Language("EN", "English", 1, "Category:All article disambiguation pages");
+    export const EN = new Language(
+        "EN",
+        "English",
+        1,
+        "Category:All article disambiguation pages"
+    );
 }

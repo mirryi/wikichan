@@ -22,7 +22,6 @@ export class WikiQuery {
         });
         return query;
     }
-    
 }
 
 class WikiQueryParams {
@@ -37,5 +36,4 @@ class WikiQueryParams {
     join(): string {
         return this.key + "=" + this.value;
     }
-
 }

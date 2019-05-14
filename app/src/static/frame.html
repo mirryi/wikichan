@@ -15,11 +15,7 @@
         <div id="results">
             <!-- disambiguations -->
             <div id="disambiguations">
-                <div
-                    rv-each-element="pages.elements"
-                    rv-show="element.isDisambiguation"
-                    class="disambiguation"
-                >
+                <div rv-each-element="pages.elements" rv-show="element.isDisambiguation" class="disambiguation">
                     <a target="_blank" rv-href="element.url" class="title" rv-href="element.url">{element.title}</a>
                     <div class="labels">
                         <a target="_blank" rv-href="element.lang.url" class="lang">{element.lang.id | lowercase}</a>
@@ -31,11 +27,7 @@
             </div>
             <hr />
 
-            <div
-                rv-each-element="pages.elements"
-                rv-hide="element.isDisambiguation"
-                class="result"
-            >
+            <div rv-each-element="pages.elements" rv-hide="element.isDisambiguation" class="result">
                 <div class="header">
                     <div class="top">
                         <a target="_blank" rv-href="element.url" class="title">
@@ -43,11 +35,7 @@
                         </a>
                         <div class="labels">
                             <span class="lang" rv-title="element.lang.name">
-                                <a
-                                    target="_blank"
-                                    rv-href="element.lang.url"
-                                    class="lang"
-                                >
+                                <a target="_blank" rv-href="element.lang.url" class="lang">
                                     {element.lang.id}
                                 </a>
                             </span>
@@ -92,20 +80,14 @@
                         <details class="extra" rv-enabled="element.extlinks">
                             <summary class="extra-summary">external links</summary>
                             <ul class="extras-list">
-                                <li
-                                    class="extras-item link"
-                                    rv-each-link="element.extlinks"
-                                >
-                                    <a target="_blank" rv-href="link" rv-title="link"
-                                        >{link}</a
-                                    >
+                                <li class="extras-item link" rv-each-link="element.extlinks">
+                                    <a target="_blank" rv-href="link" rv-title="link">{link}</a>
                                 </li>
                             </ul>
                         </details>
                     </div>
                 </div>
                 <hr />
-
             </div>
         </div>
         <p id="end-message">no more results</p>
