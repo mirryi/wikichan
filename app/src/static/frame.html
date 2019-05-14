@@ -6,19 +6,48 @@
         <link rel="stylesheet" type="text/css" media="screen" href="css/frame.css" />
     </head>
     <body>
+        <!-- search -->
         <div id="search">
             <input type="text" placeholder="Search Wikipedia" id="search-box" />
         </div>
 
         <!-- results -->
         <div id="results">
-            <div rv-each-element="pages.elements">
+            <!-- disambiguations -->
+            <div id="disambiguations">
+                <div
+                    rv-each-element="pages.elements"
+                    rv-show="element.isDisambiguation"
+                    class="disambiguation"
+                >
+                    <a target="_blank" rv-href="element.url" class="title" rv-href="element.url">{element.title}</a>
+                    <div class="labels">
+                        <a target="_blank" rv-href="element.lang.url" class="lang">{element.lang.id | lowercase}</a>
+                        <span class="edit-url">
+                            <a target="_blank" rv-href="element.editUrl">edit url</a>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <hr />
+
+            <div
+                rv-each-element="pages.elements"
+                rv-hide="element.isDisambiguation"
+                class="result"
+            >
                 <div class="header">
                     <div class="top">
-                        <a target="_blank" rv-href="element.url" class="title">{element.title}</a>
+                        <a target="_blank" rv-href="element.url" class="title">
+                            {element.title}
+                        </a>
                         <div class="labels">
                             <span class="lang" rv-title="element.lang.name">
-                                <a target="_blank" rv-href="element.lang.url" class="lang">
+                                <a
+                                    target="_blank"
+                                    rv-href="element.lang.url"
+                                    class="lang"
+                                >
                                     {element.lang.id}
                                 </a>
                             </span>
@@ -26,11 +55,13 @@
                             <span class="edit-url">
                                 <a target="_blank" rv-href="element.editUrl">edit url</a>
                             </span>
-                            <button class="hide-button" rv-on-click="hide">–</button>
+                            <button class="hide-button" rv-on-click="callbacks.hide">
+                                –
+                            </button>
                         </div>
                     </div>
-                    <span class="search"
-                        >result of:
+                    <span class="search">
+                        <span>result of:</span>
                         <span class="search-term">
                             <a target="_blank" rv-href="element.searchLink">
                                 {element.searchPhrase}
@@ -61,15 +92,20 @@
                         <details class="extra" rv-enabled="element.extlinks">
                             <summary class="extra-summary">external links</summary>
                             <ul class="extras-list">
-                                <li class="extras-item link" rv-each-link="element.extlinks">
-                                    <a target="_blank" rv-href="link" rv-title="link">{link}</a>
+                                <li
+                                    class="extras-item link"
+                                    rv-each-link="element.extlinks"
+                                >
+                                    <a target="_blank" rv-href="link" rv-title="link"
+                                        >{link}</a
+                                    >
                                 </li>
                             </ul>
                         </details>
                     </div>
                 </div>
-
                 <hr />
+
             </div>
         </div>
         <p id="end-message">no more results</p>

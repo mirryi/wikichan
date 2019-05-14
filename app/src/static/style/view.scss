@@ -1,6 +1,5 @@
 @import "view-results";
 @import "view-disamb";
-@import "view-filters";
 
 $font-stack: "Segoe UI", sans-serif;
 
@@ -11,16 +10,9 @@ $font-stack: "Segoe UI", sans-serif;
     box-sizing: border-box;
 }
 
-#disambiguations-count,
-#end-message {
-    font-size: 0.9rem;
-    text-align: center;
-    color: #818181;
-
-    padding: 0px;
-}
-
 #search {
+    margin-bottom: 5px;
+
     font-size: 0.9rem;
     text-align: right;
 
@@ -32,4 +24,12 @@ $font-stack: "Segoe UI", sans-serif;
         border-radius: 3px;
         border: 1px solid darkgray;
     }
+}
+
+#end-message {
+    font-size: 0.9rem;
+    text-align: center;
+    color: #818181;
+
+    padding: 0px;
 }

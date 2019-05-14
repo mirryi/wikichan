@@ -1,12 +1,12 @@
 import { Page } from "../model/page";
 import { Set } from "../util/set";
-import { Callbacks } from "./callbacks";
+import { Binding } from "./callbacks";
 
 const rivets = require("rivets");
 
 export class Display {
-    static DEFAULT_WIDTH: number = 525;
-    static DEFAULT_HEIGHT: number = 325;
+    static DEFAULT_WIDTH: number = 575;
+    static DEFAULT_HEIGHT: number = 375;
 
     width: number;
     height: number;
@@ -26,7 +26,7 @@ export class Display {
         this.frame.style.height = `${this.height}px`;
         this.frame.style.position = "fixed";
         this.frame.style.visibility = "hidden";
-        document.body.appendChild(this.frame);
+        document.body.appendChild(this.frame);  
     }
 
     open(top: number, left: number, pages: Set<Page>): void {
@@ -40,7 +40,7 @@ export class Display {
 
         rivets.bind(this.resultsContainer, {
             pages: pages,
-            hide: Callbacks.hide
+            callbacks: Binding.Callbacks
         });
     }
 

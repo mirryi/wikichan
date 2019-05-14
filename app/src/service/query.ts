@@ -18,7 +18,7 @@ export class WikiQuery {
     get url(): string {
         let query: string = this.endpoint;
         this.params.forEach(p => {
-            query += p.key + "=" + p.value + "&";
+            query += p.join() + "&";
         });
         return query;
     }
@@ -26,27 +26,16 @@ export class WikiQuery {
 }
 
 class WikiQueryParams {
-    private _key: string;
-    private _value: string;
+    key: string;
+    value: string;
 
     constructor(key: string, value: string) {
-        this._key = key;
-        this._value = value;
+        this.key = key;
+        this.value = value;
     }
 
-    get key(): string {
-        return this._key;
+    join(): string {
+        return this.key + "=" + this.value;
     }
 
-    set key(value: string) {
-        this._key = value;
-    }
-
-    get value(): string {
-        return this._value;
-    }
-
-    set value(value: string) {
-        this._value = value;
-    }
 }

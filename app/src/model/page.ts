@@ -33,6 +33,10 @@ export class Page implements Equals<Page> {
         );
     }
 
+    get isDisambiguation(): boolean {
+        return this.categories.indexOf(this.lang.disambId) !== -1;
+    }
+
     equals(other: Page): boolean {
         if (other === null) {
             return false;
