@@ -2,7 +2,7 @@
 **Wikichan** is a WebExtensions addon for Firefox that conveniently displays a popup with 
 a preview of the Wikipedia article. 
 
-Currently supports queries to Wikipedia in English, 
+v2 currently supports queries to Wikipedia in English, 
 ~~French, German, Spanish, Russian, Japanese, and Chinese.~~ 
 Support for more languages may come later.
 
@@ -27,15 +27,13 @@ disambiguation(s) hidden' may appear at the top of the popup. Click on this text
 the titles and links for these disambiguation pages.
 
 ## Contributing
-Uses yarn version 1.15.2; run `yarn install` and then `yarn run build` in root. The built 
-extensions will be located in the `ext` directory.
+Run `yarn install` and then `yarn run build` in root. The built extensions will be 
+located in the `ext` directory.
 
 ### Dependencies
-Wikichan uses only [Handlebars](https://handlebarsjs.com/) for templating and 
-[loglevel](https://npmjs.com/loglevel) for logging.
+[Rivets](https://www.npmjs.com/package/rivets) for data binding.
 
-In development, Wikichan is written in Typescript 2.0, HTML 5, and SCSS, which are compiled
-and bundled with Webpack 4.
+Written in Typescript 2.0, HTML 5, and SCSS, which are compiled and bundled with Webpack 4.
 
 ### Credits
 This project was inspired heavily by the extension 
