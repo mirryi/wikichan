@@ -12,7 +12,6 @@
     },
     "dependencies": {
         "log4js": "^4.1.1",
-        "node": "^12.2.0",
         "rivets": "^0.9.6"
     },
     "devDependencies": {
