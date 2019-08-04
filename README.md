@@ -9,7 +9,9 @@ Support for more languages may come later.
 ## Getting Started
 
 ### Installation
-Build from source or ~~download via AMO~~.
+Build from source or download via AMO.
+
+[![](img/marketplace.png)](https://addons.mozilla.org/en-US/firefox/addon/wikichan-v2/)
 
 ### Usage
 While holding the `alt` key, click on a word in any webpage. A popup will appear with 
@@ -18,11 +20,6 @@ information from the Wikipedia articles of that word and groups of words around 
 ~~Any of the buttons at the top with language IDs may be used to filter out results for 
 that language. Filter settings do not persist when a new popup is opened.~~
 These features have not yet been implemented in this version.
-
-Since Wikipedia has disambiguation pages to handle topics with the same or similar names 
-and an effective way of handling disambiguations has not been implemented, the message 'x 
-disambiguation(s) hidden' may appear at the top of the popup. Click on this text to show 
-the titles and links for these disambiguation pages.
 
 ## Contributing
 Run `yarn install` and then `yarn run build` in root. The built extensions will be 
