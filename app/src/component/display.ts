@@ -5,8 +5,8 @@ import { Binding } from "./callbacks";
 const rivets = require("rivets");
 
 export class Display {
-    static DEFAULT_WIDTH: number = 575;
-    static DEFAULT_HEIGHT: number = 375;
+    static DEFAULT_WIDTH: number = 475;
+    static DEFAULT_HEIGHT: number = 315;
 
     width: number;
     height: number;
