@@ -28,8 +28,6 @@ located in the `ext` directory.
 ### Dependencies
 [Rivets](https://www.npmjs.com/package/rivets) for data binding.
 
-Written in Typescript 2.0, HTML 5, and SCSS, which are compiled and bundled with Webpack 4.
-
 ### Credits
 This project was inspired heavily by the extension 
 [Yomichan](https://foosoft.net/projects/yomichan), a Japanese-learning tool.
