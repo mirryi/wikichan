@@ -1,11 +1,11 @@
 Support:
-	☐ Google Chrome port
+  ☐ Google Chrome port
 
 Features:
   ☐ Dark and light themes
 
 Archive:
-  ✔ Notify hidden disambiguation pages @done(19-03-31 13:47) @project(Features) 
+  ✔ Notify hidden disambiguation pages @done(19-03-31 13:47) @project(Features)
   ✔ Button for hide/unhide entry @done(19-03-28 21:04) @project(Features)
   ✔ Fallback for lack of summary or description @done(19-03-28 19:54) @project(Fixes)
   ✔ Flexible formatting for oversized titles @done(19-03-28 19:47) @project(Fixes)
