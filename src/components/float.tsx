@@ -1,14 +1,9 @@
 import * as React from "react";
 import { Component, CSSProperties, ReactNode } from "react";
-import * as ReactDOM from "react-dom";
-import { RootComponent } from "./root";
-import { ProviderMerge } from "../provider";
-import { fromEvent } from "rxjs";
 import Frame from "react-frame-component";
 import styles from "./float.scss";
 
 export interface FloatProps {
-  providers: ProviderMerge;
   frameWidth: number;
   frameHeight: number;
 }
@@ -28,13 +23,6 @@ export class Float extends Component<FloatProps, FloatState> {
       frameLeft: 0,
       frameTop: 0,
     };
-
-    fromEvent(window, "click").subscribe((e: Event) => {
-      const me = e as MouseEvent;
-      if (me.altKey) {
-        this.open(me.clientX, me.clientY);
-      }
-    });
   }
 
   render(): ReactNode {
@@ -48,8 +36,8 @@ export class Float extends Component<FloatProps, FloatState> {
     };
 
     return (
-      <Frame id="wikichan" className={styles.frame} style={style} frameBorder="0">
-        <RootComponent providers={this.props.providers} />
+      <Frame className={styles.frame} style={style} frameBorder="0">
+        {this.props.children}
       </Frame>
     );
   }
@@ -58,6 +46,10 @@ export class Float extends Component<FloatProps, FloatState> {
     this.hideFrame();
 
     this.showFrame(left, top);
+  }
+
+  close() {
+    this.hideFrame();
   }
 
   showFrame(left: number, top: number) {

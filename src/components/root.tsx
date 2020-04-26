@@ -2,7 +2,7 @@ import * as React from "react";
 import { Component, ReactNode } from "react";
 import { Item, ProviderMerge } from "../provider";
 import { ItemComponent } from "./item";
-import * as styles from "./root.scss";
+import styles from "./root.scss";
 import { SearchComponent } from "./search";
 
 export interface RootProps {
@@ -22,16 +22,23 @@ export class RootComponent extends Component<RootProps, RootState> {
     };
   }
 
-  searchProviders(query: string): void {
+  searchProviders(queries: string[]): void {
     this.setState({ items: [] });
-    const obs = this.props.providers.search(query);
+    const obs = this.props.providers.search(queries);
     obs.subscribe((item) => {
       this.setState({ items: [...this.state.items, item] });
     });
   }
 
   render(): ReactNode {
-    const itemRenders = this.state.items.map((item) => <ItemComponent data={item} />);
+    const itemRenders = this.state.items.map((item) => {
+      const renderf = item.provider.renderf();
+      if (renderf !== null) {
+        return renderf(item);
+      }
+
+      return <ItemComponent data={item} />;
+    });
 
     return (
       <div>

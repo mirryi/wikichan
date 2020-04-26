@@ -15,7 +15,11 @@ export class ItemComponent extends Component<ItemProps> {
       <div className={styles.item}>
         <div className={styles.header}>
           <div className={styles.top}>
-            <a className={styles.title} target="_blank" href={data.urls[0].toString()}>
+            <a
+              className={styles.title}
+              target="_blank"
+              href={data.urls ? data.urls[0].toString() : ""}
+            >
               {data.title}
             </a>
           </div>

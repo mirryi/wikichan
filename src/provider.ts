@@ -3,13 +3,13 @@ import { Observable, merge } from "rxjs";
 
 export interface Item {
   title: string;
-  subtitle: string;
+  subtitle?: string;
 
   description: string;
-  longDescription: string;
+  longDescription?: string;
 
-  tags: Record<string, string | string[]>;
-  urls: URL[];
+  tags?: Record<string, string | string[]>;
+  urls?: URL[];
 
   searchTerm: string;
 
@@ -18,7 +18,7 @@ export interface Item {
 
 export interface Provider<T extends Item> {
   search(query: string): Observable<T>;
-  renderf(): (item: T) => ReactNode;
+  renderf(): ((item: T) => ReactNode) | null;
 }
 
 export class ProviderMerge {
@@ -28,7 +28,8 @@ export class ProviderMerge {
     this.providers = providers;
   }
 
-  search(query: string): Observable<Item> {
-    return merge(...this.providers.map((pr) => pr.search(query)));
+  search(queries: string[]): Observable<Item> {
+    const searches = this.providers.map((pr) => queries.map((q) => pr.search(q)));
+    return merge(...searches.reduce((prev, cur) => [...prev, ...cur]));
   }
 }
