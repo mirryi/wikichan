@@ -1,7 +1,18 @@
 declare namespace ItemScssModule {
   export interface IItemScss {
+    content: string;
+    description: string;
+    extra: string;
+    extraSummary: string;
+    extras: string;
     header: string;
-    item: string;
+    link: string;
+    list: string;
+    listItem: string;
+    longDescription: string;
+    searchTerm: string;
+    tag: string;
+    tags: string;
     title: string;
     top: string;
   }

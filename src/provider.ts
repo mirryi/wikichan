@@ -8,7 +8,7 @@ export interface Item {
   description: string;
   longDescription?: string;
 
-  tags?: Record<string, string | string[]>;
+  tags?: Map<string, string | string[]>;
   urls?: URL[];
 
   searchTerm: string;

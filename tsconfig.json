@@ -3,6 +3,7 @@
     "allowSyntheticDefaultImports": true,
     "baseUrl": ".",
     "esModuleInterop": true,
+    "downlevelIteration": true,
     "inlineSources": true,
     "inlineSourceMap": true,
     "jsx": "react",
