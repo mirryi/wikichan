@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": ".",
+    "esModuleInterop": true,
+    "inlineSources": true,
+    "inlineSourceMap": true,
+    "jsx": "react",
+    "lib": ["ES5", "DOM"],
+    "module": "CommonJS",
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "outDir": "target",
+    "preserveConstEnums": true,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "removeComments": true,
+    "target": "ES5",
+    "typeRoots": ["src/@types", "node_modules/@types"]
+  },
+  "include": ["src/*"],
+  "exclude": ["node_modules"]
+}
