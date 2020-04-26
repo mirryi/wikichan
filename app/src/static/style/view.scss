@@ -1,0 +1,35 @@
+@import "view-results";
+@import "view-disamb";
+
+$font-stack: "Segoe UI", sans-serif;
+
+:root {
+    background: rgb(253, 253, 253);
+    font-size: 13px;
+    font-family: $font-stack;
+    box-sizing: border-box;
+}
+
+#search {
+    margin-bottom: 5px;
+
+    font-size: 0.9rem;
+    text-align: right;
+
+    #search-box {
+        width: 70%;
+        height: 23px;
+        padding-left: 5px;
+
+        border-radius: 3px;
+        border: 1px solid darkgray;
+    }
+}
+
+#end-message {
+    font-size: 0.9rem;
+    text-align: center;
+    color: #818181;
+
+    padding: 0px;
+}
