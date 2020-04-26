@@ -104,6 +104,9 @@ export class TextSource {
         newEndContainer,
         newEndOffset,
       );
+      if (expandedRange === null) {
+        return null;
+      }
 
       return new TextSource(expandedRange);
     } else if (mode === ExpandMode.word) {
@@ -176,16 +179,9 @@ function caretRangeFromPoint(x: number, y: number): Range | null {
     if (node === null) {
       return null;
     }
-
-    const range = document.createRange();
     const offset = node.nodeType === Node.TEXT_NODE ? position.offset : 0;
-    try {
-      range.setStart(node, offset);
-      range.setEnd(node, offset);
-    } catch (_) {
-      return null;
-    }
-    return range;
+
+    return newRange(node, offset, node, offset);
   }
 
   return null;
@@ -196,10 +192,14 @@ function newRange(
   startOffset: number,
   endContainer: Node,
   endOffset: number,
-): Range {
+): Range | null {
   const range = new Range();
-  range.setStart(startContainer, startOffset);
-  range.setEnd(endContainer, endOffset);
+  try {
+    range.setStart(startContainer, startOffset);
+    range.setEnd(endContainer, endOffset);
+  } catch (e) {
+    return null;
+  }
   return range;
 }
 
