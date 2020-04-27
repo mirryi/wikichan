@@ -41,8 +41,6 @@ export class WikipediaProvider implements Provider<Item> {
           throw new Error("no pages found");
         }
 
-        console.log(entries);
-
         const entry = entries[0];
         return entry;
       }),
