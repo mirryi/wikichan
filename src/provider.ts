@@ -9,7 +9,7 @@ export interface Item {
   longDescription?: string;
 
   tags?: Map<string, string | string[]>;
-  urls?: URL[];
+  urls?: string[];
 
   searchTerm: string;
 

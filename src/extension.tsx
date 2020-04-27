@@ -4,14 +4,14 @@ import { fromEvent } from "rxjs";
 import { Float } from "./components/float";
 import { RootComponent } from "./components/root";
 import { ProviderMerge } from "./provider";
-import { DummyProvider } from "./providers/dummy";
+import { WikipediaProvider, WikipediaLanguage } from "./providers/wikipedia";
 import { getTextSourceFromPoint, ExpandMode } from "./selector";
 
 if (self === top) {
   const floatRef = React.createRef<Float>();
   const rootRef = React.createRef<RootComponent>();
 
-  const providers = new ProviderMerge([new DummyProvider()]);
+  const providers = new ProviderMerge([new WikipediaProvider(WikipediaLanguage.EN)]);
   const frameWidth = 475;
   const frameHeight = 315;
 
