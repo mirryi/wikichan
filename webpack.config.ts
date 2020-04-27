@@ -56,6 +56,10 @@ const config: webpack.Configuration = {
       }),
     ],
   },
+  performance: {
+    maxEntrypointSize: 5120000,
+    maxAssetSize: 5120000,
+  },
   resolve: {
     extensions: [".ts", ".tsx", ".js", ".css", ".sass", ".scss"],
   },
