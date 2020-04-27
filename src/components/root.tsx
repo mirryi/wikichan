@@ -4,6 +4,8 @@ import { Item, ProviderMerge } from "../provider";
 import { ItemComponent } from "./item";
 import styles from "./root.scss";
 import { SearchComponent } from "./search";
+import { Subscription } from "rxjs";
+import { DummyProvider } from "../providers/dummy";
 
 export interface RootProps {
   providers: ProviderMerge;
@@ -11,6 +13,7 @@ export interface RootProps {
 
 export interface RootState {
   items: Item[];
+  itemSubscription?: Subscription;
 }
 
 export class RootComponent extends Component<RootProps, RootState> {
@@ -23,10 +26,21 @@ export class RootComponent extends Component<RootProps, RootState> {
   }
 
   searchProviders(queries: string[]): void {
-    this.setState({ items: [] });
-    const obs = this.props.providers.search(queries);
-    obs.subscribe((item) => {
-      this.setState({ items: [...this.state.items, item] });
+    this.setState({ items: [] }, () => {
+      const obs = this.props.providers.search(queries);
+      const subscription = obs.subscribe((item) => {
+        this.setState((state, _props) => ({ items: [...state.items, item] }));
+      });
+
+      this.setState((state, _props) => {
+        if (state.itemSubscription !== undefined) {
+          state.itemSubscription.unsubscribe();
+        }
+
+        return {
+          itemSubscription: subscription,
+        };
+      });
     });
   }
 
@@ -44,7 +58,9 @@ export class RootComponent extends Component<RootProps, RootState> {
       <div>
         <SearchComponent
           placeholderText="Search"
-          callback={this.searchProviders.bind(this)}
+          callback={(query: string) => {
+            this.searchProviders([query]);
+          }}
         />
 
         <div className={styles.results}>{itemRenders}</div>
