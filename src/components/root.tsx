@@ -5,7 +5,6 @@ import { ItemComponent } from "./item";
 import styles from "./root.scss";
 import { SearchComponent } from "./search";
 import { Subscription } from "rxjs";
-import { DummyProvider } from "../providers/dummy";
 
 export interface RootProps {
   providers: ProviderMerge;
