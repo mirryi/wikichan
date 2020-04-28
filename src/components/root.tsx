@@ -45,8 +45,8 @@ export class RootComponent extends Component<RootProps, RootState> {
 
   render(): ReactNode {
     const itemRenders = this.state.items.map((item) => {
-      const renderf = item.provider.renderf();
-      if (renderf !== null) {
+      const renderf = item.provider.renderf;
+      if (renderf) {
         return renderf(item);
       }
 

@@ -18,7 +18,9 @@ export interface Item {
 
 export interface Provider<T extends Item> {
   search(query: string): Observable<T>;
-  renderf(): ((item: T) => ReactNode) | null;
+
+  renderf?(item: T): ReactNode;
+  renderLongDescription?(item: T): ReactNode;
 }
 
 export class ProviderMerge {

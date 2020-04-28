@@ -10,6 +10,17 @@ export interface ItemProps {
 export class ItemComponent extends Component<ItemProps> {
   render(): ReactNode {
     const data = this.props.data;
+    const provider = data.provider;
+
+    const longDescription = provider.renderLongDescription ? (
+      provider.renderLongDescription(data)
+    ) : (
+      <div className={styles.longDescription}>
+        <span>
+          {data.longDescription ? data.longDescription : "No summary available."}
+        </span>
+      </div>
+    );
 
     const tagsRender = this.renderTags();
     const urlsRender = this.renderURLs();
@@ -38,11 +49,7 @@ export class ItemComponent extends Component<ItemProps> {
           <div className={styles.description}>
             <span>{data.description}</span>
           </div>
-          <div className={styles.longDescription}>
-            <span>
-              {data.longDescription ? data.longDescription : "No summary available."}
-            </span>
-          </div>
+          {longDescription}
 
           {urlsRender}
         </div>
