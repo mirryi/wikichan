@@ -1,82 +1,102 @@
 import { sanitize } from "dompurify";
 import htmlReactParse from "html-react-parser";
 import { ReactNode } from "react";
-import { empty, from, Observable } from "rxjs";
-import { catchError, map, mergeAll } from "rxjs/operators";
+import { empty, from, Observable, merge } from "rxjs";
+import { catchError, distinct, map } from "rxjs/operators";
 import { Item, Provider } from "../provider";
 
-export class WikipediaProvider implements Provider<Item> {
+export class WikipediaItem implements Item {
+  title: string;
+  description: string;
+  longDescription?: string;
+
+  tags: Map<string, string | string[]>;
+  urls?: string[];
+
+  searchTerm: string;
+  provider: WikipediaProvider;
+
+  pageid: number;
+}
+
+export class WikipediaProvider implements Provider<WikipediaItem> {
   language: WikipediaLanguage;
 
   constructor(language: WikipediaLanguage) {
     this.language = language;
   }
 
-  search(query: string): Observable<Item> {
-    const url = this.queryString(query);
-    const req = fetch(url.toString())
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      .then((res: Response): any => {
-        if (!res.ok) {
-          Promise.reject("unsuccessful request");
-        }
+  search(queries: string[]): Observable<WikipediaItem> {
+    const observables = queries.map((q) => {
+      const url = this.queryString(q);
+      const req = fetch(url.toString())
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        .then((res: Response): any => {
+          if (!res.ok) {
+            Promise.reject("unsuccessful request");
+          }
 
-        return res.json();
-      })
-      .then((json) => {
-        return json["query"] as MediaWikiResponse;
-      });
+          return res.json();
+        })
+        .then((json) => {
+          return json["query"] as MediaWikiResponse;
+        });
 
-    return from(req).pipe(
-      map<MediaWikiResponse, MediaWikiPage[]>((data) => {
-        const seen: Map<string, boolean> = new Map();
-        const entries: MediaWikiPage[] = Object.entries(data.pages)
-          .filter(([k]) => {
-            if (Number(k) === -1 || seen.get(k) !== undefined) {
-              return false;
-            }
-            seen.set(k, true);
-            return true;
-          })
-          .map(([, v]) => v);
+      return from(req).pipe(
+        map<MediaWikiResponse, MediaWikiPage>((data) => {
+          const seen: Map<string, boolean> = new Map();
+          const entries: MediaWikiPage[] = Object.entries(data.pages)
+            .filter(([k]) => {
+              if (Number(k) === -1 || seen.get(k) !== undefined) {
+                return false;
+              }
+              seen.set(k, true);
+              return true;
+            })
+            .map(([, v]) => v);
 
-        if (entries.length < 1) {
-          throw new Error("no pages found");
-        }
+          if (entries.length < 1) {
+            throw new Error("no pages found");
+          }
 
-        return entries;
-      }),
-      mergeAll(),
-      map((entry) => {
-        const item: Item = {
-          title: entry.title,
-          urls: [entry.fullurl, entry.editurl],
-          description: entry.description ? entry.description : "No description.",
-          longDescription: entry.extract,
-          tags: new Map([["lang", this.language.id]]),
-          searchTerm: query,
-          provider: this,
-        };
+          return entries[0];
+        }),
+        map((entry) => {
+          if (!entry.pageid) {
+            throw new Error("no pageid found");
+          }
+          const item: WikipediaItem = {
+            pageid: entry.pageid,
+            title: entry.title,
+            urls: [entry.fullurl, entry.editurl],
+            description: entry.description ? entry.description : "No description.",
+            longDescription: entry.extract,
+            tags: new Map([["lang", this.language.id]]),
+            searchTerm: q,
+            provider: this,
+          };
 
-        if (entry.categories) {
-          item.tags?.set(
-            "categories",
-            entry.categories.map((c) => c.title),
-          );
-        }
-        if (entry.extlinks) {
-          item.urls?.push(...entry.extlinks.map((link) => link["*"]));
-        }
-        if (entry.terms?.alias) {
-          item.tags?.set("aliases", entry.terms.alias);
-        }
+          if (entry.categories) {
+            item.tags?.set(
+              "categories",
+              entry.categories.map((c) => c.title),
+            );
+          }
+          if (entry.extlinks) {
+            item.urls?.push(...entry.extlinks.map((link) => link["*"]));
+          }
+          if (entry.terms?.alias) {
+            item.tags?.set("aliases", entry.terms.alias);
+          }
 
-        return item;
-      }),
-      catchError(() => {
-        return empty();
-      }),
-    );
+          return item;
+        }),
+        catchError(() => {
+          return empty();
+        }),
+      );
+    });
+    return merge(...observables).pipe(distinct((item) => item.pageid));
   }
 
   queryString(query: string): URL {

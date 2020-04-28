@@ -17,7 +17,7 @@ export interface Item {
 }
 
 export interface Provider<T extends Item> {
-  search(query: string): Observable<T>;
+  search(queries: string[]): Observable<T>;
 
   renderf?(item: T): ReactNode;
   renderLongDescription?(item: T): ReactNode;
@@ -31,7 +31,7 @@ export class ProviderMerge {
   }
 
   search(queries: string[]): Observable<Item> {
-    const searches = this.providers.map((pr) => queries.map((q) => pr.search(q)));
-    return merge(...searches.reduce((prev, cur) => [...prev, ...cur]));
+    const searches = this.providers.map((pr) => pr.search(queries));
+    return merge(...searches);
   }
 }
