@@ -4,8 +4,8 @@ import { fromEvent } from "rxjs";
 import { Float } from "./components/float";
 import { RootComponent } from "./components/root";
 import { ProviderMerge } from "./provider";
-import { WikipediaProvider, WikipediaLanguage } from "./providers/wikipedia";
-import { getTextSourceFromPoint, ExpandMode } from "./selector";
+import { WikipediaLanguage, WikipediaProvider } from "./providers/wikipedia";
+import { ExpandMode, getTextSourceFromPoint } from "./selector";
 
 if (self === top) {
   const floatRef = React.createRef<Float>();

@@ -1,8 +1,8 @@
 import { sanitize } from "dompurify";
+import htmlReactParse from "html-react-parser";
 import { ReactNode } from "react";
 import { empty, from, Observable } from "rxjs";
 import { catchError, map, mergeAll } from "rxjs/operators";
-import htmlReactParse from "html-react-parser";
 import { Item, Provider } from "../provider";
 
 export class WikipediaProvider implements Provider<Item> {

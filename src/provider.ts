@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { Observable, merge } from "rxjs";
+import { merge, Observable } from "rxjs";
 
 export interface Item {
   title: string;

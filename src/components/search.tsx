@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Component, ReactNode, ChangeEvent } from "react";
+import { ChangeEvent, Component, ReactNode } from "react";
 import styles from "./search.scss";
 
 export interface SearchProps {

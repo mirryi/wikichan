@@ -1,10 +1,10 @@
 import * as React from "react";
 import { Component, ReactNode } from "react";
+import { Subscription } from "rxjs";
 import { Item, ProviderMerge } from "../provider";
 import { ItemComponent } from "./item";
 import styles from "./root.scss";
 import { SearchComponent } from "./search";
-import { Subscription } from "rxjs";
 
 export interface RootProps {
   providers: ProviderMerge;
