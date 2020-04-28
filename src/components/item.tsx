@@ -11,7 +11,49 @@ export class ItemComponent extends Component<ItemProps> {
   render(): ReactNode {
     const data = this.props.data;
 
-    const tagsRender = !data.tags
+    const tagsRender = this.renderTags();
+    const urlsRender = this.renderURLs();
+
+    return (
+      <div>
+        <div className={styles.header}>
+          <div className={styles.top}>
+            <a
+              className={styles.title}
+              target="_blank"
+              rel="noopener noreferrer"
+              href={data.urls ? data.urls[0].toString() : ""}
+            >
+              {data.title}
+            </a>
+            <div className={styles.tags}>{tagsRender}</div>
+          </div>
+          <span>
+            <span>result of: </span>
+            <span className={styles.searchTerm}>{data.searchTerm}</span>
+          </span>
+        </div>
+
+        <div className={styles.content}>
+          <div className={styles.description}>
+            <span>{data.description}</span>
+          </div>
+          <div className={styles.longDescription}>
+            <span>
+              {data.longDescription ? data.longDescription : "No summary available."}
+            </span>
+          </div>
+
+          {urlsRender}
+        </div>
+      </div>
+    );
+  }
+
+  renderTags(): ReactNode {
+    const data = this.props.data;
+
+    return !data.tags
       ? null
       : [...data.tags].slice(0, 2).map(([k, v]) => {
           const limit = 25;
@@ -49,67 +91,34 @@ export class ItemComponent extends Component<ItemProps> {
             </span>
           );
         });
+  }
 
-    const urlsRender =
-      data.urls !== undefined ? (
-        <div>
-          <details className={styles.extra}>
-            <summary className={styles.extraSummary}>external links</summary>
-            <ul className={styles.list}>
-              {data.urls
-                ? [...data.urls.slice(1)].map((url) => (
-                    <li
-                      key={"url:" + url.toString()}
-                      className={[styles.listItem, styles.link].join(" ")}
-                    >
-                      <a
-                        target="_blank"
-                        href={url.toString()}
-                        rel="noopener noreferrer"
-                        title={url.toString()}
-                      >
-                        {url.toString()}
-                      </a>
-                    </li>
-                  ))
-                : null}
-            </ul>
-          </details>
-        </div>
-      ) : null;
-
-    return (
+  renderURLs(): ReactNode {
+    const data = this.props.data;
+    return !data.urls ? null : (
       <div>
-        <div className={styles.header}>
-          <div className={styles.top}>
-            <a
-              className={styles.title}
-              target="_blank"
-              rel="noopener noreferrer"
-              href={data.urls ? data.urls[0].toString() : ""}
-            >
-              {data.title}
-            </a>
-            <div className={styles.tags}>{tagsRender}</div>
-          </div>
-          <span>
-            <span>result of: </span>
-            <span className={styles.searchTerm}>{data.searchTerm}</span>
-          </span>
-        </div>
-
-        <div className={styles.content}>
-          <div className={styles.description}>
-            <span>{data.description}</span>
-          </div>
-          <div className={styles.longDescription}>
-            <span>
-              {data.longDescription ? data.longDescription : "No summary available."}
-            </span>
-          </div>
-
-          {urlsRender}
-        </div>
+        <details className={styles.extra}>
+          <summary className={styles.extraSummary}>external links</summary>
+          <ul className={styles.list}>
+            {data.urls
+              ? [...data.urls.slice(1)].map((url) => (
+                  <li
+                    key={"url:" + url.toString()}
+                    className={[styles.listItem, styles.link].join(" ")}
+                  >
+                    <a
+                      target="_blank"
+                      href={url.toString()}
+                      rel="noopener noreferrer"
+                      title={url.toString()}
+                    >
+                      {url.toString()}
+                    </a>
+                  </li>
+                ))
+              : null}
+          </ul>
+        </details>
       </div>
     );
   }
