@@ -3,7 +3,7 @@ import htmlReactParse from "html-react-parser";
 import { ReactNode } from "react";
 import { empty, from, Observable, merge } from "rxjs";
 import { catchError, distinct, map } from "rxjs/operators";
-import { Item, Provider } from "../provider";
+import { Item, Provider } from "../../provider";
 
 export class WikipediaItem implements Item {
   title: string;
