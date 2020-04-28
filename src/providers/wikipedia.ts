@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
-import { Observable, from, empty } from "rxjs";
-import { map, catchError } from "rxjs/operators";
+import { empty, from, Observable } from "rxjs";
+import { catchError, map } from "rxjs/operators";
 import { Item, Provider } from "../provider";
 
 export class WikipediaProvider implements Provider<Item> {
@@ -13,6 +13,7 @@ export class WikipediaProvider implements Provider<Item> {
   search(query: string): Observable<Item> {
     const url = this.queryString(query);
     const req = fetch(url.toString())
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       .then((res: Response): any => {
         if (!res.ok) {
           Promise.reject("unsuccessful request");
@@ -26,16 +27,16 @@ export class WikipediaProvider implements Provider<Item> {
 
     return from(req).pipe(
       map<MediaWikiResponse, MediaWikiPage>((data) => {
-        let seen: Map<string, boolean> = new Map();
-        let entries: MediaWikiPage[] = Object.entries(data.pages)
-          .filter(([k, _]) => {
+        const seen: Map<string, boolean> = new Map();
+        const entries: MediaWikiPage[] = Object.entries(data.pages)
+          .filter(([k]) => {
             if (Number(k) === -1 || seen.get(k) !== undefined) {
               return false;
             }
             seen.set(k, true);
             return true;
           })
-          .map(([_, v]) => v);
+          .map(([, v]) => v);
 
         if (entries.length < 1) {
           throw new Error("no pages found");
@@ -70,7 +71,7 @@ export class WikipediaProvider implements Provider<Item> {
 
         return item;
       }),
-      catchError((err, caught) => {
+      catchError(() => {
         return empty();
       }),
     );
@@ -115,7 +116,8 @@ export class WikipediaLanguage {
   }
 }
 
-export module WikipediaLanguage {
+// eslint-disable-next-line @typescript-eslint/no-namespace
+export namespace WikipediaLanguage {
   export const EN = new WikipediaLanguage(
     "EN",
     "English",

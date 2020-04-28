@@ -36,7 +36,7 @@ if (self === top) {
         return;
       }
 
-      let queries: string[] = [ts.text()];
+      const queries: string[] = [ts.text()];
 
       let stopLeft = false;
       let stopRight = false;

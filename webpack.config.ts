@@ -14,8 +14,9 @@ const config: webpack.Configuration = {
     rules: [
       {
         test: /\.tsx?$/,
-        use: "ts-loader",
+        use: ["ts-loader", "eslint-loader"],
         include: srcDir,
+        exclude: /node_modules/,
       },
       {
         test: /\.html$/,

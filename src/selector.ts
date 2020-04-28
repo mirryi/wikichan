@@ -10,7 +10,7 @@ export function getTextSourceFromPoint(
   }
 
   let ts = new TextSource(range);
-  const expandFor = (mode: ExpandMode, times: number, right: boolean) => {
+  const expandFor = (mode: ExpandMode, times: number, right: boolean): void => {
     for (let i = 0; i < times; i++) {
       const ex = right ? ts.expandNext(mode) : ts.expandPrev(mode);
       if (ex === null) {
@@ -110,6 +110,7 @@ export class TextSource {
 
       return new TextSource(expandedRange);
     } else if (mode === ExpandMode.word) {
+      // eslint-disable-next-line @typescript-eslint/no-this-alias
       let expandedSource: TextSource = this;
 
       const exp = expandedSource.expand(ExpandMode.character, right);
@@ -118,6 +119,7 @@ export class TextSource {
       }
       expandedSource = exp;
 
+      // eslint-disable-next-line no-constant-condition
       while (true) {
         const expandedRange = expandedSource.range;
 
@@ -228,6 +230,7 @@ function getPreviousNode(node: Node): Node | null {
 
   return sibling;
 }
+
 function matchBreak(c: string): boolean {
   return c === " " || /(\\n)/.test(JSON.stringify(c));
 }

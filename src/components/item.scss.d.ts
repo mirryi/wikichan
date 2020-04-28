@@ -4,7 +4,6 @@ declare namespace ItemScssModule {
     description: string;
     extra: string;
     extraSummary: string;
-    extras: string;
     header: string;
     link: string;
     list: string;

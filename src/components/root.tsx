@@ -28,10 +28,10 @@ export class RootComponent extends Component<RootProps, RootState> {
     this.setState({ items: [] }, () => {
       const obs = this.props.providers.search(queries);
       const subscription = obs.subscribe((item) => {
-        this.setState((state, _props) => ({ items: [...state.items, item] }));
+        this.setState((state) => ({ items: [...state.items, item] }));
       });
 
-      this.setState((state, _props) => {
+      this.setState((state) => {
         if (state.itemSubscription !== undefined) {
           state.itemSubscription.unsubscribe();
         }
@@ -50,14 +50,14 @@ export class RootComponent extends Component<RootProps, RootState> {
         return renderf(item);
       }
 
-      return <ItemComponent data={item} />;
+      return <ItemComponent key={item.title} data={item} />;
     });
 
     return (
       <div>
         <SearchComponent
           placeholderText="Search"
-          callback={(query: string) => {
+          callback={(query: string): void => {
             this.searchProviders([query]);
           }}
         />

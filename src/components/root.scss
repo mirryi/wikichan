@@ -2,18 +2,18 @@ $font-stack: "Segoe UI", sans-serif;
 
 :root {
   background: rgb(253, 253, 253);
-  font-size: 13px;
-  font-family: $font-stack;
   box-sizing: border-box;
+  font-family: $font-stack;
+  font-size: 13px;
 }
 
 .results {
   .header {
-    margin: 7px 5px;
-    position: sticky;
-    top: 0px;
-    padding-top: 5px;
     background-color: rgba(255, 255, 255, 0.93);
+    margin: 7px 5px;
+    padding-top: 5px;
+    position: sticky;
+    top: 0;
   }
 
   .top {
@@ -23,12 +23,11 @@ $font-stack: "Segoe UI", sans-serif;
   }
 
   .title {
-    width: 45%;
-    overflow: auto;
-
+    color: #000;
     font-size: 1.4rem;
     font-weight: bold;
+    overflow: auto;
     text-decoration: none;
-    color: #000000;
+    width: 45%;
   }
 }

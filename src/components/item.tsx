@@ -13,7 +13,7 @@ export class ItemComponent extends Component<ItemProps> {
 
     const tagsRender = data.tags
       ? [...data.tags].map(([k, v]) => (
-          <span className={styles.tag}>
+          <span key={"tag:" + k} className={styles.tag}>
             {k}: {v}
           </span>
         ))
@@ -26,8 +26,16 @@ export class ItemComponent extends Component<ItemProps> {
           <ul className={styles.list}>
             {data.urls
               ? [...data.urls.slice(1)].map((url) => (
-                  <li className={[styles.listItem, styles.link].join(" ")}>
-                    <a target="_blank" href={url.toString()} title={url.toString()}>
+                  <li
+                    key={url.toString()}
+                    className={[styles.listItem, styles.link].join(" ")}
+                  >
+                    <a
+                      target="_blank"
+                      href={url.toString()}
+                      rel="noopener noreferrer"
+                      title={url.toString()}
+                    >
                       {url.toString()}
                     </a>
                   </li>
@@ -44,6 +52,7 @@ export class ItemComponent extends Component<ItemProps> {
             <a
               className={styles.title}
               target="_blank"
+              rel="noopener noreferrer"
               href={data.urls ? data.urls[0].toString() : ""}
             >
               {data.title}
@@ -66,7 +75,7 @@ export class ItemComponent extends Component<ItemProps> {
             </span>
           </div>
 
-          <div className={styles.extras}>{urlsRender}</div>
+          <div>{urlsRender}</div>
         </div>
       </div>
     );

@@ -42,17 +42,17 @@ export class Float extends Component<FloatProps, FloatState> {
     );
   }
 
-  open(left: number, top: number) {
+  open(left: number, top: number): void {
     this.hideFrame();
 
     this.showFrame(left, top);
   }
 
-  close() {
+  close(): void {
     this.hideFrame();
   }
 
-  showFrame(left: number, top: number) {
+  showFrame(left: number, top: number): void {
     const offset = this.calculateOffset(
       left,
       top,
@@ -66,7 +66,7 @@ export class Float extends Component<FloatProps, FloatState> {
     });
   }
 
-  hideFrame() {
+  hideFrame(): void {
     this.setState({ frameVisibility: false });
   }
 
@@ -76,7 +76,7 @@ export class Float extends Component<FloatProps, FloatState> {
     w: number,
     h: number,
   ): { x: number; y: number } {
-    let offset = { x: 10, y: 10 };
+    const offset = { x: 10, y: 10 };
     if (x + offset.x + w > window.innerWidth) {
       offset.x = -(offset.x + w);
     }
