@@ -48,9 +48,12 @@
     color: #3d3d3d;
     cursor: pointer;
     font-stretch: normal;
-    font-weight: bold;
-    margin-right: 2px;
+    margin-right: 4px;
     text-decoration: none;
+
+    .tagname {
+      font-weight: bold;
+    }
   }
 }
 

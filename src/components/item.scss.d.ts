@@ -11,6 +11,7 @@ declare namespace ItemScssModule {
     longDescription: string;
     searchTerm: string;
     tag: string;
+    tagname: string;
     tags: string;
     title: string;
     top: string;

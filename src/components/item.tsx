@@ -11,38 +11,71 @@ export class ItemComponent extends Component<ItemProps> {
   render(): ReactNode {
     const data = this.props.data;
 
-    const tagsRender = data.tags
-      ? [...data.tags].map(([k, v]) => (
-          <span key={"tag:" + k} className={styles.tag}>
-            {k}: {v}
-          </span>
-        ))
-      : null;
+    const tagsRender = !data.tags
+      ? null
+      : [...data.tags].slice(0, 2).map(([k, v]) => {
+          const limit = 25;
+          let nv = v;
+          if (typeof nv === "string") {
+            if (k.length + nv.length >= limit) {
+              nv = nv.substring(0, limit - 2) + "...";
+            }
+          } else {
+            nv = nv as string[];
+            let tl = k.length;
+            for (let i = 0; i < nv.length; i++) {
+              tl += nv[i].length;
+              if (tl > limit) {
+                nv = nv.slice(0, i + 1);
+                nv[i] = nv[i].substring(0, nv[i].length - tl + limit - 2) + "...";
+                break;
+              }
+            }
+
+            nv = nv.reduce((prev, cur) => prev + ", " + cur);
+          }
+
+          let title = "";
+          if (typeof v === "string") {
+            title = v;
+          } else {
+            const lv = v as string[];
+            title = "\n : " + lv.reduce((prev, cur) => prev + "\n : " + cur);
+          }
+
+          return (
+            <span key={"tag:" + k} title={k + ": " + title} className={styles.tag}>
+              <span className={styles.tagname}>{k}</span>: {nv}
+            </span>
+          );
+        });
 
     const urlsRender =
       data.urls !== undefined ? (
-        <details className={styles.extra}>
-          <summary className={styles.extraSummary}>external links</summary>
-          <ul className={styles.list}>
-            {data.urls
-              ? [...data.urls.slice(1)].map((url) => (
-                  <li
-                    key={url.toString()}
-                    className={[styles.listItem, styles.link].join(" ")}
-                  >
-                    <a
-                      target="_blank"
-                      href={url.toString()}
-                      rel="noopener noreferrer"
-                      title={url.toString()}
+        <div>
+          <details className={styles.extra}>
+            <summary className={styles.extraSummary}>external links</summary>
+            <ul className={styles.list}>
+              {data.urls
+                ? [...data.urls.slice(1)].map((url) => (
+                    <li
+                      key={"url:" + url.toString()}
+                      className={[styles.listItem, styles.link].join(" ")}
                     >
-                      {url.toString()}
-                    </a>
-                  </li>
-                ))
-              : null}
-          </ul>
-        </details>
+                      <a
+                        target="_blank"
+                        href={url.toString()}
+                        rel="noopener noreferrer"
+                        title={url.toString()}
+                      >
+                        {url.toString()}
+                      </a>
+                    </li>
+                  ))
+                : null}
+            </ul>
+          </details>
+        </div>
       ) : null;
 
     return (
@@ -75,7 +108,7 @@ export class ItemComponent extends Component<ItemProps> {
             </span>
           </div>
 
-          <div>{urlsRender}</div>
+          {urlsRender}
         </div>
       </div>
     );
