@@ -12,6 +12,10 @@ export class ItemComponent extends Component<ItemProps> {
     const data = this.props.data;
     const provider = data.provider;
 
+    if (provider.renderf) {
+      return provider.renderf(data);
+    }
+
     const longDescription = provider.renderLongDescription ? (
       provider.renderLongDescription(data)
     ) : (
@@ -28,6 +32,11 @@ export class ItemComponent extends Component<ItemProps> {
     return (
       <div>
         <div className={styles.header}>
+          <div>
+            <span className={[styles.providerName, styles.bold].join(" ")}>
+              {provider.name()}
+            </span>
+          </div>
           <div className={styles.top}>
             <a
               className={styles.title}
@@ -37,7 +46,7 @@ export class ItemComponent extends Component<ItemProps> {
             >
               {data.title}
             </a>
-            <div className={styles.tags}>{tagsRender}</div>
+            <div>{tagsRender}</div>
           </div>
           <span>
             <span>result of: </span>
@@ -94,7 +103,7 @@ export class ItemComponent extends Component<ItemProps> {
 
           return (
             <span key={"tag:" + k} title={k + ": " + title} className={styles.tag}>
-              <span className={styles.tagname}>{k}</span>: {nv}
+              <span className={styles.bold}>{k}</span>: {nv}
             </span>
           );
         });

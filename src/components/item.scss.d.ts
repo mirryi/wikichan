@@ -1,5 +1,6 @@
 declare namespace ItemScssModule {
   export interface IItemScss {
+    bold: string;
     content: string;
     description: string;
     extra: string;
@@ -9,10 +10,9 @@ declare namespace ItemScssModule {
     list: string;
     listItem: string;
     longDescription: string;
+    providerName: string;
     searchTerm: string;
     tag: string;
-    tagname: string;
-    tags: string;
     title: string;
     top: string;
   }
