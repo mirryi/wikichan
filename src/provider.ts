@@ -17,6 +17,8 @@ export interface Item {
 }
 
 export interface Provider<T extends Item> {
+  name(): string;
+
   search(queries: string[]): Observable<T>;
 
   renderf?(item: T): ReactNode;

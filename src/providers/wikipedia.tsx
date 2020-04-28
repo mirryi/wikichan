@@ -26,6 +26,10 @@ export class WikipediaProvider implements Provider<WikipediaItem> {
     this.language = language;
   }
 
+  name(): string {
+    return this.language.name + " Wikipedia";
+  }
+
   search(queries: string[]): Observable<WikipediaItem> {
     const observables = queries.map((q) => {
       const url = this.queryString(q);
