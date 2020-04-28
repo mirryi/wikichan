@@ -1,7 +1,7 @@
 import { sanitize } from "dompurify";
 import { ReactNode } from "react";
 import { empty, from, Observable } from "rxjs";
-import { catchError, map } from "rxjs/operators";
+import { catchError, map, mergeAll } from "rxjs/operators";
 import htmlReactParse from "html-react-parser";
 import { Item, Provider } from "../provider";
 
@@ -28,7 +28,7 @@ export class WikipediaProvider implements Provider<Item> {
       });
 
     return from(req).pipe(
-      map<MediaWikiResponse, MediaWikiPage>((data) => {
+      map<MediaWikiResponse, MediaWikiPage[]>((data) => {
         const seen: Map<string, boolean> = new Map();
         const entries: MediaWikiPage[] = Object.entries(data.pages)
           .filter(([k]) => {
@@ -44,9 +44,9 @@ export class WikipediaProvider implements Provider<Item> {
           throw new Error("no pages found");
         }
 
-        const entry = entries[0];
-        return entry;
+        return entries;
       }),
+      mergeAll(),
       map((entry) => {
         const item: Item = {
           title: entry.title,
