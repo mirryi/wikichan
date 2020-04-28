@@ -4,7 +4,7 @@ import { fromEvent } from "rxjs";
 import { Float } from "./components/float";
 import { RootComponent } from "./components/root";
 import { ProviderMerge } from "./provider";
-import { WikipediaLanguage, WikipediaProvider } from "./providers/wikipedia";
+import { WikipediaLanguage, WikipediaProvider } from "./providers/wikipedia/wikipedia";
 import { ExpandMode, getTextSourceFromPoint, TextSource } from "./selector";
 
 if (self === top) {
