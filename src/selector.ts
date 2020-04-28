@@ -36,7 +36,7 @@ export class TextSource {
   }
 
   text(): string {
-    return this.range.toString();
+    return this.range.toString().trim();
   }
 
   /**
@@ -65,24 +65,24 @@ export class TextSource {
           return null;
         }
         const maxOffset = range.endContainer.textContent.length - 1;
+        newEndOffset = range.endOffset + 1;
 
-        if (range.endOffset + 1 > maxOffset) {
+        if (newEndOffset > maxOffset) {
           const nextNode = getNextNode(range.endContainer);
           if (nextNode === null) {
             return null;
           }
           newEndContainer = nextNode;
           newEndOffset = 0;
-        } else {
-          newEndOffset = range.endOffset + 1;
         }
       } else {
         if (range.startContainer.textContent === null) {
           return null;
         }
         const minOffset = 0;
+        newStartOffset = range.startOffset - 1;
 
-        if (range.startOffset - 1 < minOffset) {
+        if (newStartOffset < minOffset) {
           const prevNode = getPreviousNode(range.startContainer);
           if (prevNode === null) {
             return null;
@@ -93,8 +93,6 @@ export class TextSource {
             return null;
           }
           newStartOffset = newStartContainer.textContent.length - 1;
-        } else {
-          newStartOffset = range.startOffset - 1;
         }
       }
 
@@ -113,49 +111,75 @@ export class TextSource {
       // eslint-disable-next-line @typescript-eslint/no-this-alias
       let expandedSource: TextSource = this;
 
-      const exp = expandedSource.expand(ExpandMode.character, right);
-      if (exp === null) {
+      const nextChar = right
+        ? expandedSource.nextRightChar()
+        : expandedSource.nextLeftChar();
+      if (!nextChar || matchBreak(nextChar)) {
         return expandedSource;
       }
-      expandedSource = exp;
 
       // eslint-disable-next-line no-constant-condition
       while (true) {
-        const expandedRange = expandedSource.range;
-
-        if (right) {
-          const endText = expandedRange.endContainer.textContent;
-          if (endText === null) {
-            return null;
-          }
-
-          const lastChar = endText.charAt(expandedRange.endOffset);
-          if (matchBreak(lastChar)) {
-            break;
-          }
-        } else {
-          const startText = expandedRange.startContainer.textContent;
-          if (startText === null) {
-            return null;
-          }
-
-          const firstChar = startText.charAt(expandedRange.startOffset);
-          if (matchBreak(firstChar)) {
-            break;
-          }
-        }
-
         const exp = expandedSource.expand(ExpandMode.character, right);
         if (exp === null) {
           break;
         }
         expandedSource = exp;
+
+        const nextChar = right
+          ? expandedSource.nextRightChar()
+          : expandedSource.nextLeftChar();
+        if (!nextChar || matchBreak(nextChar)) {
+          const exp = expandedSource.expand(ExpandMode.character, right);
+          if (exp) {
+            expandedSource = exp;
+          }
+          break;
+        }
       }
 
       return expandedSource;
     }
 
     return null;
+  }
+
+  nextRightChar(): string | null {
+    const endText = this.range.endContainer.textContent;
+    if (!endText) {
+      return null;
+    }
+
+    const expandedSource = this.expandNext(ExpandMode.character);
+    if (!expandedSource) {
+      return null;
+    }
+
+    const expandedRange = expandedSource.range;
+    if (!expandedRange.endContainer.textContent) {
+      return null;
+    }
+
+    return expandedRange.endContainer.textContent.charAt(expandedRange.endOffset - 1);
+  }
+
+  nextLeftChar(): string | null {
+    const startText = this.range.startContainer.textContent;
+    if (!startText) {
+      return null;
+    }
+
+    const expandedSource = this.expandPrev(ExpandMode.character);
+    if (!expandedSource) {
+      return null;
+    }
+
+    const expandedRange = expandedSource.range;
+    if (!expandedRange.startContainer.textContent) {
+      return null;
+    }
+
+    return expandedRange.startContainer.textContent.charAt(expandedRange.startOffset);
   }
 }
 
@@ -232,5 +256,5 @@ function getPreviousNode(node: Node): Node | null {
 }
 
 function matchBreak(c: string): boolean {
-  return c === " " || /(\\n)/.test(JSON.stringify(c));
+  return /[\s\p{Punctuation}]/u.test(c);
 }
