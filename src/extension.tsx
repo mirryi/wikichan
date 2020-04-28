@@ -12,8 +12,8 @@ if (self === top) {
   const rootRef = React.createRef<RootComponent>();
 
   const providers = new ProviderMerge([new WikipediaProvider(WikipediaLanguage.EN)]);
-  const frameWidth = 475;
-  const frameHeight = 315;
+  const frameWidth = 600;
+  const frameHeight = 400;
 
   const ext = (
     <Float ref={floatRef} frameWidth={frameWidth} frameHeight={frameHeight}>
