@@ -1,6 +1,8 @@
+import { sanitize } from "dompurify";
 import { ReactNode } from "react";
 import { empty, from, Observable } from "rxjs";
 import { catchError, map } from "rxjs/operators";
+import htmlReactParse from "html-react-parser";
 import { Item, Provider } from "../provider";
 
 export class WikipediaProvider implements Provider<Item> {
@@ -95,8 +97,15 @@ export class WikipediaProvider implements Provider<Item> {
     return new URL(url);
   }
 
-  renderf(): ((item: Item) => ReactNode) | null {
-    return null;
+  renderLongDescription(item: Item): ReactNode {
+    const ld = item.longDescription;
+    if (!ld) {
+      return null;
+    }
+
+    const html = sanitize(ld);
+    const components = htmlReactParse(html);
+    return components;
   }
 }
 

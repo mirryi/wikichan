@@ -49,7 +49,7 @@ export class ItemComponent extends Component<ItemProps> {
           <div className={styles.description}>
             <span>{data.description}</span>
           </div>
-          {longDescription}
+          <div>{longDescription}</div>
 
           {urlsRender}
         </div>
