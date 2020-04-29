@@ -15,8 +15,6 @@ const config: webpack.Configuration = {
       {
         test: /\.tsx?$/,
         use: ["ts-loader", "eslint-loader"],
-        include: srcDir,
-        exclude: /node_modules/,
       },
       {
         test: /\.html$/,
@@ -28,14 +26,26 @@ const config: webpack.Configuration = {
         use: [
           { loader: "style-loader" },
           {
+            loader: "css-loader",
+            options: {
+              modules: {
+                auto: true,
+                localIdentName: "[path][name]__[local]--[hash:base64:5]",
+              },
+            },
+          },
+          {
             loader: "@teamsupercell/typings-for-css-modules-loader",
             options: {
               formatter: "prettier",
             },
           },
-          { loader: "css-loader", options: { modules: true } },
           { loader: "sass-loader" },
         ],
+      },
+      {
+        test: /\..?js.map$/,
+        loader: "ignore-loader",
       },
     ],
   },
@@ -62,6 +72,12 @@ const config: webpack.Configuration = {
     maxAssetSize: 5120000,
   },
   resolve: {
+    alias: {
+      "wordpos-web": path.resolve(
+        __dirname,
+        "node_modules/wordpos-web/dist/wordpos.min.js",
+      ),
+    },
     extensions: [".ts", ".tsx", ".js", ".css", ".sass", ".scss"],
   },
 };
