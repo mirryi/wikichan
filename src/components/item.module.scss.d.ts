@@ -1,5 +1,5 @@
-declare namespace ItemScssModule {
-  export interface IItemScss {
+declare namespace ItemModuleScssModule {
+  export interface IItemModuleScss {
     bold: string;
     content: string;
     description: string;
@@ -18,9 +18,9 @@ declare namespace ItemScssModule {
   }
 }
 
-declare const ItemScssModule: ItemScssModule.IItemScss & {
+declare const ItemModuleScssModule: ItemModuleScssModule.IItemModuleScss & {
   /** WARNING: Only available when `css-loader` is used without `style-loader` or `mini-css-extract-plugin` */
-  locals: ItemScssModule.IItemScss;
+  locals: ItemModuleScssModule.IItemModuleScss;
 };
 
-export = ItemScssModule;
+export = ItemModuleScssModule;

@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Component, ReactNode } from "react";
 import { Item } from "../provider";
-import styles from "./item.scss";
+import styles from "./item.module.scss";
 
 export interface ItemProps {
   data: Item;

@@ -3,7 +3,7 @@ import { Component, ReactNode } from "react";
 import { Subscription } from "rxjs";
 import { Item, ProviderMerge } from "../provider";
 import { ItemComponent } from "./item";
-import styles from "./root.scss";
+import styles from "./root.module.scss";
 import { SearchComponent } from "./search";
 
 export interface RootProps {
