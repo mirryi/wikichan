@@ -36,27 +36,30 @@ export class RootComponent extends Component<RootProps, RootState> {
   }
 
   searchProviders(queries: string[]): void {
-    this.setState({ items: [] }, () => {
-      this.state.unsubscribe.next();
-      this.state.unsubscribe.complete();
+    this.setState(
+      (state) => {
+        state.unsubscribe.next();
+        state.unsubscribe.complete();
 
-      const unsubscribe = new Subject<void>();
+        return { items: [] };
+      },
+      () => {
+        const unsubscribe = new Subject<void>();
 
-      const obs = this.props.providers
-        .search(queries)
-        .pipe(takeUntil(this.state.unsubscribe));
+        const obs = this.props.providers.search(queries).pipe(takeUntil(unsubscribe));
 
-      const subscription = obs.subscribe((item) => {
-        this.setState((state) => ({ items: [...state.items, item] }));
-      });
+        const subscription = obs.subscribe((item) => {
+          this.setState((state) => ({ items: [...state.items, item] }));
+        });
 
-      this.setState(() => {
-        return {
-          itemSubscription: subscription,
-          unsubscribe: unsubscribe,
-        };
-      });
-    });
+        this.setState(() => {
+          return {
+            itemSubscription: subscription,
+            unsubscribe: unsubscribe,
+          };
+        });
+      },
+    );
   }
 
   render(): ReactNode {
