@@ -4,6 +4,7 @@ declare namespace RootModuleScssModule {
     results: string;
     title: string;
     top: string;
+    wrapper: string;
   }
 }
 

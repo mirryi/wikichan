@@ -1,6 +1,7 @@
 import * as React from "react";
 import { Component, ReactNode } from "react";
-import { Subscription } from "rxjs";
+import { Subscription, Subject } from "rxjs";
+import { takeUntil } from "rxjs/operators";
 import { Item, ProviderMerge } from "../provider";
 import { ItemComponent } from "./item";
 import styles from "./root.module.scss";
@@ -13,6 +14,7 @@ export interface RootProps {
 export interface RootState {
   items: Item[];
   itemSubscription?: Subscription;
+  unsubscribe: Subject<void>;
 }
 
 export class RootComponent extends Component<RootProps, RootState> {
@@ -21,23 +23,38 @@ export class RootComponent extends Component<RootProps, RootState> {
 
     this.state = {
       items: [],
+      unsubscribe: new Subject<void>(),
     };
+  }
+
+  componentWillUnmount(): void {
+    this.setState((state) => {
+      state.unsubscribe.next();
+      state.unsubscribe.complete();
+      return {};
+    });
   }
 
   searchProviders(queries: string[]): void {
     this.setState({ items: [] }, () => {
-      const obs = this.props.providers.search(queries);
+      this.state.unsubscribe.next();
+      this.state.unsubscribe.complete();
+
+      const unsubscribe = new Subject<void>();
+
+      const obs = this.props.providers
+        .search(queries)
+        .pipe(takeUntil(this.state.unsubscribe));
+
       const subscription = obs.subscribe((item) => {
+        console.log(unsubscribe);
         this.setState((state) => ({ items: [...state.items, item] }));
       });
 
-      this.setState((state) => {
-        if (state.itemSubscription !== undefined) {
-          state.itemSubscription.unsubscribe();
-        }
-
+      this.setState(() => {
         return {
           itemSubscription: subscription,
+          unsubscribe: unsubscribe,
         };
       });
     });
@@ -49,7 +66,7 @@ export class RootComponent extends Component<RootProps, RootState> {
     });
 
     return (
-      <div>
+      <div className={styles.wrapper}>
         <SearchComponent
           placeholderText="Search"
           callback={(query: string): void => {
