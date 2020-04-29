@@ -47,7 +47,6 @@ export class RootComponent extends Component<RootProps, RootState> {
         .pipe(takeUntil(this.state.unsubscribe));
 
       const subscription = obs.subscribe((item) => {
-        console.log(unsubscribe);
         this.setState((state) => ({ items: [...state.items, item] }));
       });
 
