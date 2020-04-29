@@ -26,18 +26,19 @@ const config: webpack.Configuration = {
         use: [
           { loader: "style-loader" },
           {
+            loader: "@teamsupercell/typings-for-css-modules-loader",
+            options: {
+              formatter: "prettier",
+            },
+          },
+          {
             loader: "css-loader",
             options: {
               modules: {
                 auto: true,
                 localIdentName: "[path][name]__[local]--[hash:base64:5]",
               },
-            },
-          },
-          {
-            loader: "@teamsupercell/typings-for-css-modules-loader",
-            options: {
-              formatter: "prettier",
+              localsConvention: "camelCase",
             },
           },
           { loader: "sass-loader" },
