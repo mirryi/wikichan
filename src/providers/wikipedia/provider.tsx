@@ -112,7 +112,7 @@ export class WikipediaProvider implements Provider<WikipediaItem> {
       ["prop", "info|description|categories|extlinks|pageterms|extracts&exintro"],
       ["inprop", "url"],
       ["redirects", "1"],
-      ["titles", query],
+      ["titles", encodeURIComponent(query)],
     ]);
 
     for (const [k, v] of params) {
