@@ -1,14 +1,14 @@
 {
   "compilerOptions": {
-    "allowSyntheticDefaultImports": true,
     "baseUrl": ".",
     "esModuleInterop": true,
     "downlevelIteration": true,
     "inlineSources": true,
     "inlineSourceMap": true,
     "jsx": "react",
-    "lib": ["ES5", "DOM"],
-    "module": "CommonJS",
+    "lib": ["ES5", "DOM", "ES2019"],
+    "module": "ES2020",
+    "moduleResolution": "Node",
     "noImplicitAny": true,
     "noImplicitReturns": true,
     "noImplicitThis": true,
@@ -17,8 +17,11 @@
     "strictNullChecks": true,
     "strictFunctionTypes": true,
     "removeComments": true,
-    "target": "ES5",
-    "typeRoots": ["src/@types", "node_modules/@types"]
+    "target": "ES6",
+    "typeRoots": ["src/@types", "node_modules/@types"],
+    "paths": {
+      "*": ["src/@types/*"]
+    }
   },
   "include": ["src/*"],
   "exclude": ["node_modules"]
