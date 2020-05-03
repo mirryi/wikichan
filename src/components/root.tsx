@@ -36,6 +36,10 @@ export class RootComponent extends Component<RootProps, RootState> {
   }
 
   searchProviders(queries: string[]): void {
+    queries = [...new Set(queries.map((q) => q.trim()))].filter((q) => q !== "");
+    if (queries.length === 0) {
+      return;
+    }
     this.setState(
       (state) => {
         state.unsubscribe.next();
