@@ -27,7 +27,7 @@ if (self === top) {
 
   let lastSource: TextSource | null = null;
 
-  let interval = 0;
+  let interval: number;
 
   fromEvent(window, "mousemove").subscribe((e: Event) => {
     const me = e as MouseEvent;
@@ -47,7 +47,9 @@ if (self === top) {
         }
       }
 
-      clearInterval(interval);
+      if (interval) {
+        clearInterval(interval);
+      }
       floatRef.current?.close();
 
       let ts = getTextSourceFromPoint(x, y, [1, 0], [1, 0]);
