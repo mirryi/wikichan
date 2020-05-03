@@ -3,8 +3,6 @@ import webpack from "webpack";
 
 import TerserPlugin from "terser-webpack-plugin";
 
-const srcDir = path.resolve(__dirname, "src");
-
 const config: webpack.Configuration = {
   mode: "production",
   entry: {
@@ -15,11 +13,6 @@ const config: webpack.Configuration = {
       {
         test: /\.tsx?$/,
         use: ["ts-loader", "eslint-loader"],
-      },
-      {
-        test: /\.html$/,
-        use: "html-loader",
-        include: srcDir,
       },
       {
         test: /\.s[ac]ss$/,
@@ -73,12 +66,6 @@ const config: webpack.Configuration = {
     maxAssetSize: 5120000,
   },
   resolve: {
-    alias: {
-      "wordpos-web": path.resolve(
-        __dirname,
-        "node_modules/wordpos-web/dist/wordpos.min.js",
-      ),
-    },
     extensions: [".ts", ".tsx", ".js", ".css", ".sass", ".scss"],
   },
 };
