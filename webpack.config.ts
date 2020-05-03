@@ -48,7 +48,7 @@ const config: webpack.Configuration = {
     cluster: "empty",
   },
   output: {
-    path: path.resolve(__dirname, "target"),
+    path: path.resolve(__dirname, "dist"),
     filename: "[name].js",
   },
   optimization: {

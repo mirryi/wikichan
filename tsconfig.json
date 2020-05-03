@@ -12,7 +12,7 @@
     "noImplicitAny": true,
     "noImplicitReturns": true,
     "noImplicitThis": true,
-    "outDir": "target",
+    "outDir": "dist",
     "preserveConstEnums": true,
     "strictNullChecks": true,
     "strictFunctionTypes": true,
