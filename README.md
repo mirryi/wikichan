@@ -11,6 +11,15 @@ While holding the `alt` key, click on a word in any webpage. A popup
 will appear with information from the Wikipedia articles of that word
 and groups of words around it.
 
+## Contributing
+
+### To-Do
+
+- [ ] Manifest and build WebExtension
+- [ ] MusicBrainz API provider
+- [ ] English dictionary provider
+- [ ] Enable / disable providers
+
 ### Credits
 
 This project was inspired heavily by the extension
