@@ -5,7 +5,7 @@
   "author": "Eric Zhao",
   "license": "MIT",
   "scripts": {
-    "build": "cross-env TS_NODE_PROJECT=\"tsconfig-webpack.json\" webpack"
+    "build": "cross-env TS_NODE_PROJECT=\"build/webpack.tsconfig.json\" webpack"
   },
   "devDependencies": {
     "@teamsupercell/typings-for-css-modules-loader": "^2.1.1",
