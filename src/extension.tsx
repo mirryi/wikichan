@@ -26,11 +26,6 @@ if (self === top) {
   document.body.appendChild(tmp.childNodes[0]);
 
   let lastSource: TextSource | null = null;
-  const highlightDiv: HTMLDivElement = document.createElement("div");
-  document.body.appendChild(highlightDiv);
-  highlightDiv.style.background = "yellow";
-  highlightDiv.style.position = "absolute";
-  highlightDiv.style.zIndex = "-1";
 
   let interval = 0;
 
@@ -95,12 +90,6 @@ if (self === top) {
       }
 
       rootRef.current?.searchProviders(queries);
-
-      const newRect = initialSource.range.getBoundingClientRect();
-      highlightDiv.style.left = `${newRect.left}px`;
-      highlightDiv.style.top = `${newRect.top}px`;
-      highlightDiv.style.width = `${newRect.width}px`;
-      highlightDiv.style.height = `${newRect.height}px`;
 
       interval = window.setInterval(() => {
         const rootState = rootRef.current?.state;
