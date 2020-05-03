@@ -19,6 +19,8 @@ and groups of words around it.
 - [ ] MusicBrainz API provider
 - [ ] English dictionary provider
 - [ ] Enable / disable providers
+- [ ] Cache results (per provider)
+- [ ] Eliminate duplicate query strings before calling providers
 
 ### Credits
 
