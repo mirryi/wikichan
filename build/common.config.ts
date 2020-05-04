@@ -2,11 +2,6 @@ import path from "path";
 import webpack from "webpack";
 import TerserPlugin from "terser-webpack-plugin";
 
-export enum Mode {
-  development = "development",
-  production = "production",
-}
-
 const rootDir = path.resolve(__dirname, "..");
 export const dir = {
   root: rootDir,
@@ -14,10 +9,9 @@ export const dir = {
   dist: path.resolve(rootDir, "dist"),
 };
 
-function common(mode: Mode): webpack.Configuration {
-  const config: webpack.Configuration = {
-    mode: mode,
-    devtool: "inline-source-map",
+const common = (): webpack.Configuration => {
+  return {
+    mode: "production",
     resolve: {
       extensions: [".ts", ".tsx", ".js", ".css", ".sass", ".scss"],
     },
@@ -67,7 +61,6 @@ function common(mode: Mode): webpack.Configuration {
       ],
     },
   };
-  return config;
-}
+};
 
 export default common;

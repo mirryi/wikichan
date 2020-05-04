@@ -377,6 +377,13 @@
   resolved "https://registry.yarnpkg.com/@types/unist/-/unist-2.0.3.tgz#9c088679876f374eb5983f150d4787aa6fb32d7e"
   integrity sha512-FvUupuM3rlRsRtCN+fDudtmytGO6iHJuuRKS1Ss0pG5z8oX0diNEw94UEL7hgDbpN94rgaK5R7sWm6RrSkZuAQ==
 
+"@types/webpack-merge@^4.1.5":
+  version "4.1.5"
+  resolved "https://registry.yarnpkg.com/@types/webpack-merge/-/webpack-merge-4.1.5.tgz#265fbee4810474860d0f4c17e0107032881eed47"
+  integrity sha512-cbDo592ljSHeaVe5Q39JKN6Z4vMhmo4+C3JbksOIg+kjhKQYN2keGN7dvr/i18+dughij98Qrsfn1mU9NgVoCA==
+  dependencies:
+    "@types/webpack" "*"
+
 "@types/webpack-sources@*":
   version "0.1.7"
   resolved "https://registry.yarnpkg.com/@types/webpack-sources/-/webpack-sources-0.1.7.tgz#0a330a9456113410c74a5d64180af0cbca007141"
@@ -6532,6 +6539,13 @@ webpack-cli@^3.3.11:
     supports-color "6.1.0"
     v8-compile-cache "2.0.3"
     yargs "13.2.4"
+
+webpack-merge@^4.2.2:
+  version "4.2.2"
+  resolved "https://registry.yarnpkg.com/webpack-merge/-/webpack-merge-4.2.2.tgz#a27c52ea783d1398afd2087f547d7b9d2f43634d"
+  integrity sha512-TUE1UGoTX2Cd42j3krGYqObZbOD+xF7u28WB7tfUordytSjbWTIjK/8V0amkBfTYN4/pB/GIDlJZZ657BGG19g==
+  dependencies:
+    lodash "^4.17.15"
 
 webpack-sources@^1.4.0, webpack-sources@^1.4.1:
   version "1.4.3"
