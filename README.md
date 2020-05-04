@@ -7,7 +7,7 @@ displays a popup with a preview of the Wikipedia article.
 
 ### Usage
 
-While holding the `alt` key, click on a word in any webpage. A popup
+While holding the `ctrl` key, click on a word in any webpage. A popup
 will appear with information from the Wikipedia articles of that word
 and groups of words around it.
 
