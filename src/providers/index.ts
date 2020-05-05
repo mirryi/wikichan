@@ -16,7 +16,7 @@ export interface Item {
   provider: Provider<Item>;
 }
 
-export interface Provider<T extends Item> {
+export interface Provider<T extends Item = Item> {
   name(): string;
 
   search(queries: string[]): Observable<T>;

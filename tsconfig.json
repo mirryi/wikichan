@@ -18,8 +18,9 @@
     "strictFunctionTypes": true,
     "removeComments": true,
     "target": "ES6",
-    "typeRoots": ["src/@types", "node_modules/@types"],
+    "typeRoots": ["node_modules/@types"],
     "paths": {
+      "@common/*": ["src/common/*"],
       "@components/*": ["src/components/*"],
       "@providers/*": ["src/providers/*"],
       "@providers": ["src/providers/index.ts"]

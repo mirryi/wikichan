@@ -22,6 +22,7 @@ const common = (mode: Mode): webpack.Configuration => {
     resolve: {
       extensions: [".ts", ".tsx", ".js", ".css", ".sass", ".scss"],
       alias: {
+        "@common": path.resolve(dir.src, "common"),
         "@components": path.resolve(dir.src, "components"),
         "@providers": path.resolve(dir.src, "providers"),
       },

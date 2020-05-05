@@ -9,7 +9,7 @@ const config = (): Configuration => {
 
   return {
     entry: {
-      wikichan: path.resolve(dir.src, "extension"),
+      wikichan: path.resolve(dir.src, "userscript"),
     },
     output: {
       path: dist,
