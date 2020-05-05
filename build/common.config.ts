@@ -12,6 +12,7 @@ export const dir = {
 const common = (): webpack.Configuration => {
   return {
     mode: "production",
+    devtool: "inline-source-map",
     resolve: {
       extensions: [".ts", ".tsx", ".js", ".css", ".sass", ".scss"],
     },
