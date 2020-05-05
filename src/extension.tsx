@@ -18,8 +18,15 @@ if (self === top) {
   const frameWidth = 600;
   const frameHeight = 400;
 
+  const styles = document.getElementById("wikichan-styles") as HTMLDivElement;
+
   const ext = (
-    <Float ref={floatRef} frameWidth={frameWidth} frameHeight={frameHeight}>
+    <Float
+      ref={floatRef}
+      frameWidth={frameWidth}
+      frameHeight={frameHeight}
+      inlineStyles={Array.from(styles.children).map((c) => c.innerHTML)}
+    >
       <RootComponent ref={rootRef} providers={providers} />
     </Float>
   );
