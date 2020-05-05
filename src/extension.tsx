@@ -10,7 +10,10 @@ import { ProviderMerge } from "./provider";
 import { WikipediaLanguage, WikipediaProvider } from "./providers/wikipedia/provider";
 import { ExpandMode, getTextSourceFromPoint, TextSource } from "./selector";
 
-if (self === top) {
+(function (): void {
+  if (self !== top) {
+    return;
+  }
   const floatRef = React.createRef<Float>();
   const rootRef = React.createRef<RootComponent>();
 
@@ -121,4 +124,4 @@ if (self === top) {
       floatRef.current?.close();
     }
   });
-}
+})();
