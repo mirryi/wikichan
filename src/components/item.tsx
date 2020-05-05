@@ -1,6 +1,7 @@
-import * as React from "react";
-import { Component, ReactNode } from "react";
-import { Item } from "../provider";
+import { default as React, Component, ReactNode } from "react";
+
+import { Item } from "@providers";
+
 import styles from "./item.module.scss";
 
 export interface ItemProps {

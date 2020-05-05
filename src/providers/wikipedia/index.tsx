@@ -1,9 +1,10 @@
 import { sanitize } from "dompurify";
 import htmlReactParse from "html-react-parser";
 import { ReactNode } from "react";
-import { empty, from, Observable, merge } from "rxjs";
+import { empty, from, merge, Observable } from "rxjs";
 import { catchError, distinct, map } from "rxjs/operators";
-import { Item, Provider } from "../../provider";
+
+import { Item, Provider } from "../index";
 
 export class WikipediaItem implements Item {
   title: string;

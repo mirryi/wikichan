@@ -15,6 +15,10 @@ const common = (): webpack.Configuration => {
     devtool: "inline-source-map",
     resolve: {
       extensions: [".ts", ".tsx", ".js", ".css", ".sass", ".scss"],
+      alias: {
+        "@components": path.resolve(dir.src, "components"),
+        "@providers": path.resolve(dir.src, "providers"),
+      },
     },
     module: {
       rules: [

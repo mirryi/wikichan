@@ -1,5 +1,5 @@
-import * as React from "react";
-import { ChangeEvent, Component, ReactNode } from "react";
+import { default as React, ChangeEvent, Component, ReactNode } from "react";
+
 import styles from "./search.module.scss";
 
 export interface SearchProps {

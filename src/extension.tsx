@@ -4,10 +4,12 @@ import "regenerator-runtime/runtime";
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { fromEvent } from "rxjs";
-import { Float } from "./components/float";
-import { RootComponent } from "./components/root";
-import { ProviderMerge } from "./provider";
-import { WikipediaLanguage, WikipediaProvider } from "./providers/wikipedia/provider";
+
+import { Float } from "@components/float";
+import { RootComponent } from "@components/root";
+import { ProviderMerge } from "@providers";
+import { WikipediaLanguage, WikipediaProvider } from "@providers/wikipedia";
+
 import { ExpandMode, getTextSourceFromPoint, TextSource } from "./selector";
 
 (function (): void {

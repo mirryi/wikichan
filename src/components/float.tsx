@@ -1,6 +1,6 @@
-import * as React from "react";
-import { Component, CSSProperties, ReactNode } from "react";
+import { default as React, Component, CSSProperties, ReactNode } from "react";
 import Frame from "react-frame-component";
+
 import styles from "./float.module.scss";
 
 export interface FloatProps {
