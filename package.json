@@ -10,6 +10,8 @@
     "build:ujs": "cross-env TS_NODE_PROJECT=\"build/tsconfig.webpack.json\" TARGET=\"ujs\" webpack"
   },
   "devDependencies": {
+    "@babel/core": "^7.9.6",
+    "@babel/preset-env": "^7.9.6",
     "@teamsupercell/typings-for-css-modules-loader": "^2.1.1",
     "@types/dompurify": "^2.0.1",
     "@types/jquery": "^3.3.35",
@@ -21,6 +23,7 @@
     "@types/webpack-merge": "^4.1.5",
     "@typescript-eslint/eslint-plugin": "^2.30.0",
     "@typescript-eslint/parser": "^2.30.0",
+    "babel-loader": "^8.1.0",
     "cross-env": "^7.0.2",
     "css-loader": "^3.5.3",
     "eslint": "^6.8.0",
@@ -51,11 +54,13 @@
     "webpack-merge": "^4.2.2"
   },
   "dependencies": {
+    "core-js": "3",
     "dompurify": "^2.0.10",
     "html-react-parser": "^0.10.3",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-frame-component": "^4.1.1",
+    "regenerator-runtime": "^0.13.5",
     "rxjs": "^6.5.5"
   },
   "husky": {
@@ -64,6 +69,8 @@
     }
   },
   "lint-staged": {
-    "*.{js,ts,tsx}": ["eslint"]
+    "*.{js,ts,tsx}": [
+      "eslint"
+    ]
   }
 }

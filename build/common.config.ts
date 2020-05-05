@@ -19,7 +19,7 @@ const common = (): webpack.Configuration => {
       rules: [
         {
           test: /\.tsx?$/,
-          use: ["ts-loader", "eslint-loader"],
+          use: ["babel-loader", "ts-loader", "eslint-loader"],
         },
         {
           test: /\.s[ac]ss$/,
