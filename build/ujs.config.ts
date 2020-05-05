@@ -1,5 +1,6 @@
 import path from "path";
 import { Configuration } from "webpack";
+import UserscriptPlugin from "webpack-userscript";
 
 import { dir } from "./common.config";
 
@@ -14,6 +15,18 @@ const config = (): Configuration => {
       path: dist,
       filename: "[name].user.js",
     },
+    plugins: [
+      new UserscriptPlugin({
+        headers: {
+          name: "[name]",
+          description: "[description]",
+          author: "[author]",
+          version: "[version]",
+          include: "*://*/*",
+        },
+        pretty: false,
+      }),
+    ],
   };
 };
 

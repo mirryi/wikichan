@@ -2,6 +2,11 @@ import path from "path";
 import webpack from "webpack";
 import TerserPlugin from "terser-webpack-plugin";
 
+export enum Mode {
+  development = "development",
+  production = "production",
+}
+
 const rootDir = path.resolve(__dirname, "..");
 export const dir = {
   root: rootDir,
@@ -9,10 +14,11 @@ export const dir = {
   dist: path.resolve(rootDir, "dist"),
 };
 
-const common = (): webpack.Configuration => {
+const common = (mode: Mode): webpack.Configuration => {
+  const isDev = mode === Mode.development;
   return {
     mode: "production",
-    devtool: "inline-source-map",
+    devtool: isDev ? "inline-source-map" : undefined,
     resolve: {
       extensions: [".ts", ".tsx", ".js", ".css", ".sass", ".scss"],
       alias: {
@@ -80,6 +86,11 @@ const common = (): webpack.Configuration => {
           sourceMap: true,
         }),
       ],
+    },
+    performance: {
+      hints: isDev ? false : "warning",
+      maxAssetSize: 500000,
+      maxEntrypointSize: 500000,
     },
   };
 };

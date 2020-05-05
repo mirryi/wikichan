@@ -7,7 +7,9 @@
   "author": "Eric Zhao",
   "license": "MIT",
   "scripts": {
-    "build:ujs": "cross-env TS_NODE_PROJECT=\"build/tsconfig.webpack.json\" TARGET=\"ujs\" webpack"
+    "dev:ujs": "cross-env MODE=\"development\" TARGET=\"ujs\" yarn build",
+    "build:ujs": "cross-env TARGET=\"ujs\" yarn build",
+    "build": "cross-env TS_NODE_PROJECT=\"build/tsconfig.webpack.json\" webpack"
   },
   "devDependencies": {
     "@babel/core": "^7.9.6",
@@ -62,7 +64,8 @@
     "react-dom": "^16.13.1",
     "react-frame-component": "^4.1.1",
     "regenerator-runtime": "^0.13.5",
-    "rxjs": "^6.5.5"
+    "rxjs": "^6.5.5",
+    "webpack-userscript": "^2.5.3"
   },
   "husky": {
     "hooks": {
@@ -70,8 +73,6 @@
     }
   },
   "lint-staged": {
-    "*.{js,ts,tsx}": [
-      "eslint"
-    ]
+    "*.{js,ts,tsx}": ["eslint"]
   }
 }
