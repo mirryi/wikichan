@@ -2,7 +2,7 @@ import { sanitize } from "dompurify";
 import htmlReactParse from "html-react-parser";
 import { ReactNode } from "react";
 import { empty, from, merge, Observable } from "rxjs";
-import { catchError, distinct, map } from "rxjs/operators";
+import { catchError, distinct, filter, map } from "rxjs/operators";
 
 import { Item, Provider } from "../index";
 
@@ -45,10 +45,13 @@ export class WikipediaProvider implements Provider<WikipediaItem> {
         })
         .then((json) => {
           return json["query"] as MediaWikiResponse;
-        });
+        })
+        .catch(() => null);
 
       return from(req).pipe(
-        map<MediaWikiResponse, MediaWikiPage>((data) => {
+        filter((v) => !!v),
+        map((data) => {
+          data = data as MediaWikiResponse;
           const seen: Map<string, boolean> = new Map();
           const entries: MediaWikiPage[] = Object.entries(data.pages)
             .filter(([k]) => {
