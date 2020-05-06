@@ -9,8 +9,10 @@
   "scripts": {
     "dev:ujs": "cross-env MODE=\"development\" TARGET=\"ujs\" yarn build",
     "dev:firefox": "cross-env MODE=\"development\" TARGET=\"firefox\" yarn build",
+    "dev:chrome": "cross-env MODE=\"development\" TARGET=\"chrome\" yarn build",
     "build:ujs": "cross-env TARGET=\"ujs\" yarn build",
     "build:firefox": "cross-env TARGET=\"firefox\" yarn build",
+    "build:chrome": "cross-env TARGET=\"chrome\" yarn build",
     "build": "cross-env TS_NODE_PROJECT=\"build/tsconfig.webpack.json\" webpack"
   },
   "devDependencies": {
@@ -77,8 +79,6 @@
     }
   },
   "lint-staged": {
-    "*.{js,ts,tsx}": [
-      "eslint"
-    ]
+    "*.{js,ts,tsx}": ["eslint"]
   }
 }
