@@ -4,15 +4,13 @@ import { fromEvent } from "rxjs";
 
 import { Float } from "@components/float";
 import { RootComponent } from "@components/root";
-import { Provider, ProviderMerge } from "@providers";
+import { ProviderMerge } from "@providers";
 
 import { ExpandMode, getTextSourceFromPoint, TextSource } from "./selector";
 
-export function register(w: Window, providers: Provider[]): void {
-  const providerMerge = new ProviderMerge(providers);
-
+export function register(w: Window, providers: ProviderMerge): void {
   const doc = w.document;
-  const [floatRef, rootRef] = injectFrame(doc, providerMerge);
+  const [floatRef, rootRef] = injectFrame(doc, providers);
 
   let lastSource: TextSource | undefined = undefined;
   let interval: number;
