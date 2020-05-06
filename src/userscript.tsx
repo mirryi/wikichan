@@ -2,13 +2,23 @@ import "core-js/stable";
 import "regenerator-runtime/runtime";
 
 import { register } from "@common/foreground";
+import { Provider } from "@providers";
 import { WikipediaLanguage, WikipediaProvider } from "@providers/wikipedia";
+import { OwlBotProvider } from "@providers/owlbot";
 
 (function (): void {
   if (self !== top) {
     return;
   }
 
-  const providers = [new WikipediaProvider(WikipediaLanguage.EN)];
+  const providers: Provider[] = [new WikipediaProvider(WikipediaLanguage.EN)];
+
+  const owlbotToken = process.env.OWLBOT_TOKEN;
+  if (!owlbotToken) {
+    console.warn("OwlBot API token not provided; cannot query OwlBot");
+  } else {
+    providers.push(new OwlBotProvider(owlbotToken as string));
+  }
+
   register(window, providers);
 })();

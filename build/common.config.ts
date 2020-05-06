@@ -1,5 +1,6 @@
 import path from "path";
 import webpack from "webpack";
+import DotenvPlugin from "dotenv-webpack";
 import TerserPlugin from "terser-webpack-plugin";
 
 export enum Mode {
@@ -27,6 +28,7 @@ const common = (mode: Mode): webpack.Configuration => {
         "@providers": path.resolve(dir.src, "providers"),
       },
     },
+    plugins: [new DotenvPlugin()],
     module: {
       rules: [
         {
