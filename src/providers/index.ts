@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import { merge, Observable, from, of } from "rxjs";
-import { mergeMap, tap } from "rxjs/operators";
+import { mergeMap, tap, distinct } from "rxjs/operators";
 
 import { Cache } from "@common/cache";
 
@@ -80,13 +80,17 @@ export abstract class CachedProvider<T extends Item> implements Provider<T> {
             const serialized = this.serializeItem(item);
             this.cache.set(this.key(item.searchTerm), serialized);
           }),
+          distinct((item) => this.distinctProperty(item)),
         );
       }),
     );
   }
 
-  abstract serializeItem(item: T): string;
-  abstract deserializeItem(str: string): T;
+  protected abstract serializeItem(item: T): string;
+  protected abstract deserializeItem(str: string): T;
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  protected abstract distinctProperty(item: T): any;
 
   abstract key(k: string): string;
 }

@@ -24,6 +24,11 @@ export class CachedWikipediaProvider extends CachedProvider<WikipediaItem> {
     return item;
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  distinctProperty(item: WikipediaItem): any {
+    return item.pageid;
+  }
+
   key(k: string): string {
     return "wikipedia_" + k;
   }
