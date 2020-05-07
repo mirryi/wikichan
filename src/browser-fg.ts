@@ -18,15 +18,19 @@ class BrowserCache implements Cache {
     this.prefix = prefix;
   }
 
-  set(key: string, value: BrowserCacheValue): Promise<void> {
+  async set(key: string, value: string): Promise<void> {
     const item: { [key: string]: BrowserCacheValue } = {};
     item[key] = value;
 
     return browser.storage.local.set(item);
   }
 
-  get(key: string): Promise<BrowserCacheValue> {
+  async get(key: string): Promise<string | undefined> {
     return browser.storage.local.get(key).then((v) => v[key]);
+  }
+
+  async list(): Promise<Record<string, string>> {
+    return browser.storage.local.get(null);
   }
 }
 

@@ -6,6 +6,8 @@ import { catchError, distinct, filter, map } from "rxjs/operators";
 
 import { Item, Provider } from "../index";
 
+export * from "./cached";
+
 export class WikipediaItem implements Item {
   title: string;
   description: string;

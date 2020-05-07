@@ -1,16 +1,12 @@
 import "core-js/stable";
 import "regenerator-runtime/runtime";
+import "gm4-polyfill";
 
 import { Cache } from "@common/cache";
 import { register } from "@common/foreground";
 import { Provider, ProviderMerge } from "@providers";
-import { WikipediaLanguage, WikipediaProvider } from "@providers/wikipedia";
+import { WikipediaLanguage, CachedWikipediaProvider } from "@providers/wikipedia";
 import { OwlBotProvider } from "@providers/owlbot";
-
-/* eslint-disable @typescript-eslint/camelcase */
-declare function GM_setValue(key: string, val: GMValue): Promise<void>;
-declare function GM_getValue(key: string): Promise<GMValue>;
-/* eslint-enable @typescript-eslint/camelcase */
 
 type GMValue = string | number | boolean;
 
@@ -21,14 +17,38 @@ class GMCache implements Cache {
     this.prefix = prefix;
   }
 
-  set(key: string, val: GMValue): Promise<void> {
-    return GM_setValue(key, val).then(() => {
-      return;
-    });
+  async set(key: string, val: string): Promise<void> {
+    return GM.setValue(`${this.prefix}_${key}`, val);
   }
 
-  async get(key: string): Promise<GMValue> {
-    return GM_getValue(key);
+  async get(key: string): Promise<string | undefined> {
+    return GM.getValue(`${this.prefix}_${key}`);
+  }
+
+  async list(): Promise<Record<string, string>> {
+    const list = await GM.listValues();
+
+    const tuples = await Promise.all(
+      list.map(
+        async (k): Promise<[string, string]> => {
+          const get = await GM.getValue(k);
+          let val: string;
+          if (!get) {
+            val = "";
+          } else {
+            val = String(get);
+          }
+          return [k, val];
+        },
+      ),
+    );
+
+    const record: Record<string, string> = {};
+    for (const [k, v] of tuples) {
+      record[k] = v;
+    }
+
+    return record;
   }
 }
 
@@ -37,7 +57,11 @@ class GMCache implements Cache {
     return;
   }
 
-  const providers: Provider[] = [new WikipediaProvider(WikipediaLanguage.EN)];
+  const cache = new GMCache("");
+
+  const providers: Provider[] = [
+    new CachedWikipediaProvider(WikipediaLanguage.EN, cache),
+  ];
   const providerMerge = new ProviderMerge(providers);
 
   const owlbotToken = process.env.OWLBOT_TOKEN;

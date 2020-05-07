@@ -20,6 +20,7 @@
     "target": "ES6",
     "typeRoots": ["node_modules/@types"],
     "paths": {
+      "gm4-polyfill": ["lib/gm4-polyfill/gm4-polyfill.js"],
       "@common/*": ["src/common/*"],
       "@components/*": ["src/components/*"],
       "@providers/*": ["src/providers/*"],

@@ -12,6 +12,7 @@ const rootDir = path.resolve(__dirname, "..");
 export const dir = {
   root: rootDir,
   src: path.resolve(rootDir, "src"),
+  lib: path.resolve(rootDir, "lib"),
   dist: path.resolve(rootDir, "dist"),
 };
 
@@ -23,6 +24,7 @@ const common = (mode: Mode): webpack.Configuration => {
     resolve: {
       extensions: [".ts", ".tsx", ".js", ".css", ".sass", ".scss"],
       alias: {
+        "gm4-polyfill": path.resolve(dir.lib, "gm4-polyfill", "gm4-polyfill.js"),
         "@common": path.resolve(dir.src, "common"),
         "@components": path.resolve(dir.src, "components"),
         "@providers": path.resolve(dir.src, "providers"),
