@@ -6,7 +6,7 @@
     "inlineSources": true,
     "inlineSourceMap": true,
     "jsx": "react",
-    "lib": ["ES5", "DOM", "ES2019"],
+    "lib": ["DOM", "ES2020"],
     "module": "ES2020",
     "moduleResolution": "Node",
     "noImplicitAny": true,
