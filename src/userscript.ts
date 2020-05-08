@@ -6,7 +6,7 @@ import { Cache } from "@common/cache";
 import { register } from "@common/foreground";
 import { Provider, ProviderMerge } from "@providers";
 import { WikipediaLanguage, CachedWikipediaProvider } from "@providers/wikipedia";
-import { OwlBotProvider } from "@providers/owlbot";
+import { CachedOwlBotProvider } from "@providers/owlbot";
 
 type GMValue = string | number | boolean;
 
@@ -92,9 +92,10 @@ class GMCache implements Cache {
   }
 
   const cache = new GMCache("");
+  const defaultCacheDuration = 24 * 60 * 60;
 
   const providers: Provider[] = [
-    new CachedWikipediaProvider(WikipediaLanguage.EN, cache, 24 * 60 * 60),
+    new CachedWikipediaProvider(WikipediaLanguage.EN, cache, defaultCacheDuration),
   ];
   const providerMerge = new ProviderMerge(providers);
 
@@ -102,7 +103,9 @@ class GMCache implements Cache {
   if (!owlbotToken) {
     console.warn("OwlBot API token not provided; cannot query OwlBot");
   } else {
-    providers.push(new OwlBotProvider(owlbotToken as string));
+    providers.push(
+      new CachedOwlBotProvider(owlbotToken as string, cache, defaultCacheDuration),
+    );
   }
 
   register(window, providerMerge);

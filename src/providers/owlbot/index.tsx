@@ -6,6 +6,8 @@ import { Provider, Item } from "@providers";
 
 import styles from "./index.module.scss";
 
+export * from "./cached";
+
 export interface OwlBotItem extends Item {
   title: string;
   description: string;
