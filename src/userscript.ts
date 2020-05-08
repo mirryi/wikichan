@@ -44,7 +44,14 @@ class GMCache implements Cache {
             if (val === undefined) {
               return undefined;
             }
-            return [k, val];
+
+            const key = this.parseRawKey(k);
+            if (!key) {
+              await this.remove(k);
+              return undefined;
+            }
+
+            return [key, val];
           },
         ),
       )
@@ -79,6 +86,14 @@ class GMCache implements Cache {
     }
 
     return parts[1];
+  }
+
+  private parseRawKey(rawKey: string): string | undefined {
+    const prefix = this.prefix + "_";
+    if (rawKey.length <= prefix.length || rawKey.indexOf(prefix) !== 0) {
+      return undefined;
+    }
+    return rawKey.substring(prefix.length + 1);
   }
 
   private async remove(fullKey: string): Promise<void> {
