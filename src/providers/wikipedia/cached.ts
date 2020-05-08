@@ -4,8 +4,8 @@ import { CachedProvider } from "@providers";
 import { WikipediaProvider, WikipediaLanguage, WikipediaItem } from "./index";
 
 export class CachedWikipediaProvider extends CachedProvider<WikipediaItem> {
-  constructor(language: WikipediaLanguage, cache: Cache) {
-    super(new WikipediaProvider(language), cache);
+  constructor(language: WikipediaLanguage, cache: Cache, cacheDuration: number) {
+    super(new WikipediaProvider(language), cache, cacheDuration);
     this.cache = cache;
   }
 

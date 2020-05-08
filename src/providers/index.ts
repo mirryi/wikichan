@@ -43,15 +43,17 @@ export class ProviderMerge {
 
 export abstract class CachedProvider<T extends Item> implements Provider<T> {
   cache: Cache;
+  cacheDuration: number;
   provider: Provider<T>;
 
   name(): string {
     return this.provider.name();
   }
 
-  constructor(provider: Provider<T>, cache: Cache) {
+  constructor(provider: Provider<T>, cache: Cache, cacheDuration: number) {
     this.provider = provider;
     this.cache = cache;
+    this.cacheDuration = cacheDuration;
   }
 
   search(queries: string[]): Observable<T> {
@@ -78,7 +80,7 @@ export abstract class CachedProvider<T extends Item> implements Provider<T> {
         return this.provider.search([v as string]).pipe(
           tap((item) => {
             const serialized = this.serializeItem(item);
-            this.cache.set(this.key(item.searchTerm), serialized);
+            this.cache.set(this.key(item.searchTerm), serialized, this.cacheDuration);
           }),
           distinct((item) => this.distinctProperty(item)),
         );
