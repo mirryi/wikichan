@@ -1,5 +1,69 @@
-import { Cache } from "@common/cache";
 import { browser } from "webextension-polyfill-ts";
+
+import { Cache } from "@common/cache";
+
+import { RuntimeMessage } from "./message";
+
+export type CacheMessage = CacheGetMessage | CacheSetMessage | CacheListMessage;
+
+export interface CacheGetMessage extends RuntimeMessage {
+  kind: "cache::get";
+  key: string;
+}
+
+export interface CacheSetMessage extends RuntimeMessage {
+  kind: "cache::set";
+  key: string;
+  value: string;
+  duration: number;
+}
+
+export interface CacheListMessage extends RuntimeMessage {
+  kind: "cache::list";
+}
+
+export function isCacheGetMessage(object: RuntimeMessage): object is CacheGetMessage {
+  return object.kind === "cache::get";
+}
+
+export function isCacheSetMessage(object: RuntimeMessage): object is CacheSetMessage {
+  return object.kind === "cache::set";
+}
+
+export function isCacheListMessage(object: RuntimeMessage): object is CacheListMessage {
+  return object.kind === "cache::list";
+}
+
+export class CacheMessenger implements Cache {
+  async set(key: string, val: string, duration: number): Promise<void> {
+    const message: CacheSetMessage = {
+      kind: "cache::set",
+      key: key,
+      value: val,
+      duration: duration,
+    };
+    return await browser.runtime.sendMessage(message).then(() => {
+      return;
+    });
+  }
+
+  async get(key: string): Promise<string | undefined> {
+    const message: CacheGetMessage = {
+      kind: "cache::get",
+      key: key,
+    };
+
+    return await browser.runtime.sendMessage(message);
+  }
+
+  async list(): Promise<Record<string, string>> {
+    const message: CacheListMessage = {
+      kind: "cache::list",
+    };
+
+    return await browser.runtime.sendMessage(message);
+  }
+}
 
 export class BrowserCache implements Cache {
   prefix: string;
