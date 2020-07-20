@@ -15,11 +15,11 @@ and groups of words around it.
 
 ### To-Do
 
--   [ ] Manifest and build WebExtension
+-   [x] Manifest and build WebExtension
 -   [ ] MusicBrainz API provider
--   [ ] English dictionary provider
+-   [x] English dictionary provider
 -   [ ] Enable / disable providers
--   [ ] Cache results (per provider)
+-   [x] Cache results (per provider)
 -   [x] Eliminate duplicate query strings before calling providers
 
 ### Credits
