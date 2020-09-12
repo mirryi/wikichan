@@ -1,3 +1,6 @@
+# scss typescript definitions
+*.scss.d.ts
+
 # Logs
 logs
 *.log
