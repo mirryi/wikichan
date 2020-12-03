@@ -1,7 +1,17 @@
 .frame {
+  all: revert;
   background: rgb(253, 253, 253);
   border: 1px solid #999;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  overflow-y: scroll;
   position: fixed;
   z-index: 9999;
+
+  &::before,
+  &::after,
+  *,
+  *::before,
+  *::after {
+    all: revert;
+  }
 }

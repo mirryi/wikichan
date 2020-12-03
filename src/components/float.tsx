@@ -1,12 +1,12 @@
 import { default as React, Component, CSSProperties, ReactNode } from "react";
-import Frame from "react-frame-component";
+// import Frame from "react-frame-component";
 
 import styles from "./float.module.scss";
 
 export interface FloatProps {
   frameWidth: number;
   frameHeight: number;
-  inlineStyles: string[];
+  inlineStyles?: string[];
 }
 
 export interface FloatState {
@@ -36,14 +36,14 @@ export class Float extends Component<FloatProps, FloatState> {
       top: this.state.frameTop,
     };
 
-    const head = this.props.inlineStyles.map((style) => (
-      <style key={style}>{style}</style>
-    ));
+    // const head = this.props.inlineStyles.map((style) => (
+    // <style key={style}>{style}</style>
+    // ));
 
     return (
-      <Frame head={head} className={styles.frame} style={style} frameBorder="0">
+      <div className={styles.frame} style={style}>
         {this.props.children}
-      </Frame>
+      </div>
     );
   }
 

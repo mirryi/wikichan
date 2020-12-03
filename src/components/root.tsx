@@ -81,7 +81,7 @@ export class RootComponent extends Component<RootProps, RootState> {
           }}
         />
 
-        <div className={styles.results}>{itemRenders}</div>
+        <div>{itemRenders}</div>
       </div>
     );
   }
