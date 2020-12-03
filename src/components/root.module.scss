@@ -1,7 +1,10 @@
+@import "./shared";
+
 $font-stack: "Segoe UI", sans-serif;
 
 .wrapper {
-  box-sizing: border-box;
+  box-sizing: border-box !important;
   font-family: $font-stack !important;
-  font-size: 0.8rem;
+  font-size: 0.8 * $base-size !important;
+  padding: 10px !important;
 }

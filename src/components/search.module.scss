@@ -1,5 +1,7 @@
+@import "./shared";
+
 .searchWrapper {
-  font-size: 0.9rem;
-  margin-bottom: 5px;
-  text-align: right;
+  font-size: 0.9 * $base-size !important;
+  margin-bottom: 5px !important;
+  text-align: right !important;
 }

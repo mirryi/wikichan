@@ -71,6 +71,7 @@
     "wext-manifest-loader": "^1.1.6"
   },
   "dependencies": {
+    "cleanslate": "git+https://github.com/premasagar/cleanslate",
     "core-js": "3",
     "dompurify": "^2.0.10",
     "html-react-parser": "^0.10.3",

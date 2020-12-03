@@ -1,118 +1,120 @@
+@import "./shared";
+
 %button {
-  background-color: #eee;
-  border: 0;
-  border-radius: 5px;
-  cursor: context-menu;
-  font-size: 0.8rem;
-  font-weight: bold;
-  padding: 3px;
-  text-align: center;
+  background-color: #eee !important;
+  border: 0 !important;
+  border-radius: 5px !important;
+  cursor: context-menu !important;
+  font-size: 0.8 * $base-size !important;
+  font-weight: bold !important;
+  padding: 3px !important;
+  text-align: center !important;
 }
 
 %url {
   @extend %button;
 
   a {
-    text-decoration: none;
+    text-decoration: none !important;
   }
 }
 
 .bold {
-  font-weight: bold;
+  font-weight: bold !important;
 }
 
 .header {
-  background-color: rgba(255, 255, 255, 0.93);
-  margin: 7px 5px;
-  padding-top: 5px;
-  // position: sticky;
-  top: 0;
+  background-color: rgba(255, 255, 255, 0.93) !important;
+  margin: 7px 5px !important;
+  padding-top: 5px !important;
+  position: sticky !important;
+  top: 0 !important;
 }
 
 .top {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 3px;
+  display: flex !important;
+  justify-content: space-between !important;
+  margin-bottom: 3px !important;
 }
 
 .title {
-  color: #000;
-  font-size: 1.4rem;
-  font-weight: bold;
-  overflow: auto;
-  text-decoration: none;
-  width: 45%;
+  color: #000 !important;
+  font-size: 1.4 * $base-size !important;
+  font-weight: bold !important;
+  overflow: auto !important;
+  text-decoration: none !important;
+  width: 45% !important;
 }
 
 .tag {
   @extend %button;
 
-  background: #ececec;
-  color: #3d3d3d;
-  cursor: pointer;
-  font-size: 0.6rem;
-  font-stretch: normal;
-  margin-right: 4px;
-  text-decoration: none;
+  background: #ececec !important;
+  color: #3d3d3d !important;
+  cursor: pointer !important;
+  font-size: 0.6 * $base-size !important;
+  font-stretch: normal !important;
+  margin-right: 4px !important;
+  text-decoration: none !important;
 }
 
 .providerName {
-  color: #666;
-  margin-bottom: 3px;
+  color: #666 !important;
+  margin-bottom: 3px !important;
 }
 
 .searchTerm {
   @extend %button;
 
-  font-style: italic;
-  font-weight: normal;
+  font-style: italic !important;
+  font-weight: normal !important;
 }
 
 .content {
-  display: block;
-  margin: 15px 30px;
+  display: block !important;
+  margin: 15px 30px !important;
 }
 
 .description {
-  font-size: 1em;
-  font-style: italic;
+  font-size: 0.8 * $base-size !important;
+  font-style: italic !important;
 }
 
 .longDescription {
-  font-size: 1em;
+  font-size: $base-size !important;
 }
 
 .extra {
-  background-color: #f1f1f1;
-  border-radius: 5px;
-  padding: 5px;
+  background-color: #f1f1f1 !important;
+  border-radius: 5px !important;
+  padding: 5px !important;
 
   .extraSummary {
-    cursor: pointer;
-    font-weight: bold;
+    cursor: pointer !important;
+    font-weight: bold !important;
   }
 
   .list {
-    list-style-type: none;
-    padding-left: 15px;
+    list-style-type: none !important;
+    padding-left: 15px !important;
 
     .listItem {
-      display: block;
-      margin-bottom: 3px;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      width: 25em;
+      display: block !important;
+      margin-bottom: 3px !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+      white-space: nowrap !important;
+      width: 25 * $base-size !important;
     }
   }
 
   .link {
-    $link-color: #5eb1e9;
+    $link-color: #5eb1e9 !important;
 
-    color: $link-color;
+    color: $link-color !important;
 
     a {
-      color: $link-color;
+      color: $link-color !important;
     }
   }
 }

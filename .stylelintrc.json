@@ -10,6 +10,7 @@
     "selector-class-pattern": null,
     "order/order": ["custom-properties", "declarations"],
     "order/properties-alphabetical-order": true,
-    "prettier/prettier": true
+    "prettier/prettier": true,
+    "scss/at-extend-no-missing-placeholder": false
   }
 }

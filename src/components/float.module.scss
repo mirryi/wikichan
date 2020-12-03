@@ -1,17 +1,20 @@
-.frame {
-  all: revert;
-  background: rgb(253, 253, 253);
-  border: 1px solid #999;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-  overflow-y: scroll;
-  position: fixed;
-  z-index: 9999;
+// @import "~cleanslate/cleanslate";
 
-  &::before,
-  &::after,
-  *,
-  *::before,
-  *::after {
-    all: revert;
-  }
+.frame {
+  // @extend .cleanslate;
+
+  background: rgb(253, 253, 253) !important;
+  border: 1px solid #999 !important;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5) !important;
+  overflow-y: scroll !important;
+  position: fixed !important;
+  z-index: 9999 !important;
+}
+
+.frameVisible {
+  visibility: visible !important;
+}
+
+.frameHidden {
+  visibility: hidden !important;
 }

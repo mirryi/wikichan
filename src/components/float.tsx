@@ -28,20 +28,19 @@ export class Float extends Component<FloatProps, FloatState> {
 
   render(): ReactNode {
     const style: CSSProperties = {
-      visibility: this.state.frameVisibility ? "visible" : "hidden",
-      position: "fixed",
       width: this.props.frameWidth,
       height: this.props.frameHeight,
       left: this.state.frameLeft,
       top: this.state.frameTop,
     };
 
-    // const head = this.props.inlineStyles.map((style) => (
-    // <style key={style}>{style}</style>
-    // ));
+    const classes = [
+      styles.frame,
+      this.state.frameVisibility ? styles.frameVisible : styles.frameHidden,
+    ];
 
     return (
-      <div className={styles.frame} style={style}>
+      <div className={classes.join(" ")} style={style}>
         {this.props.children}
       </div>
     );
