@@ -67,7 +67,7 @@ export function register(w: Window, providers: ProviderMerge): void {
   // Click handler to close frame
   fromEvent(w, "click").subscribe((e: Event): void => {
     const me = e as MouseEvent;
-    if (!me.ctrlKey) {
+    if (!me.ctrlKey && !floatRef.current?.containsPoint(me.x, me.y)) {
       floatRef.current?.close();
     }
   });

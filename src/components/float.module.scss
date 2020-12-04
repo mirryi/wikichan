@@ -1,14 +1,21 @@
-// @import "~cleanslate/cleanslate";
+@import "~cleanslate/cleanslate";
 
 .frame {
-  // @extend .cleanslate;
-
   background: rgb(253, 253, 253) !important;
   border: 1px solid #999 !important;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5) !important;
   overflow-y: scroll !important;
   position: fixed !important;
   z-index: 9999 !important;
+
+  * {
+    color: initial !important;
+    direction: initial !important;
+    line-height: initial !important;
+    list-style-type: initial !important;
+    text-align: initial !important;
+    text-decoration: initial !important;
+  }
 }
 
 .frameVisible {

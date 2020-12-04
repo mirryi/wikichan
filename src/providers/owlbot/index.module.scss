@@ -1,6 +1,8 @@
+@import "./shared";
+
 .example {
   color: #444;
-  font-size: 0.8rem;
+  font-size: 0.7 * $base-size;
 }
 
 .definition {

@@ -37,6 +37,7 @@ export class Float extends Component<FloatProps, FloatState> {
     const classes = [
       styles.frame,
       this.state.frameVisibility ? styles.frameVisible : styles.frameHidden,
+      "cleanslate",
     ];
 
     return (
@@ -72,6 +73,15 @@ export class Float extends Component<FloatProps, FloatState> {
 
   hideFrame(): void {
     this.setState({ frameVisibility: false });
+  }
+
+  containsPoint(x: number, y: number): boolean {
+    return (
+      x > this.state.frameLeft &&
+      x < this.state.frameLeft + this.props.frameWidth &&
+      y > this.state.frameTop &&
+      y < this.state.frameTop + this.props.frameHeight
+    );
   }
 
   private calculateOffset(
