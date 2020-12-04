@@ -1,4 +1,3 @@
-@import "~cleanslate/cleanslate";
 @import "./shared";
 
 .frame {
@@ -9,17 +8,6 @@
   position: fixed !important;
   scrollbar-width: thin !important;
   z-index: 9999 !important;
-
-  * {
-    color: initial !important;
-    direction: initial !important;
-    font-style: initial !important;
-    font-weight: initial !important;
-    line-height: initial !important;
-    list-style-type: initial !important;
-    text-align: initial !important;
-    text-decoration: initial !important;
-  }
 
   .scrollTopButton {
     @extend %button;

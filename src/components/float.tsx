@@ -39,13 +39,13 @@ class Float extends Component<FloatProps, FloatState> {
     const classes = [
       styles.frame,
       this.state.frameVisibility ? styles.frameVisible : styles.frameHidden,
-      "cleanslate",
     ];
 
     const toTopStyle = {
       left: this.state.frameLeft + this.props.frameWidth - 30,
       top: this.state.frameTop + this.props.frameHeight - 30,
     };
+
     return (
       <div className={classes.join(" ")} style={style} ref={this.innerRef}>
         {this.props.children}

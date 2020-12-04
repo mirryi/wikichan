@@ -1,6 +1,7 @@
 import React, { RefObject } from "react";
 import ReactDOM from "react-dom";
 import { fromEvent } from "rxjs";
+import root from "react-shadow";
 
 import Float from "@components/float";
 import RootComponent from "@components/root";
@@ -92,10 +93,18 @@ function injectFrame(
   const frameWidth = 600;
   const frameHeight = 400;
 
+  const stylesDiv = doc.getElementById("wikichan-styles") as HTMLDivElement;
+  const inlineStyles = Array.from(stylesDiv.children).map((st, i) => (
+    <style key={i}>{st.innerHTML}</style>
+  ));
+
   const ext = (
-    <Float ref={floatRef} frameWidth={frameWidth} frameHeight={frameHeight}>
-      <RootComponent ref={rootRef} providers={providerMerge} />
-    </Float>
+    <root.div>
+      {inlineStyles}
+      <Float ref={floatRef} frameWidth={frameWidth} frameHeight={frameHeight}>
+        <RootComponent ref={rootRef} providers={providerMerge} />
+      </Float>
+    </root.div>
   );
 
   const tmp = doc.createElement("div");

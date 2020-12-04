@@ -42,6 +42,20 @@ const common = (mode: Mode): webpack.Configuration => {
           use: [
             {
               loader: "style-loader",
+              options: {
+                /* eslint-disable */
+                insert: function insert(element) {
+                  var id = "wikichan-styles";
+                  var parent = document.getElementById(id);
+                  if (!parent) {
+                    parent = document.createElement("div");
+                    parent.id = id;
+                    document.querySelector("head").appendChild(parent);
+                  }
+                  parent.appendChild(element);
+                },
+                /* eslint-enable */
+              },
             },
             {
               loader: "@teamsupercell/typings-for-css-modules-loader",
