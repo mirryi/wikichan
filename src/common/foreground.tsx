@@ -87,16 +87,8 @@ function injectFrame(
   const frameWidth = 600;
   const frameHeight = 400;
 
-  // const stylesDiv = doc.getElementById("wikichan-styles") as HTMLDivElement;
-  // const inlineStyles = Array.from(stylesDiv.children).map((c) => c.innerHTML);
-
   const ext = (
-    <Float
-      ref={floatRef}
-      frameWidth={frameWidth}
-      frameHeight={frameHeight}
-      // inlineStyles={inlineStyles}
-    >
+    <Float ref={floatRef} frameWidth={frameWidth} frameHeight={frameHeight}>
       <RootComponent ref={rootRef} providers={providerMerge} />
     </Float>
   );
