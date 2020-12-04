@@ -48,14 +48,15 @@ class ItemComponent extends Component<ItemProps> {
                 </span>
               }
               theme="light"
-              position="right"
+              position="bottom"
               arrow={true}
               animateFill={false}
               stickyDuration={false}
               duration={0}
+              className={styles.title}
             >
               <a
-                className={styles.title}
+                // className={styles.title}
                 target="_blank"
                 rel="noopener noreferrer"
                 href={data.urls ? data.urls[0].toString() : ""}
@@ -77,7 +78,7 @@ class ItemComponent extends Component<ItemProps> {
           </div>
           <div>{longDescription}</div>
 
-          {urlsRender}
+          <div>{urlsRender}</div>
         </div>
       </div>
     );
@@ -136,31 +137,27 @@ class ItemComponent extends Component<ItemProps> {
 
   renderURLs(): ReactNode {
     const data = this.props.data;
-    return !data.urls ? null : (
-      <div>
+    if (!data.urls) {
+      return null;
+    }
+
+    const links = [...data.urls.slice(1)].map((url) => (
+      <li
+        key={"url:" + url.toString()}
+        className={[styles.listItem, styles.link].join(" ")}
+      >
+        <a target="_blank" href={url} rel="noopener noreferrer" title={url}>
+          {url}
+        </a>
+      </li>
+    ));
+    return (
+      <>
         <details className={styles.extra}>
           <summary className={styles.extraSummary}>external links</summary>
-          <ul className={styles.list}>
-            {data.urls
-              ? [...data.urls.slice(1)].map((url) => (
-                  <li
-                    key={"url:" + url.toString()}
-                    className={[styles.listItem, styles.link].join(" ")}
-                  >
-                    <a
-                      target="_blank"
-                      href={url.toString()}
-                      rel="noopener noreferrer"
-                      title={url.toString()}
-                    >
-                      {url.toString()}
-                    </a>
-                  </li>
-                ))
-              : null}
-          </ul>
+          <ul className={styles.list}>{links}</ul>
         </details>
-      </div>
+      </>
     );
   }
 }
