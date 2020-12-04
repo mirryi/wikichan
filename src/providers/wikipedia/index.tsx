@@ -36,21 +36,7 @@ export class WikipediaProvider implements Provider<WikipediaItem> {
 
   search(queries: string[]): Observable<WikipediaItem> {
     const observables = queries.map((q) => {
-      const url = this.queryString(q);
-      const req = fetch(url.toString())
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        .then((res: Response): any => {
-          if (!res.ok) {
-            Promise.reject("unsuccessful request");
-          }
-
-          return res.json();
-        })
-        .then((json) => {
-          return json["query"] as MediaWikiResponse;
-        })
-        .catch(() => null);
-
+      const req = this.request(q);
       return from(req).pipe(
         filter((v) => !!v),
         map((data) => {
@@ -108,6 +94,22 @@ export class WikipediaProvider implements Provider<WikipediaItem> {
       );
     });
     return merge(...observables).pipe(distinct((item) => item.pageid));
+  }
+
+  async request(query: string): Promise<MediaWikiResponse | null> {
+    const url = this.queryString(query);
+    try {
+      const res = await fetch(url.toString());
+
+      if (!res.ok) {
+        return null;
+      }
+
+      const data = await res.json();
+      return data["query"] as MediaWikiResponse;
+    } catch (error) {
+      return null;
+    }
   }
 
   queryString(query: string): URL {
