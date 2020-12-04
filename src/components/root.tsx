@@ -1,11 +1,11 @@
-import { default as React, Component, ReactNode } from "react";
+import React, { Component, ReactNode } from "react";
 import { Subscription, Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 
 import { Item, ProviderMerge } from "@providers";
 
-import { ItemComponent } from "./item";
-import { SearchComponent } from "./search";
+import ItemComponent from "./item";
+import SearchComponent from "./search";
 import styles from "./root.module.scss";
 
 export interface RootProps {
@@ -18,7 +18,7 @@ export interface RootState {
   unsubscribe: Subject<void>;
 }
 
-export class RootComponent extends Component<RootProps, RootState> {
+class RootComponent extends Component<RootProps, RootState> {
   constructor(props: RootProps) {
     super(props);
 
@@ -86,3 +86,5 @@ export class RootComponent extends Component<RootProps, RootState> {
     );
   }
 }
+
+export default RootComponent;

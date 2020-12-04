@@ -1,4 +1,4 @@
-import { default as React, Component, ReactNode } from "react";
+import React, { Component, ReactNode } from "react";
 import { Tooltip } from "react-tippy";
 import "react-tippy/dist/tippy.css";
 
@@ -10,7 +10,7 @@ export interface ItemProps {
   data: Item;
 }
 
-export class ItemComponent extends Component<ItemProps> {
+class ItemComponent extends Component<ItemProps> {
   render(): ReactNode {
     const data = this.props.data;
     const provider = data.provider;
@@ -164,3 +164,5 @@ export class ItemComponent extends Component<ItemProps> {
     );
   }
 }
+
+export default ItemComponent;

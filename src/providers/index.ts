@@ -2,7 +2,7 @@ import { ReactNode } from "react";
 import { merge, Observable, from, of } from "rxjs";
 import { mergeMap, tap, distinct } from "rxjs/operators";
 
-import { Cache } from "@common/cache";
+import Cache from "@common/cache";
 
 export interface Item {
   title: string;

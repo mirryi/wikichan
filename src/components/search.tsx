@@ -1,4 +1,4 @@
-import { default as React, ChangeEvent, Component, ReactNode } from "react";
+import React, { ChangeEvent, Component, ReactNode } from "react";
 
 import styles from "./search.module.scss";
 
@@ -7,7 +7,7 @@ export interface SearchProps {
   callback: (searchValue: string) => void;
 }
 
-export class SearchComponent extends Component<SearchProps> {
+class SearchComponent extends Component<SearchProps> {
   callback: (e: ChangeEvent<HTMLInputElement>) => void;
 
   constructor(props: Readonly<SearchProps>) {
@@ -30,3 +30,5 @@ export class SearchComponent extends Component<SearchProps> {
     );
   }
 }
+
+export default SearchComponent;

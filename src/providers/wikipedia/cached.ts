@@ -1,9 +1,9 @@
-import { Cache } from "@common/cache";
+import Cache from "@common/cache";
 import { CachedProvider } from "@providers";
 
 import { WikipediaProvider, WikipediaLanguage, WikipediaItem } from "./index";
 
-export class CachedWikipediaProvider extends CachedProvider<WikipediaItem> {
+class CachedWikipediaProvider extends CachedProvider<WikipediaItem> {
   constructor(language: WikipediaLanguage, cache: Cache, cacheDuration: number) {
     super(new WikipediaProvider(language), cache, cacheDuration);
     this.cache = cache;
@@ -33,3 +33,5 @@ export class CachedWikipediaProvider extends CachedProvider<WikipediaItem> {
     return "wikipedia_" + k;
   }
 }
+
+export default CachedWikipediaProvider;

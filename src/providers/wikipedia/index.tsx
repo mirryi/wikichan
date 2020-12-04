@@ -4,9 +4,10 @@ import { ReactNode } from "react";
 import { empty, from, merge, Observable } from "rxjs";
 import { catchError, distinct, filter, map } from "rxjs/operators";
 
-import { Item, Provider } from "../index";
+import { Item, Provider } from "@providers";
+import CachedWikipediaProvider from "./cached";
 
-export * from "./cached";
+export { CachedWikipediaProvider };
 
 export class WikipediaItem implements Item {
   title: string;

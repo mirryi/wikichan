@@ -1,12 +1,13 @@
-import { default as React, ReactNode } from "react";
+import React, { ReactNode } from "react";
 import { from, merge, Observable } from "rxjs";
 import { distinct, filter, map } from "rxjs/operators";
 
 import { Provider, Item } from "@providers";
 
+import CachedOwlBotProvider from "./cached";
 import styles from "./index.module.scss";
 
-export * from "./cached";
+export { CachedOwlBotProvider };
 
 export interface OwlBotItem extends Item {
   title: string;

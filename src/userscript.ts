@@ -7,7 +7,7 @@ import { Provider, ProviderMerge } from "@providers";
 import { WikipediaLanguage, CachedWikipediaProvider } from "@providers/wikipedia";
 import { CachedOwlBotProvider } from "@providers/owlbot";
 
-import { GMCache } from "./userscript/cache";
+import GMCache from "./userscript/cache";
 
 (function (): void {
   if (self !== top) {

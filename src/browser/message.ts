@@ -1,3 +1,5 @@
-export interface RuntimeMessage {
+interface RuntimeMessage {
   kind: string;
 }
+
+export default RuntimeMessage;

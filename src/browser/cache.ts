@@ -1,8 +1,8 @@
 import { browser } from "webextension-polyfill-ts";
 
-import { Cache } from "@common/cache";
+import Cache from "@common/cache";
 
-import { RuntimeMessage } from "./message";
+import RuntimeMessage from "./message";
 
 export type CacheMessage = CacheGetMessage | CacheSetMessage | CacheListMessage;
 
@@ -65,7 +65,7 @@ export class CacheMessenger implements Cache {
   }
 }
 
-export class BrowserCache implements Cache {
+class BrowserCache implements Cache {
   prefix: string;
 
   private static delimit = ":::::";
@@ -150,3 +150,5 @@ export class BrowserCache implements Cache {
     return `${this.prefix}_${key}`;
   }
 }
+
+export default BrowserCache;

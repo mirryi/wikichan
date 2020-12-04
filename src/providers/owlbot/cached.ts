@@ -1,9 +1,9 @@
-import { Cache } from "@common/cache";
+import Cache from "@common/cache";
 import { CachedProvider } from "@providers";
 
 import { OwlBotItem, OwlBotProvider } from "./index";
 
-export class CachedOwlBotProvider extends CachedProvider<OwlBotItem> {
+class CachedOwlBotProvider extends CachedProvider<OwlBotItem> {
   constructor(token: string, cache: Cache, cacheDuration: number) {
     super(new OwlBotProvider(token), cache, cacheDuration);
     this.cache = cache;
@@ -33,3 +33,5 @@ export class CachedOwlBotProvider extends CachedProvider<OwlBotItem> {
     return "owlbot_" + k;
   }
 }
+
+export default CachedOwlBotProvider;

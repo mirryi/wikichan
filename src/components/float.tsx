@@ -1,4 +1,4 @@
-import { default as React, Component, CSSProperties, ReactNode } from "react";
+import React, { Component, CSSProperties, ReactNode } from "react";
 
 import styles from "./float.module.scss";
 
@@ -14,7 +14,7 @@ export interface FloatState {
   frameTop: number;
 }
 
-export class Float extends Component<FloatProps, FloatState> {
+class Float extends Component<FloatProps, FloatState> {
   constructor(props: FloatProps) {
     super(props);
 
@@ -101,3 +101,5 @@ export class Float extends Component<FloatProps, FloatState> {
     return offset;
   }
 }
+
+export default Float;

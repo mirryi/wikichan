@@ -1,6 +1,6 @@
-import { Cache } from "@common/cache";
+import Cache from "@common/cache";
 
-export class GMCache implements Cache {
+class GMCache implements Cache {
   prefix: string;
 
   private static delimit = ":::::";
@@ -90,3 +90,5 @@ export class GMCache implements Cache {
     return GM.deleteValue(fullKey);
   }
 }
+
+export default GMCache;

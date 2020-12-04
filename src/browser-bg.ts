@@ -1,14 +1,13 @@
 import { browser } from "webextension-polyfill-ts";
 
-import {
-  BrowserCache,
+import BrowserCache, {
   CacheGetMessage,
   CacheSetMessage,
   isCacheGetMessage,
   isCacheSetMessage,
   isCacheListMessage,
 } from "./browser/cache";
-import { RuntimeMessage } from "./browser/message";
+import RuntimeMessage from "./browser/message";
 
 (function (): void {
   const cache = new BrowserCache("");
