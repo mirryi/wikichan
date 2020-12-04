@@ -58,6 +58,17 @@
   text-decoration: none !important;
 }
 
+.tagList {
+  list-style-type: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+
+  li {
+    padding: 1px !important;
+    text-align: left !important;
+  }
+}
+
 .providerName {
   color: #666 !important;
   margin-bottom: 3px !important;
@@ -117,4 +128,9 @@
       color: $link-color !important;
     }
   }
+}
+
+.tooltip {
+  font-size: 0.7 * $base-size !important;
+  line-break: loose;
 }

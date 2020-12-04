@@ -1,4 +1,6 @@
 import { default as React, Component, ReactNode } from "react";
+import { Tooltip } from "react-tippy";
+import "react-tippy/dist/tippy.css";
 
 import { Item } from "@providers";
 
@@ -39,14 +41,28 @@ export class ItemComponent extends Component<ItemProps> {
             </span>
           </div>
           <div className={styles.top}>
-            <a
-              className={styles.title}
-              target="_blank"
-              rel="noopener noreferrer"
-              href={data.urls ? data.urls[0].toString() : ""}
+            <Tooltip
+              html={
+                <span className={styles.tooltip}>
+                  Go to {`'${data.title}'`} @ {provider.name()}
+                </span>
+              }
+              theme="light"
+              position="right"
+              arrow={true}
+              animateFill={false}
+              stickyDuration={false}
+              duration={0}
             >
-              {data.title}
-            </a>
+              <a
+                className={styles.title}
+                target="_blank"
+                rel="noopener noreferrer"
+                href={data.urls ? data.urls[0].toString() : ""}
+              >
+                {data.title}
+              </a>
+            </Tooltip>
             <div>{tagsRender}</div>
           </div>
           <span>
@@ -74,38 +90,46 @@ export class ItemComponent extends Component<ItemProps> {
       ? null
       : [...data.tags].slice(0, 2).map(([k, v]) => {
           const limit = 25;
-          let nv = v;
-          if (typeof nv === "string") {
-            if (k.length + nv.length >= limit) {
-              nv = nv.substring(0, limit - 2) + "...";
-            }
-          } else {
-            nv = nv as string[];
-            let tl = k.length;
-            for (let i = 0; i < nv.length; i++) {
-              tl += nv[i].length;
-              if (tl > limit) {
-                nv = nv.slice(0, i + 1);
-                nv[i] = nv[i].substring(0, nv[i].length - tl + limit - 2) + "...";
-                break;
-              }
-            }
-
-            nv = nv.reduce((prev, cur) => prev + ", " + cur);
-          }
-
-          let title = "";
+          let label;
           if (typeof v === "string") {
-            title = v;
+            label = k + ": " + v;
+            if (k.length + v.length >= limit) {
+              label = k;
+            }
           } else {
-            const lv = v as string[];
-            title = "\n : " + lv.reduce((prev, cur) => prev + "\n : " + cur);
+            label = k + ": " + (v as string[]).join("; ");
+            if (label.length >= limit) {
+              label = k;
+            }
           }
+
+          let title;
+          if (typeof v === "string") {
+            title = [v];
+          } else {
+            title = v as string[];
+          }
+          const list = title.map((v) => <li key={v}>{v}</li>);
 
           return (
-            <span key={"tag:" + k} title={k + ": " + title} className={styles.tag}>
-              <span className={styles.bold}>{k}</span>: {nv}
-            </span>
+            <Tooltip
+              key={"tag:" + k}
+              html={
+                <div className={styles.tooltip}>
+                  <ul className={styles.tagList}>{list}</ul>
+                </div>
+              }
+              theme="light"
+              position="bottom"
+              arrow={true}
+              animateFill={false}
+              stickyDuration={false}
+              duration={0}
+            >
+              <span className={styles.tag}>
+                <span className={styles.bold}>{label}</span>
+              </span>
+            </Tooltip>
           );
         });
   }
