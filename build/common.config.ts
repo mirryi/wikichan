@@ -84,8 +84,8 @@ const common = (mode: Mode): webpack.Configuration => {
     },
     performance: {
       hints: isDev ? false : "warning",
-      maxAssetSize: 500000,
-      maxEntrypointSize: 500000,
+      maxAssetSize: 5000000,
+      maxEntrypointSize: 5000000,
     },
     watch: isDev,
   };
