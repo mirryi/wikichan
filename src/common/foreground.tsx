@@ -8,6 +8,10 @@ import { ProviderMerge } from "@providers";
 
 import { ExpandMode, getTextSourceFromPoint, TextSource } from "./selector";
 
+// eslint-disable-next-line no-useless-escape
+const PUNCT_RE = /[\u2000-\u206F\u2E00-\u2E7F\\'!"#$%&()*+,\-.\/:;<=>?@\[\]^_`{|}~]/g;
+const SPACE_RE = /\s+/g;
+
 export function register(w: Window, providers: ProviderMerge): void {
   const doc = w.document;
   const [floatRef, rootRef] = injectFrame(doc, providers);
@@ -113,7 +117,7 @@ function queriesFromExpansions(ts: TextSource, n: number): string[] {
     if (!stopRight) {
       const rex = ts.expandNext(ExpandMode.word);
       if (rex !== null) {
-        queries.push(rex.text());
+        queries.push(tsText(rex));
       } else {
         stopRight = true;
       }
@@ -122,7 +126,7 @@ function queriesFromExpansions(ts: TextSource, n: number): string[] {
     if (!stopLeft) {
       const lex = ts.expandPrev(ExpandMode.word);
       if (lex !== null) {
-        queries.push(lex.text());
+        queries.push(tsText(lex));
         ts = lex;
       } else {
         stopLeft = true;
@@ -132,12 +136,17 @@ function queriesFromExpansions(ts: TextSource, n: number): string[] {
     if (!stopRight) {
       const rex = ts.expandNext(ExpandMode.word);
       if (rex !== null) {
-        queries.push(rex.text());
+        queries.push(tsText(rex));
         ts = rex;
       }
     }
   }
   return queries;
+}
+
+function tsText(ts: TextSource): string {
+  const text = ts.text();
+  return text.replace(PUNCT_RE, "").replace(SPACE_RE, " ");
 }
 
 function pointInRect(x: number, y: number, rect: DOMRect): boolean {
