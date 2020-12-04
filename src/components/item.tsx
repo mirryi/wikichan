@@ -10,7 +10,24 @@ export interface ItemProps {
   data: Item;
 }
 
-class ItemComponent extends Component<ItemProps> {
+export interface ItemState {
+  expanded: boolean;
+}
+
+class ItemComponent extends Component<ItemProps, ItemState> {
+  constructor(props: ItemProps) {
+    super(props);
+    this.state = { expanded: true };
+  }
+
+  private toggleExpanded(): void {
+    this.setState((state) => {
+      return {
+        expanded: !state.expanded,
+      };
+    });
+  }
+
   render(): ReactNode {
     const data = this.props.data;
     const provider = data.provider;
@@ -19,18 +36,33 @@ class ItemComponent extends Component<ItemProps> {
       return provider.renderf(data);
     }
 
-    const longDescription = provider.renderLongDescription ? (
-      provider.renderLongDescription(data)
-    ) : (
-      <div className={styles.longDescription}>
-        <span>
-          {data.longDescription ? data.longDescription : "No summary available."}
-        </span>
-      </div>
-    );
-
     const tagsRender = this.renderTags();
-    const urlsRender = this.renderURLs();
+
+    let body: ReactNode = undefined;
+    if (this.state.expanded) {
+      const longDescription = provider.renderLongDescription ? (
+        provider.renderLongDescription(data)
+      ) : (
+        <div className={styles.longDescription}>
+          <span>
+            {data.longDescription ? data.longDescription : "No summary available."}
+          </span>
+        </div>
+      );
+
+      const urlsRender = this.renderURLs();
+
+      body = (
+        <div className={styles.content}>
+          <div className={styles.description}>
+            <span>{data.description}</span>
+          </div>
+          <div>{longDescription}</div>
+
+          <div>{urlsRender}</div>
+        </div>
+      );
+    }
 
     return (
       <div>
@@ -43,9 +75,9 @@ class ItemComponent extends Component<ItemProps> {
           <div className={styles.top}>
             <Tooltip
               html={
-                <span className={styles.tooltip}>
+                <div className={styles.tooltip}>
                   Go to {`'${data.title}'`} @ {provider.name()}
-                </span>
+                </div>
               }
               theme="light"
               position="bottom"
@@ -56,7 +88,6 @@ class ItemComponent extends Component<ItemProps> {
               className={styles.title}
             >
               <a
-                // className={styles.title}
                 target="_blank"
                 rel="noopener noreferrer"
                 href={data.urls ? data.urls[0].toString() : ""}
@@ -64,22 +95,22 @@ class ItemComponent extends Component<ItemProps> {
                 {data.title}
               </a>
             </Tooltip>
-            <div>{tagsRender}</div>
+            <div>
+              <button
+                className={styles.minimizeButton}
+                onClick={(): void => this.toggleExpanded()}
+              >
+                -
+              </button>
+              {tagsRender}
+            </div>
           </div>
           <span>
             <span>result of: </span>
             <span className={styles.searchTerm}>{data.searchTerm}</span>
           </span>
         </div>
-
-        <div className={styles.content}>
-          <div className={styles.description}>
-            <span>{data.description}</span>
-          </div>
-          <div>{longDescription}</div>
-
-          <div>{urlsRender}</div>
-        </div>
+        {body}
       </div>
     );
   }
@@ -136,12 +167,12 @@ class ItemComponent extends Component<ItemProps> {
   }
 
   renderURLs(): ReactNode {
-    const data = this.props.data;
-    if (!data.urls) {
+    const urls = this.props.data.urls;
+    if (!urls || urls.length == 0) {
       return null;
     }
 
-    const links = [...data.urls.slice(1)].map((url) => (
+    const links = urls.map((url) => (
       <li
         key={"url:" + url.toString()}
         className={[styles.listItem, styles.link].join(" ")}

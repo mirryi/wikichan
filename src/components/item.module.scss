@@ -1,18 +1,24 @@
 @import "./shared";
 
-%button {
+%tag {
   background-color: #eee !important;
   border: 0 !important;
   border-radius: 5px !important;
-  cursor: context-menu !important;
   font-size: 0.8 * $base-size !important;
-  font-weight: bold !important;
   padding: 3px !important;
   text-align: center !important;
 }
 
+%button {
+  @extend %tag;
+
+  &:hover {
+    background-color: #ddd !important;
+  }
+}
+
 %url {
-  @extend %button;
+  @extend %tag;
 
   a {
     text-decoration: none !important;
@@ -31,6 +37,14 @@
   top: 0 !important;
 }
 
+.minimizeButton {
+  @extend %button;
+
+  background-color: #eee !important;
+  float: right !important;
+  padding: 1px 5px !important;
+}
+
 .top {
   display: flex !important;
   justify-content: space-between !important;
@@ -40,8 +54,6 @@
 .title {
   margin-bottom: 3px !important;
   max-width: 60% !important;
-  min-width: 50% !important;
-  width: 60% !important;
   word-wrap: break-word !important;
 
   a {
@@ -53,7 +65,7 @@
 }
 
 .tag {
-  @extend %button;
+  @extend %tag;
 
   background: #ececec !important;
   color: #3d3d3d !important;
@@ -81,7 +93,7 @@
 }
 
 .searchTerm {
-  @extend %button;
+  @extend %tag;
 
   font-style: italic !important;
   font-weight: normal !important;
