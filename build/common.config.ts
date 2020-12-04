@@ -35,7 +35,7 @@ const common = (mode: Mode): webpack.Configuration => {
       rules: [
         {
           test: /\.tsx?$/,
-          use: ["babel-loader", "ts-loader"],
+          use: ["babel-loader"],
         },
         {
           test: /\.((c|sa|sc)ss)$/i,

@@ -3,10 +3,6 @@
     [
       "@babel/preset-env",
       {
-        "targets": {
-          "firefox": "60",
-          "chrome": "67"
-        },
         "useBuiltIns": "usage",
         "corejs": {
           "version": 3,
@@ -14,6 +10,8 @@
         }
       }
     ],
-    ["@babel/preset-react"]
-  ]
+    ["@babel/preset-react"],
+    ["@babel/preset-typescript"]
+  ],
+  "plugins": ["@babel/plugin-transform-typescript", "@babel/proposal-class-properties"]
 }

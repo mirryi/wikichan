@@ -153,11 +153,8 @@ export class WikipediaLanguage {
   baseURL(): URL {
     return new URL(`https://${this.id.toLowerCase()}.wikipedia.org`);
   }
-}
 
-// eslint-disable-next-line @typescript-eslint/no-namespace
-export namespace WikipediaLanguage {
-  export const EN = new WikipediaLanguage(
+  static readonly EN = new WikipediaLanguage(
     "EN",
     "English",
     "Category:All article disambiguation pages",

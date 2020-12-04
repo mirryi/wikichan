@@ -17,8 +17,10 @@
   },
   "devDependencies": {
     "@babel/core": "^7.9.6",
+    "@babel/plugin-transform-typescript": "^7.12.1",
     "@babel/preset-env": "^7.9.6",
     "@babel/preset-react": "^7.9.4",
+    "@babel/preset-typescript": "^7.12.7",
     "@teamsupercell/typings-for-css-modules-loader": "^2.1.1",
     "@types/dompurify": "^2.0.1",
     "@types/greasemonkey": "^4.0.0",
@@ -59,7 +61,6 @@
     "stylelint-order": "^4.0.0",
     "stylelint-prettier": "^1.1.2",
     "stylelint-webpack-plugin": "^1.2.3",
-    "ts-loader": "^7.0.1",
     "ts-node": "^8.9.0",
     "tsconfig-paths": "^3.9.0",
     "typescript": "^3.8.3",
