@@ -117,6 +117,7 @@ class BrowserCache implements Cache {
     return browser.storage.local.remove(prefixedKey);
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private async checkParseValue(key: string, rawVal: any): Promise<string | undefined> {
     if (rawVal === undefined) {
       await this.remove(key);
