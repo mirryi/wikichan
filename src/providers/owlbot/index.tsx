@@ -36,19 +36,7 @@ export class OwlBotProvider implements Provider<OwlBotItem> {
 
   search(queries: string[]): Observable<OwlBotItem> {
     const observables = queries.map((q) => {
-      const url = `https://owlbot.info/api/v4/dictionary/${encodeURIComponent(q)}`;
-      const req = fetch(url, {
-        headers: {
-          Authorization: `Token ${this.token}`,
-        },
-      }).then((res: Response): Promise<OwlBotResponse> | null => {
-        if (!res.ok) {
-          return null;
-        }
-
-        return res.json().catch(() => null);
-      });
-
+      const req = this.request(q);
       return from(req).pipe(
         filter((d) => !!d && !!d.definitions),
         map((d) => {
@@ -68,6 +56,24 @@ export class OwlBotProvider implements Provider<OwlBotItem> {
       );
     });
     return merge(...observables).pipe(distinct((item) => item.title));
+  }
+
+  async request(query: string): Promise<OwlBotResponse | null> {
+    const url = `https://owlbot.info/api/v4/dictionary/${encodeURIComponent(query)}`;
+    try {
+      const res = await fetch(url, {
+        headers: {
+          Authorization: `Token ${this.token}`,
+        },
+      });
+
+      if (!res.ok) {
+        return null;
+      }
+      return res.json();
+    } catch (e) {
+      return null;
+    }
   }
 
   renderLongDescription(item: OwlBotItem): ReactNode {
