@@ -1,6 +1,8 @@
 import React, { ReactNode } from "react";
 import { from, merge, Observable } from "rxjs";
 import { distinct, filter, map } from "rxjs/operators";
+import { sanitize } from "dompurify";
+import htmlReactParse from "html-react-parser";
 
 import { Provider, Item } from "@providers";
 
@@ -78,14 +80,25 @@ export class OwlBotProvider implements Provider<OwlBotItem> {
   }
 
   renderLongDescription(item: OwlBotItem): ReactNode {
-    return item.definitions.map((def) => (
-      <div key={item.title + def.definition} className={styles.definition}>
-        <div>
-          <em>{def.type}</em>: {def.definition} {def.emoji}
+    return item.definitions.map((def) => {
+      const definition = this.renderRawHTML(def.definition);
+      const emoji = def.emoji ? this.renderRawHTML(def.emoji) : null;
+      const example = def.example ? '"' + this.renderRawHTML(def.example) + '"' : null;
+      return (
+        <div key={item.title + def.definition} className={styles.definition}>
+          <div>
+            <em>{def.type}</em>: {definition} {emoji}
+          </div>
+          <div className={styles.example}>{example}</div>
         </div>
-        <div className={styles.example}>{def.example ? '"' + def.example + '"' : ""}</div>
-      </div>
-    ));
+      );
+    });
+  }
+
+  private renderRawHTML(raw: string): ReactNode {
+    const html = sanitize(raw);
+    const components = htmlReactParse(html);
+    return components;
   }
 }
 
