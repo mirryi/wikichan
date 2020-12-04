@@ -19,6 +19,13 @@ export function register(w: Window, providers: ProviderMerge): void {
   let lastSource: TextSource | undefined = undefined;
   let interval: number;
 
+  const closeFrame = (): void => {
+    floatRef.current?.close();
+    if (interval) {
+      clearInterval(interval);
+    }
+  };
+
   fromEvent(w, "mousemove").subscribe((e: Event) => {
     const me = e as MouseEvent;
     // Only proceed if <Ctrl> is held down
@@ -39,10 +46,7 @@ export function register(w: Window, providers: ProviderMerge): void {
     }
 
     // Close frame and clear interval for previous opening
-    floatRef.current?.close();
-    if (interval) {
-      clearInterval(interval);
-    }
+    closeFrame();
 
     // Scrape the text at the current spot
     const ts = getTextSourceFromPoint(x, y, [1, 0], [1, 0]);
@@ -72,7 +76,8 @@ export function register(w: Window, providers: ProviderMerge): void {
   fromEvent(w, "click").subscribe((e: Event): void => {
     const me = e as MouseEvent;
     if (!me.ctrlKey && !floatRef.current?.containsPoint(me.x, me.y)) {
-      floatRef.current?.close();
+      lastSource = undefined;
+      closeFrame();
     }
   });
 }
