@@ -1,4 +1,4 @@
-import React, { Component, CSSProperties, ReactNode } from "react";
+import React, { Component, CSSProperties, ReactNode, RefObject } from "react";
 
 import styles from "./float.module.scss";
 
@@ -15,6 +15,8 @@ export interface FloatState {
 }
 
 class Float extends Component<FloatProps, FloatState> {
+  innerRef: RefObject<HTMLDivElement>;
+
   constructor(props: FloatProps) {
     super(props);
 
@@ -23,6 +25,7 @@ class Float extends Component<FloatProps, FloatState> {
       frameLeft: 0,
       frameTop: 0,
     };
+    this.innerRef = React.createRef();
   }
 
   render(): ReactNode {
@@ -39,9 +42,20 @@ class Float extends Component<FloatProps, FloatState> {
       "cleanslate",
     ];
 
+    const toTopStyle = {
+      left: this.state.frameLeft + this.props.frameWidth - 30,
+      top: this.state.frameTop + this.props.frameHeight - 30,
+    };
     return (
-      <div className={classes.join(" ")} style={style}>
+      <div className={classes.join(" ")} style={style} ref={this.innerRef}>
         {this.props.children}
+        <button
+          className={styles.scrollTopButton}
+          style={toTopStyle}
+          onClick={(): void => this.scrollToTop()}
+        >
+          ^
+        </button>
       </div>
     );
   }
@@ -54,6 +68,13 @@ class Float extends Component<FloatProps, FloatState> {
 
   close(): void {
     this.hideFrame();
+  }
+
+  scrollToTop(): void {
+    const div = this.innerRef.current;
+    if (div) {
+      div.scrollTop = 0;
+    }
   }
 
   showFrame(left: number, top: number): void {
