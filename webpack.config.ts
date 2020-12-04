@@ -21,6 +21,9 @@ switch (target) {
     config = merge(config, ujsConfig());
     break;
   case Target.firefox:
+  case Target.chrome:
+  case Target.opera:
+  case Target.edge:
     config = merge(config, browserConfig(target));
     break;
   default:

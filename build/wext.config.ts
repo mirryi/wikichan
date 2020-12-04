@@ -6,11 +6,14 @@ import { dir } from "./common.config";
 
 export enum Browser {
   firefox = "firefox",
+  chrome = "chrome",
+  edge = "edge",
+  opera = "opera",
 }
 
 const config = (browser: Browser): Configuration => {
   const dist = path.resolve(dir.dist, browser);
-  process.env.TARGET_BROWSER = browser;
+  // process.env.TARGET_BROWSER = browser;
 
   return {
     entry: {
