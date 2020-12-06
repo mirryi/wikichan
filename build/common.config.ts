@@ -73,11 +73,10 @@ const common = (mode: Mode): webpack.Configuration => {
                     ? "[path][name]__[local]--[hash:base64:5]"
                     : "[name][local]--[hash:base64:5]",
                 },
-                sourceMap: true,
               },
             },
-            { loader: "postcss-loader", options: { sourceMap: isDev } },
-            { loader: "sass-loader", options: { sourceMap: isDev } },
+            { loader: "postcss-loader" },
+            { loader: "sass-loader" },
           ],
         },
       ],
