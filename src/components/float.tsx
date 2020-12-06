@@ -42,13 +42,17 @@ class Float extends Component<FloatProps, FloatState> {
       this.state.frameVisibility ? styles.frameVisible : styles.frameHidden,
     ];
 
+    const head = (
+      <>
+        {this.props.inlineStyles?.map((st, i) => (
+          <style key={i}>{st}</style>
+        ))}
+      </>
+    );
+
     return (
-      <Frame className={classes.join(" ")} style={style}>
-        <div
-          className={styles.frameContent}
-          style={{ maxHeight: this.props.frameHeight }}
-          ref={this.innerRef}
-        >
+      <Frame head={head} className={classes.join(" ")} style={style}>
+        <div style={{ maxHeight: this.props.frameHeight }} ref={this.innerRef}>
           {this.props.children}
         </div>
       </Frame>
