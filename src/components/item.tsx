@@ -1,6 +1,4 @@
 import React, { Component, ReactNode } from "react";
-import { Tooltip } from "react-tippy";
-import "react-tippy/dist/tippy.css";
 
 import { Item } from "@providers";
 
@@ -73,28 +71,14 @@ class ItemComponent extends Component<ItemProps, ItemState> {
             </span>
           </div>
           <div className={styles.top}>
-            <Tooltip
-              html={
-                <div className={styles.tooltip}>
-                  Go to {`'${data.title}'`} @ {provider.name()}
-                </div>
-              }
-              theme="light"
-              position="bottom"
-              arrow={true}
-              animateFill={false}
-              stickyDuration={false}
-              duration={0}
+            <a
+              target="_blank"
+              rel="noopener noreferrer"
+              href={data.urls ? data.urls[0].toString() : ""}
               className={styles.title}
             >
-              <a
-                target="_blank"
-                rel="noopener noreferrer"
-                href={data.urls ? data.urls[0].toString() : ""}
-              >
-                {data.title}
-              </a>
-            </Tooltip>
+              {data.title}
+            </a>
             <div>
               <button
                 className={styles.minimizeButton}
@@ -135,33 +119,18 @@ class ItemComponent extends Component<ItemProps, ItemState> {
             }
           }
 
-          let title;
-          if (typeof v === "string") {
-            title = [v];
-          } else {
-            title = v as string[];
-          }
-          const list = title.map((v) => <li key={v}>{v}</li>);
+          // let title;
+          // if (typeof v === "string") {
+          // title = [v];
+          // } else {
+          // title = v as string[];
+          // }
+          // const list = title.map((v) => <li key={v}>{v}</li>);
 
           return (
-            <Tooltip
-              key={"tag:" + k}
-              html={
-                <div className={styles.tooltip}>
-                  <ul className={styles.tagList}>{list}</ul>
-                </div>
-              }
-              theme="light"
-              position="bottom"
-              arrow={true}
-              animateFill={false}
-              stickyDuration={false}
-              duration={0}
-            >
-              <span className={styles.tag}>
-                <span className={styles.bold}>{label}</span>
-              </span>
-            </Tooltip>
+            <span key={label} className={styles.tag}>
+              <span className={styles.bold}>{label}</span>
+            </span>
           );
         });
   }

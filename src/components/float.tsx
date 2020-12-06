@@ -1,4 +1,5 @@
 import React, { Component, CSSProperties, ReactNode, RefObject } from "react";
+import Frame from "react-frame-component";
 
 import styles from "./float.module.scss";
 
@@ -41,22 +42,16 @@ class Float extends Component<FloatProps, FloatState> {
       this.state.frameVisibility ? styles.frameVisible : styles.frameHidden,
     ];
 
-    const toTopStyle = {
-      left: this.state.frameLeft + this.props.frameWidth - 30,
-      top: this.state.frameTop + this.props.frameHeight - 30,
-    };
-
     return (
-      <div className={classes.join(" ")} style={style} ref={this.innerRef}>
-        {this.props.children}
-        <button
-          className={styles.scrollTopButton}
-          style={toTopStyle}
-          onClick={(): void => this.scrollToTop()}
+      <Frame className={classes.join(" ")} style={style}>
+        <div
+          className={styles.frameContent}
+          style={{ maxHeight: this.props.frameHeight }}
+          ref={this.innerRef}
         >
-          ^
-        </button>
-      </div>
+          {this.props.children}
+        </div>
+      </Frame>
     );
   }
 
@@ -68,13 +63,6 @@ class Float extends Component<FloatProps, FloatState> {
 
   close(): void {
     this.hideFrame();
-  }
-
-  scrollToTop(): void {
-    const div = this.innerRef.current;
-    if (div) {
-      div.scrollTop = 0;
-    }
   }
 
   showFrame(left: number, top: number): void {

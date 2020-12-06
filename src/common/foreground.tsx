@@ -1,7 +1,6 @@
 import React, { RefObject } from "react";
 import ReactDOM from "react-dom";
 import { fromEvent } from "rxjs";
-import root from "react-shadow";
 
 import Float from "@components/float";
 import RootComponent from "@components/root";
@@ -98,13 +97,12 @@ function injectFrame(
     <style key={i}>{st.innerHTML}</style>
   ));
 
+  const head = <>{inlineStyles}</>;
+
   const ext = (
-    <root.div>
-      {inlineStyles}
-      <Float ref={floatRef} frameWidth={frameWidth} frameHeight={frameHeight}>
-        <RootComponent ref={rootRef} providers={providerMerge} />
-      </Float>
-    </root.div>
+    <Float head={head} ref={floatRef} frameWidth={frameWidth} frameHeight={frameHeight}>
+      <RootComponent ref={rootRef} providers={providerMerge} />
+    </Float>
   );
 
   const tmp = doc.createElement("div");

@@ -35,16 +35,13 @@
 }
 
 .title {
+  color: #000 !important;
+  font-size: 1.4 * $base-size !important;
+  font-weight: bold !important;
   margin-bottom: 3px !important;
   max-width: 60% !important;
+  text-decoration: none !important;
   word-wrap: break-word !important;
-
-  a {
-    color: #000 !important;
-    font-size: 1.4 * $base-size !important;
-    font-weight: bold !important;
-    text-decoration: none !important;
-  }
 }
 
 .tag {
