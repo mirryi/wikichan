@@ -45,7 +45,7 @@ Automated builds and addon store entries coming soon.
 
 Pass in the desired target value:
 
-DOCKER_BUILDKIT=1 docker build --build-arg TARGET=<target> --output dist .
+    DOCKER_BUILDKIT=1 docker build --build-arg TARGET=<target> --output dist .
 
 ## Contributing
 
