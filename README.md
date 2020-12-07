@@ -3,14 +3,12 @@
 **Wikichan** is a WebExtensions addon and userscript that displays a popup with
 information from Wikipedia and other sources.
 
-## Getting Started
-
-### Usage
+## Usage
 
 While holding the `Ctrl` key, click on a word in any webpage. A popup will
 appear with information for that word and groups of words around it.
 
-### Installation
+## Installation
 
 Clone and build from source for your platform.
 
@@ -18,25 +16,30 @@ Clone and build from source for your platform.
     cd wikichan
     yarn install
 
-For Greasemonkey userscript:
+### Greasemonkey Userscript
 
-    yarn build:ujs
+The userscript has been tested on Tampermonkey, Violentmonkey, and qutebrowser's
+built-in greasemonkey support. It **does not work on Greasemonkey**.
 
-For Firefox extension:
+Build the script and copy:
+
+    yarn build:ujs    # builds to dist/ujs/wikichan.user.js
+
+### Firefox Addon
+
+Build and sign the addon:
 
     yarn build:firefox
+    cd dist/firefox
+    yarn web-ext sign --api-key <api-key> --api-secret <api-secret>
 
-For Chrome extension:
+### Chrome Extension:
+
+Build and zip the extension:
 
     yarn build:chrome
-
-For Edge extension (not tested at all):
-
-    yarn build:edge
-
-For Opera extension (not tested at all):
-
-    yarn build:opera
+    cd dist/chrome
+    zip addon.zip *
 
 Automated builds and addon store entries coming soon.
 
