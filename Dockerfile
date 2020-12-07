@@ -4,8 +4,9 @@ WORKDIR /build
 COPY package.json yarn.lock ./
 RUN yarn install
 
-ARG TARGET
 COPY . .
+
+ARG TARGET
 RUN yarn build:$TARGET
 
 FROM scratch as export-stage
