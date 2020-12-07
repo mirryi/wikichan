@@ -1,19 +1,24 @@
-import Cache from "@common/cache";
+import Storage from "@common/storage";
 
-class GMCache implements Cache {
+class GMStorage implements Storage {
   prefix: string;
 
-  private static delimit = ":::::";
+  private static readonly DELIMIT = ":::::";
 
   constructor(prefix: string) {
     this.prefix = prefix;
   }
 
-  async set(key: string, val: string, duration: number): Promise<void> {
+  async set(key: string, val: string, duration?: number): Promise<void> {
     const k = `${this.prefix}_${key}`;
 
-    const expires = new Date(Date.now() + 1000 * duration);
-    const v = expires.getTime() + GMCache.delimit + val;
+    let v = val;
+    if (duration) {
+      const expires = new Date(Date.now() + 1000 * duration);
+      v = expires.getTime() + GMStorage.DELIMIT + v;
+    } else {
+      v = "-1" + GMStorage.DELIMIT + v;
+    }
 
     return GM.setValue(k, v);
   }
@@ -66,16 +71,19 @@ class GMCache implements Cache {
       return v;
     }
 
-    const parts = (v as string).split(GMCache.delimit, 2);
+    const parts = (v as string).split(GMStorage.DELIMIT, 2);
     if (parts.length < 2) {
       await this.remove(k);
       return undefined;
     }
 
-    const expires = new Date(Number(parts[0]));
-    if (Date.now() > expires.getTime()) {
-      await this.remove(k);
-      return undefined;
+    const expiresNum = Number(parts[0]);
+    if (expiresNum !== -1) {
+      const expires = new Date(expiresNum);
+      if (Date.now() > expires.getTime()) {
+        await this.remove(k);
+        return undefined;
+      }
     }
 
     return parts[1];
@@ -94,4 +102,4 @@ class GMCache implements Cache {
   }
 }
 
-export default GMCache;
+export default GMStorage;

@@ -2,27 +2,27 @@ import "core-js/stable";
 import "regenerator-runtime/runtime";
 import { browser } from "webextension-polyfill-ts";
 
-import BrowserCache, {
-  CacheGetMessage,
-  CacheSetMessage,
-  isCacheGetMessage,
-  isCacheSetMessage,
-  isCacheListMessage,
-} from "./browser/cache";
+import BrowserStorage, {
+  StorageGetMessage,
+  StorageSetMessage,
+  isStorageGetMessage,
+  isStorageSetMessage,
+  isStorageListMessage,
+} from "./browser/storage";
 import RuntimeMessage from "./browser/message";
 
 (function (): void {
-  const cache = new BrowserCache("");
+  const cache = new BrowserStorage("");
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const cacheHandler = async (m: RuntimeMessage): Promise<any> => {
-    if (isCacheGetMessage(m)) {
-      const message = m as CacheGetMessage;
+    if (isStorageGetMessage(m)) {
+      const message = m as StorageGetMessage;
       return await cache.get(message.key);
-    } else if (isCacheSetMessage(m)) {
-      const message = m as CacheSetMessage;
+    } else if (isStorageSetMessage(m)) {
+      const message = m as StorageSetMessage;
       return await cache.set(message.key, message.value, message.duration);
-    } else if (isCacheListMessage(m)) {
+    } else if (isStorageListMessage(m)) {
       return await cache.list();
     } else {
       return Promise.reject("invalid cache message type");
