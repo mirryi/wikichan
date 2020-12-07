@@ -11,10 +11,8 @@ export enum Browser {
   opera = "opera",
 }
 
-const config = (browser: Browser): Configuration => {
+const config = (_: boolean, browser: Browser): Configuration => {
   const dist = path.resolve(dir.dist, browser);
-  // process.env.TARGET_BROWSER = browser;
-
   return {
     entry: {
       fg: path.resolve(dir.src, "browser-fg"),

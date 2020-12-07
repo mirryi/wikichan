@@ -4,7 +4,7 @@ import UserscriptPlugin from "webpack-userscript";
 
 import { dir } from "./common.config";
 
-const config = (): Configuration => {
+const config = (production: boolean): Configuration => {
   const dist = path.resolve(dir.dist, "ujs");
 
   return {
@@ -21,10 +21,16 @@ const config = (): Configuration => {
           name: "[name]",
           description: "[description]",
           author: "[author]",
-          version: "[version]",
+          version: production ? "[version]" : "[version]-build.[buildNo]",
           include: "*://*/*",
+          grant: ["GM.setValue", "GM.getValue", "GM.listValues", "GM.deleteValue"],
         },
         pretty: false,
+        proxyScript: {
+          baseUrl: "http://127.0.0.1:5503",
+          filename: "[basename].proxy.user.js",
+          enable: true,
+        },
       }),
     ],
   };

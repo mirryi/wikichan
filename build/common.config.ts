@@ -3,11 +3,6 @@ import webpack from "webpack";
 import DotenvPlugin from "dotenv-webpack";
 import TerserPlugin from "terser-webpack-plugin";
 
-export enum Mode {
-  development = "development",
-  production = "production",
-}
-
 const rootDir = path.resolve(__dirname, "..");
 export const dir = {
   root: rootDir,
@@ -16,11 +11,10 @@ export const dir = {
   dist: path.resolve(rootDir, "dist"),
 };
 
-const common = (mode: Mode): webpack.Configuration => {
-  const isDev = mode === Mode.development;
+const common = (production: boolean): webpack.Configuration => {
   return {
-    mode: "production",
-    devtool: isDev ? "inline-source-map" : undefined,
+    mode: production ? "production" : "development",
+    devtool: production ? undefined : "inline-source-map",
     resolve: {
       extensions: [".ts", ".tsx", ".js", ".css", ".sass", ".scss"],
       alias: {
@@ -69,9 +63,9 @@ const common = (mode: Mode): webpack.Configuration => {
                 importLoaders: 1,
                 modules: {
                   auto: true,
-                  localIdentName: isDev
-                    ? "[path][name]__[local]--[hash:base64:5]"
-                    : "[name][local]--[hash:base64:5]",
+                  localIdentName: production
+                    ? "[name]__[local]--[hash:base64:5]"
+                    : "[path][name]__[local]--[hash:base64:5]",
                 },
               },
             },
@@ -81,26 +75,22 @@ const common = (mode: Mode): webpack.Configuration => {
         },
       ],
     },
-    node: {
-      fs: "empty",
-      cluster: "empty",
-    },
     optimization: {
       minimize: true,
       minimizer: [
         new TerserPlugin({
-          cache: true,
           parallel: true,
-          sourceMap: true,
         }),
       ],
     },
     performance: {
-      hints: isDev ? false : "warning",
+      hints: production ? "warning" : false,
       maxAssetSize: 5000000,
       maxEntrypointSize: 5000000,
     },
-    watch: isDev,
+    devServer: {
+      contentBase: dir.dist,
+    },
   };
 };
 
