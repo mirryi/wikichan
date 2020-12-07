@@ -1,3 +1,5 @@
+import "core-js/stable";
+import "regenerator-runtime/runtime";
 import { browser } from "webextension-polyfill-ts";
 
 import BrowserCache, {
