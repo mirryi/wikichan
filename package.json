@@ -12,19 +12,19 @@
     "dev:chrome": "yarn dev --env target=chrome",
     "dev:opera": "  yarn dev --env target=opera",
     "dev:edge": "yarn dev --env target=edge",
-    "dev": "yarn build --env production=false",
+    "dev": "cross-env TS_NODE_PROJECT=\"build/tsconfig.json\" webpack",
     "start:ujs": "yarn start --env target=ujs",
     "start:firefox": "yarn start --env target=firefox",
     "start:chrome": "yarn start --env target=chrome",
     "start:opera": "  yarn start --env target=opera",
     "start:edge": "yarn start --env target=edge",
-    "start": "cross-env TS_NODE_PROJECT=\"build/tsconfig.json\" webpack serve --env production=false",
+    "start": "cross-env TS_NODE_PROJECT=\"build/tsconfig.json\" webpack serve",
     "build:ujs": "yarn dev --env target=ujs",
     "build:firefox": "yarn build --env target=firefox",
     "build:chrome": "yarn build --env target=chrome",
     "build:opera": "yarn build --env target=opera",
     "build:edge": "yarn build --env target=edge",
-    "build": "cross-env TS_NODE_PROJECT=\"build/tsconfig.json\" webpack"
+    "build": "yarn dev --env production"
   },
   "devDependencies": {
     "@babel/core": "^7.9.6",
