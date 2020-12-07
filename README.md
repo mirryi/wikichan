@@ -23,25 +23,29 @@ built-in greasemonkey support. It **does not work on Greasemonkey**.
 
 Build the script and copy:
 
-    yarn build:ujs    # builds to dist/ujs/wikichan.user.js
+    yarn build:ujs      # builds to dist/ujs/wikichan.user.js
 
 ### Firefox Addon
 
 Build and sign the addon:
 
-    yarn build:firefox
+    yarn build:firefox  # builds to dist/firefox
     cd dist/firefox
     yarn web-ext sign --api-key <api-key> --api-secret <api-secret>
 
-### Chrome Extension:
+### Chrome Extension
 
-Build and zip the extension:
+Build the extension:
 
-    yarn build:chrome
-    cd dist/chrome
-    zip addon.zip *
+    yarn build:chrome   # builds to dist/chrome
 
 Automated builds and addon store entries coming soon.
+
+### With Docker
+
+Pass in the desired target value:
+
+DOCKER_BUILDKIT=1 docker build --build-arg TARGET=<target> --output dist .
 
 ## Contributing
 
@@ -50,14 +54,14 @@ Automated builds and addon store entries coming soon.
 -   [x] Manifest and build WebExtension
 -   [x] English dictionary provider
 -   [x] Cache results (per provider)
--   [x] Eliminate duplicate query strings before calling providers
 -   [ ] More provider choices
 -   [ ] Settings menu
     -   [ ] Enable / disable providers
--   [ ] Dark and light theme + switch
+    -   [ ] Dark and light theme + switch
 -   [ ] Cross-domain cache and settings in qutebrowser
 -   [ ] Tabs to show results from individual providers
 -   [ ] Testing
+-   [ ] Automated release builds
 
 ## Credits
 
