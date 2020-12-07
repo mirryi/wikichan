@@ -92,7 +92,7 @@
     "html-react-parser": "^0.10.3",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-frame-component": "^4.1.1",
+    "react-frame-component": "^5.0.0-alpha.0",
     "regenerator-runtime": "^0.13.5",
     "rxjs": "^6.5.5",
     "webextension-polyfill-ts": "^0.15.0"
