@@ -24,7 +24,10 @@ class GMCache implements Cache {
   }
 
   async list(): Promise<Record<string, string>> {
-    const list = await GM.listValues();
+    let list = await GM.listValues();
+    if (typeof list === "string") {
+      list = [list];
+    }
 
     const tuples = (
       await Promise.all(
