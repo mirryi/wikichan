@@ -14,7 +14,7 @@ export const dir = {
 const common = (production: boolean): webpack.Configuration => {
   return {
     mode: production ? "production" : "development",
-    devtool: production ? undefined : "inline-source-map",
+    devtool: production ? undefined : "eval-source-map",
     resolve: {
       extensions: [".ts", ".tsx", ".js", ".css", ".sass", ".scss"],
       alias: {
