@@ -7,14 +7,14 @@ import { Provider, ProviderMerge } from "@providers";
 import { WikipediaLanguage, CachedWikipediaProvider } from "@providers/wikipedia";
 import { CachedOwlBotProvider } from "@providers/owlbot";
 
-import ServerCache from "./qutebrowser/cache";
+import ServerCache from "./qutebrowser/storage";
 
 (function (): void {
   if (self !== top) {
     return;
   }
 
-  const cache = new ServerCache("");
+  const cache = new ServerCache("http://127.0.0.1:5000");
   const defaultCacheDuration = 24 * 60 * 60;
 
   const providers: Provider[] = [

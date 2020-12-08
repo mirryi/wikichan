@@ -3,10 +3,12 @@ import merge from "webpack-merge";
 
 import common from "./build/common.config";
 import ujsConfig from "./build/ujs.config";
+import qutebrowserConfig from "./build/qutebrowser.config";
 import browserConfig, { Browser } from "./build/wext.config";
 
 enum OtherTargets {
   ujs = "ujs",
+  qutebrowser = "qutebrowser",
 }
 
 const Target = { ...Browser, ...OtherTargets };
@@ -30,6 +32,9 @@ module.exports = (env: any): webpack.Configuration => {
   switch (target) {
     case Target.ujs:
       config = merge(config, ujsConfig(production));
+      break;
+    case Target.qutebrowser:
+      config = merge(config, qutebrowserConfig(production));
       break;
     case Target.firefox:
     case Target.chrome:
