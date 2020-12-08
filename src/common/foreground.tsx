@@ -6,7 +6,7 @@ import Float from "@components/float";
 import RootComponent from "@components/root";
 import { ProviderMerge } from "@providers";
 
-import { ExpandMode, getTextSourceFromPoint, TextSource } from "./selector";
+import { ExpandMode, TextSource } from "./selector";
 
 // eslint-disable-next-line no-useless-escape
 const PUNCT_RE = /[\u2000-\u206F\u2E00-\u2E7F\\'!"#$%&()*+,\-.\/:;<=>?@\[\]^_`{|}~]/g;
@@ -49,7 +49,7 @@ export function register(w: Window, providers: ProviderMerge): void {
     closeFrame();
 
     // Scrape the text at the current spot
-    const ts = getTextSourceFromPoint(x, y, [1, 0], [1, 0]);
+    const ts = TextSource.getFromPoint(x, y, [1, 0], [1, 0]);
     if (ts === null) {
       return;
     }

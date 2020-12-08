@@ -1,33 +1,3 @@
-export function getTextSourceFromPoint(
-  x: number,
-  y: number,
-  leftEx: [number, number],
-  rightEx: [number, number],
-): TextSource | null {
-  const range = caretRangeFromPoint(x, y);
-  if (range === null) {
-    return null;
-  }
-
-  let ts = new TextSource(range);
-  const expandFor = (mode: ExpandMode, times: number, right: boolean): void => {
-    for (let i = 0; i < times; i++) {
-      const ex = right ? ts.expandNext(mode) : ts.expandPrev(mode);
-      if (ex === null) {
-        break;
-      }
-      ts = ex;
-    }
-  };
-
-  expandFor(ExpandMode.word, leftEx[0], false);
-  expandFor(ExpandMode.character, leftEx[1], false);
-  expandFor(ExpandMode.word, rightEx[0], true);
-  expandFor(ExpandMode.character, rightEx[1], true);
-
-  return ts;
-}
-
 export class TextSource {
   range: Range;
 
@@ -48,6 +18,37 @@ export class TextSource {
 
   expandPrev(mode: ExpandMode): TextSource | null {
     return this.expand(mode, false);
+  }
+
+  static getFromPoint(
+    x: number,
+    y: number,
+    leftEx: [number, number],
+    rightEx: [number, number],
+  ): TextSource | null {
+    const range = caretRangeFromPoint(x, y);
+    if (range === null) {
+      return null;
+    }
+
+    let ts = new TextSource(range);
+
+    const expandFor = (mode: ExpandMode, times: number, right: boolean): void => {
+      for (let i = 0; i < times; i++) {
+        const ex = right ? ts.expandNext(mode) : ts.expandPrev(mode);
+        if (ex === null) {
+          break;
+        }
+        ts = ex;
+      }
+    };
+
+    expandFor(ExpandMode.word, leftEx[0], false);
+    expandFor(ExpandMode.character, leftEx[1], false);
+    expandFor(ExpandMode.word, rightEx[0], true);
+    expandFor(ExpandMode.character, rightEx[1], true);
+
+    return ts;
   }
 
   private expand(mode: ExpandMode, right: boolean): TextSource | null {
