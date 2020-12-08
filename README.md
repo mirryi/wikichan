@@ -19,8 +19,9 @@ Clone and build from source for your platform.
     yarn install
 
 If you want to enable the OwlBot provider, [create an OwlBot API
-key](https://owlbot.info/) and set the environment variable `OWLBOT_TOKEN` to
-the key value.
+key](https://owlbot.info/) and create a `.env` file:
+
+    OWLBOT_TOKEN=<token>
 
 ### Greasemonkey Userscript
 
@@ -56,21 +57,23 @@ Pass in the desired target value:
 ### To-Do
 
 -   [x] Manifest and build WebExtension
--   [ ] Cache results (per provider)
-    -   [x] Browser and GM cache
-    -   [ ] Cross-domain cache and settings in qutebrowser
+-   [x] Cache results (per provider)
 -   [ ] More provider choices
     -   [x] English dictionary provider
     -   [ ] Any language Wikipedia
     -   [ ] Other language dictionary
 -   [ ] Settings menu
-    -   [ ] Enable / disable providers
-    -   [ ] Dark and light theme + switch
+    -   [ ] Use library for certain cache/storage backends
+    -   [ ] Cross-domain cache and settings in qutebrowser
+    -   [ ] Input API tokens instead of at compile-time
+    -   [ ] Enable/disable providers
+    -   [ ] Dark/light themes (migrate to styled components?)
     -   [ ] Option to select by character
 -   [ ] Tabs to show results from individual providers
+-   [ ] Automated release builds
 -   [ ] Testing
 -   [ ] i18n
--   [ ] Automated release builds
+-   [ ] Legacy extension support
 
 ## Credits
 
