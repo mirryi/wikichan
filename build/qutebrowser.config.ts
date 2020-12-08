@@ -1,11 +1,16 @@
 import path from "path";
 import { Configuration } from "webpack";
 import UserscriptPlugin from "webpack-userscript";
+import CopyPlugin from "copy-webpack-plugin";
 
 import { dir } from "./common.config";
 
 const config = (production: boolean): Configuration => {
   const dist = path.resolve(dir.dist, "qutebrowser");
+
+  const copyPatterns = production
+    ? [{ from: path.join(dir.root, "qutebrowser"), to: dist }]
+    : [];
 
   return {
     devtool: production ? undefined : "inline-source-map",
@@ -27,6 +32,9 @@ const config = (production: boolean): Configuration => {
           grant: ["GM.setValue", "GM.getValue", "GM.listValues", "GM.deleteValue"],
         },
         pretty: false,
+      }),
+      new CopyPlugin({
+        patterns: copyPatterns,
       }),
     ],
   };
