@@ -29,7 +29,7 @@ const config = (production: boolean): Configuration => {
         proxyScript: {
           baseUrl: "http://127.0.0.1:5503",
           filename: "[basename].proxy.user.js",
-          enable: true,
+          enable: !production,
         },
       }),
     ],
