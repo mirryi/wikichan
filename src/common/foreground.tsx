@@ -124,7 +124,7 @@ function queriesFromExpansions(ts: TextSource, n: number): string[] {
     if (!stopRight) {
       const rex = ts.expandNext(ExpandMode.word);
       if (rex !== null) {
-        queries.push(tsText(rex));
+        queries.concat(getTexts(rex));
       } else {
         stopRight = true;
       }
@@ -133,7 +133,7 @@ function queriesFromExpansions(ts: TextSource, n: number): string[] {
     if (!stopLeft) {
       const lex = ts.expandPrev(ExpandMode.word);
       if (lex !== null) {
-        queries.push(tsText(lex));
+        queries.concat(getTexts(lex));
         ts = lex;
       } else {
         stopLeft = true;
@@ -143,7 +143,7 @@ function queriesFromExpansions(ts: TextSource, n: number): string[] {
     if (!stopRight) {
       const rex = ts.expandNext(ExpandMode.word);
       if (rex !== null) {
-        queries.push(tsText(rex));
+        queries.concat(getTexts(rex));
         ts = rex;
       }
     }
@@ -151,9 +151,9 @@ function queriesFromExpansions(ts: TextSource, n: number): string[] {
   return queries;
 }
 
-function tsText(ts: TextSource): string {
+function getTexts(ts: TextSource): string[] {
   const text = ts.text();
-  return text.replace(PUNCT_RE, "").replace(SPACE_RE, " ");
+  return [text, text.replace(PUNCT_RE, " ").replace(SPACE_RE, " ").trim()];
 }
 
 function pointInRect(x: number, y: number, rect: DOMRect): boolean {

@@ -36,7 +36,7 @@ export class TextSource {
   }
 
   text(): string {
-    return this.range.toString().trim();
+    return this.range.toString();
   }
 
   /**
