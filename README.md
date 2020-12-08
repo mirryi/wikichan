@@ -25,8 +25,8 @@ key](https://owlbot.info/) and create a `.env` file:
 
 ### Greasemonkey Userscript
 
-The userscript has been tested on Tampermonkey, Violentmonkey, and qutebrowser's
-built-in greasemonkey support. It **does not work on Greasemonkey**.
+The userscript has been tested on Tampermonkey. It **does not work on
+Greasemonkey**.
 
 Build the script and copy:
 
@@ -40,7 +40,7 @@ cross-domain storage is accomplished via a tiny server with an SQLite database.
 
 Build the script and copy files:
 
-    yarn build:qutebrowser
+    yarn build:qutebrowser  # builds to dist/qutebrowser/
 
 You will need to start the server when you start up qutebrowser.
 
