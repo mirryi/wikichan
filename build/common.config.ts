@@ -19,6 +19,7 @@ const common = (production: boolean): webpack.Configuration => {
       extensions: [".ts", ".tsx", ".js", ".css", ".sass", ".scss"],
       alias: {
         "gm4-polyfill": path.resolve(dir.lib, "gm4-polyfill", "gm4-polyfill.js"),
+        cleanslate: path.resolve(dir.lib, "cleanslate"),
         "@common": path.resolve(dir.src, "common"),
         "@components": path.resolve(dir.src, "components"),
         "@providers": path.resolve(dir.src, "providers"),

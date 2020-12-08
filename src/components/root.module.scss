@@ -1,8 +1,12 @@
+@import "~cleanslate/cleanslate";
+
 @import "./shared";
 
 $font-stack: "Segoe UI", sans-serif;
 
 .wrapper {
+  @extend .cleanslate;
+
   box-sizing: border-box !important;
   font-family: $font-stack !important;
   font-size: 0.8 * $base-size !important;
