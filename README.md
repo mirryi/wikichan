@@ -10,11 +10,17 @@ appear with information for that word and groups of words around it.
 
 ## Installation
 
+Automated release builds and addon store entries coming soon.
+
 Clone and build from source for your platform.
 
     git clone https://github.com/Dophin2009/wikichan
     cd wikichan
     yarn install
+
+If you want to enable the OwlBot provider, [create an OwlBot API
+key](https://owlbot.info/) and set the environment variable `OWLBOT_TOKEN` to
+the key value.
 
 ### Greasemonkey Userscript
 
@@ -39,8 +45,6 @@ Build the extension:
 
     yarn build:chrome   # builds to dist/chrome
 
-Automated builds and addon store entries coming soon.
-
 ### With Docker
 
 Pass in the desired target value:
@@ -52,15 +56,20 @@ Pass in the desired target value:
 ### To-Do
 
 -   [x] Manifest and build WebExtension
--   [x] English dictionary provider
--   [x] Cache results (per provider)
+-   [ ] Cache results (per provider)
+    -   [x] Browser and GM cache
+    -   [ ] Cross-domain cache and settings in qutebrowser
 -   [ ] More provider choices
+    -   [x] English dictionary provider
+    -   [ ] Any language Wikipedia
+    -   [ ] Other language dictionary
 -   [ ] Settings menu
     -   [ ] Enable / disable providers
     -   [ ] Dark and light theme + switch
--   [ ] Cross-domain cache and settings in qutebrowser
+    -   [ ] Option to select by character
 -   [ ] Tabs to show results from individual providers
 -   [ ] Testing
+-   [ ] i18n
 -   [ ] Automated release builds
 
 ## Credits
