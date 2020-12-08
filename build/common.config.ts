@@ -40,18 +40,8 @@ const common = (production: boolean): webpack.Configuration => {
             {
               loader: "style-loader",
               options: {
-                /* eslint-disable */
-                insert: function insert(element) {
-                  var id = "wikichan-styles";
-                  var parent = document.getElementById(id);
-                  if (!parent) {
-                    parent = document.createElement("div");
-                    parent.id = id;
-                    document.querySelector("head").appendChild(parent);
-                  }
-                  parent.appendChild(element);
-                },
-                /* eslint-enable */
+                injectType: "singletonStyleTag",
+                attributes: { id: "wikichan-styles" },
               },
             },
             {
@@ -67,8 +57,8 @@ const common = (production: boolean): webpack.Configuration => {
                 modules: {
                   auto: true,
                   localIdentName: production
-                    ? "[name]__[local]--[hash:base64:5]"
-                    : "[path][name]__[local]--[hash:base64:5]",
+                    ? "[local]__[name]--[hash:base64:5]"
+                    : "[local]__[path][name]--[hash:base64:5]",
                 },
               },
             },

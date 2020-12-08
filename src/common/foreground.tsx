@@ -92,8 +92,8 @@ function injectFrame(
   const frameWidth = 600;
   const frameHeight = 400;
 
-  const stylesDiv = doc.getElementById("wikichan-styles") as HTMLDivElement;
-  const inlineStyles = Array.from(stylesDiv.children).map((st) => st.innerHTML);
+  const injectedStyle = doc.getElementById("wikichan-styles") as HTMLStyleElement;
+  const inlineStyles = injectedStyle.innerHTML;
 
   const ext = (
     <React.StrictMode>
