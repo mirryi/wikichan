@@ -32,6 +32,18 @@ Build the script and copy:
 
     yarn build:ujs      # builds to dist/ujs/wikichan.user.js
 
+#### For Qutebrowser
+
+Until qutebrowser has better Greasemonkey support ([see
+\#3238](https://github.com/qutebrowser/qutebrowser/issues/3238)), persistent
+cross-domain storage is accomplished via a tiny server with an SQLite database.
+
+Build the script and copy files:
+
+    yarn build:qutebrowser
+
+You will need to start the server when you start up qutebrowser.
+
 ### Firefox Addon
 
 Build and sign the addon:
@@ -64,7 +76,7 @@ Pass in the desired target value:
     -   [ ] Other language dictionary
 -   [ ] Settings menu
     -   [ ] Use library for certain cache/storage backends
-    -   [ ] Cross-domain cache and settings in qutebrowser
+    -   [x] Cross-domain cache and settings in qutebrowser
     -   [ ] Input API tokens instead of at compile-time
     -   [ ] Enable/disable providers
     -   [ ] Dark/light themes (migrate to styled components?)
