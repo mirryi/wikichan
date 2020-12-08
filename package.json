@@ -65,6 +65,7 @@
     "postcss-initial": "^4.0.0",
     "postcss-loader": "^4.1.0",
     "prettier": "^2.0.5",
+    "process": "^0.11.10",
     "raw-loader": "^4.0.1",
     "sass-loader": "^8.0.2",
     "style-loader": "^1.2.0",
