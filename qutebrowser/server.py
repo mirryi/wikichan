@@ -1,12 +1,14 @@
 import sqlite3
 from datetime import datetime, timezone, timedelta
 from flask import Flask, g, request, jsonify
+from flask_cors import CORS
 from argparse import ArgumentParser
 from typing import Optional
 
 DB = 'db.sqlite'
 
 app = Flask(__name__)
+CORS(app, resources={r"/*": {"origins": "*"}})
 
 tz = timezone.utc
 
