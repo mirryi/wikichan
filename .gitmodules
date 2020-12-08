@@ -1,3 +1,6 @@
 [submodule "lib/gm4-polyfill"]
 	path = lib/gm4-polyfill
 	url = https://github.com/greasemonkey/gm4-polyfill
+[submodule "lib/cleanslate"]
+	path = lib/cleanslate
+	url = https://github.com/premasagar/cleanslate
