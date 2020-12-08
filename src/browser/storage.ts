@@ -1,42 +1,44 @@
 import { browser } from "webextension-polyfill-ts";
 
-import Cache from "@common/cache";
+import Storage from "@common/storage";
 
 import RuntimeMessage from "./message";
 
-export type CacheMessage = CacheGetMessage | CacheSetMessage | CacheListMessage;
+export type StorageMessage = StorageGetMessage | StorageSetMessage | StorageListMessage;
 
-export interface CacheGetMessage extends RuntimeMessage {
+export interface StorageGetMessage extends RuntimeMessage {
   kind: "cache::get";
   key: string;
 }
 
-export interface CacheSetMessage extends RuntimeMessage {
+export interface StorageSetMessage extends RuntimeMessage {
   kind: "cache::set";
   key: string;
   value: string;
-  duration: number;
+  duration?: number;
 }
 
-export interface CacheListMessage extends RuntimeMessage {
+export interface StorageListMessage extends RuntimeMessage {
   kind: "cache::list";
 }
 
-export function isCacheGetMessage(object: RuntimeMessage): object is CacheGetMessage {
+export function isStorageGetMessage(object: RuntimeMessage): object is StorageGetMessage {
   return object.kind === "cache::get";
 }
 
-export function isCacheSetMessage(object: RuntimeMessage): object is CacheSetMessage {
+export function isStorageSetMessage(object: RuntimeMessage): object is StorageSetMessage {
   return object.kind === "cache::set";
 }
 
-export function isCacheListMessage(object: RuntimeMessage): object is CacheListMessage {
+export function isStorageListMessage(
+  object: RuntimeMessage,
+): object is StorageListMessage {
   return object.kind === "cache::list";
 }
 
-export class CacheMessenger implements Cache {
-  async set(key: string, val: string, duration: number): Promise<void> {
-    const message: CacheSetMessage = {
+export class StorageMessenger implements Storage {
+  async set(key: string, val: string, duration?: number): Promise<void> {
+    const message: StorageSetMessage = {
       kind: "cache::set",
       key: key,
       value: val,
@@ -48,7 +50,7 @@ export class CacheMessenger implements Cache {
   }
 
   async get(key: string): Promise<string | undefined> {
-    const message: CacheGetMessage = {
+    const message: StorageGetMessage = {
       kind: "cache::get",
       key: key,
     };
@@ -57,7 +59,7 @@ export class CacheMessenger implements Cache {
   }
 
   async list(): Promise<Record<string, string>> {
-    const message: CacheListMessage = {
+    const message: StorageListMessage = {
       kind: "cache::list",
     };
 
@@ -65,21 +67,27 @@ export class CacheMessenger implements Cache {
   }
 }
 
-class BrowserCache implements Cache {
+class BrowserStorage implements Storage {
   prefix: string;
 
-  private static delimit = ":::::";
+  private static readonly DELIMIT = ":::::";
 
   constructor(prefix: string) {
     this.prefix = prefix;
   }
 
-  async set(key: string, val: string, duration: number): Promise<void> {
+  async set(key: string, val: string, duration?: number): Promise<void> {
     const item: { [key: string]: string } = {};
 
     const k = this.prefixedKey(key);
-    const expires = new Date(Date.now() + 1000 * duration);
-    const v = expires.getTime() + BrowserCache.delimit + val;
+
+    let v = val;
+    if (duration) {
+      const expires = new Date(Date.now() + 1000 * duration);
+      v = expires.getTime() + BrowserStorage.DELIMIT + v;
+    } else {
+      v = "-1" + BrowserStorage.DELIMIT + v;
+    }
 
     item[k] = v;
     return browser.storage.local.set(item);
@@ -124,16 +132,19 @@ class BrowserCache implements Cache {
       return undefined;
     }
 
-    const parts = (rawVal as string).split(BrowserCache.delimit, 2);
+    const parts = (rawVal as string).split(BrowserStorage.DELIMIT, 2);
     if (parts.length < 2) {
       await this.remove(key);
       return undefined;
     }
 
-    const expires = new Date(Number(parts[0]));
-    if (Date.now() > expires.getTime()) {
-      await this.remove(key);
-      return undefined;
+    const expiresNum = Number(parts[0]);
+    if (expiresNum !== -1) {
+      const expires = new Date(expiresNum);
+      if (Date.now() > expires.getTime()) {
+        await this.remove(key);
+        return undefined;
+      }
     }
 
     return parts[1];
@@ -152,4 +163,4 @@ class BrowserCache implements Cache {
   }
 }
 
-export default BrowserCache;
+export default BrowserStorage;

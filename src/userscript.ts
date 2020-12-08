@@ -7,14 +7,14 @@ import { Provider, ProviderMerge } from "@providers";
 import { WikipediaLanguage, CachedWikipediaProvider } from "@providers/wikipedia";
 import { CachedOwlBotProvider } from "@providers/owlbot";
 
-import GMCache from "./userscript/cache";
+import GMStorage from "./userscript/storage";
 
 (function (): void {
   if (self !== top) {
     return;
   }
 
-  const cache = new GMCache("");
+  const cache = new GMStorage("");
   const defaultCacheDuration = 24 * 60 * 60;
 
   const providers: Provider[] = [

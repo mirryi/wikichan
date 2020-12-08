@@ -10,11 +10,18 @@ appear with information for that word and groups of words around it.
 
 ## Installation
 
+Automated release builds and addon store entries coming soon.
+
 Clone and build from source for your platform.
 
     git clone https://github.com/Dophin2009/wikichan
     cd wikichan
     yarn install
+
+If you want to enable the OwlBot provider, [create an OwlBot API
+key](https://owlbot.info/) and create a `.env` file:
+
+    OWLBOT_TOKEN=<token>
 
 ### Greasemonkey Userscript
 
@@ -23,41 +30,50 @@ built-in greasemonkey support. It **does not work on Greasemonkey**.
 
 Build the script and copy:
 
-    yarn build:ujs    # builds to dist/ujs/wikichan.user.js
+    yarn build:ujs      # builds to dist/ujs/wikichan.user.js
 
 ### Firefox Addon
 
 Build and sign the addon:
 
-    yarn build:firefox
+    yarn build:firefox  # builds to dist/firefox
     cd dist/firefox
     yarn web-ext sign --api-key <api-key> --api-secret <api-secret>
 
-### Chrome Extension:
+### Chrome Extension
 
-Build and zip the extension:
+Build the extension:
 
-    yarn build:chrome
-    cd dist/chrome
-    zip addon.zip *
+    yarn build:chrome   # builds to dist/chrome
 
-Automated builds and addon store entries coming soon.
+### With Docker
+
+Pass in the desired target value:
+
+    DOCKER_BUILDKIT=1 docker build --build-arg TARGET=<target> --output dist .
 
 ## Contributing
 
 ### To-Do
 
 -   [x] Manifest and build WebExtension
--   [x] English dictionary provider
 -   [x] Cache results (per provider)
--   [x] Eliminate duplicate query strings before calling providers
 -   [ ] More provider choices
+    -   [x] English dictionary provider
+    -   [ ] Any language Wikipedia
+    -   [ ] Other language dictionary
 -   [ ] Settings menu
-    -   [ ] Enable / disable providers
--   [ ] Dark and light theme + switch
--   [ ] Cross-domain cache and settings in qutebrowser
+    -   [ ] Use library for certain cache/storage backends
+    -   [ ] Cross-domain cache and settings in qutebrowser
+    -   [ ] Input API tokens instead of at compile-time
+    -   [ ] Enable/disable providers
+    -   [ ] Dark/light themes (migrate to styled components?)
+    -   [ ] Option to select by character
 -   [ ] Tabs to show results from individual providers
+-   [ ] Automated release builds
 -   [ ] Testing
+-   [ ] i18n
+-   [ ] Legacy extension support
 
 ## Credits
 

@@ -19,6 +19,7 @@ module.exports = {
     "prettier/@typescript-eslint",
     "plugin:prettier/recommended",
     "plugin:react/recommended",
+    "plugin:no-unsanitized/DOM",
   ],
   rules: {
     "@typescript-eslint/no-use-before-define": "off",

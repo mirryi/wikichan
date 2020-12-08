@@ -6,14 +6,14 @@ import { Provider, ProviderMerge } from "@providers";
 import { CachedWikipediaProvider, WikipediaLanguage } from "@providers/wikipedia";
 import { CachedOwlBotProvider } from "@providers/owlbot";
 
-import { CacheMessenger } from "./browser/cache";
+import { StorageMessenger } from "./browser/storage";
 
 (function (): void {
   if (self !== top) {
     return;
   }
 
-  const cache = new CacheMessenger();
+  const cache = new StorageMessenger();
   const defaultCacheDuration = 24 * 60 * 60;
 
   const providers: Provider[] = [

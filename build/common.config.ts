@@ -24,7 +24,10 @@ const common = (production: boolean): webpack.Configuration => {
         "@providers": path.resolve(dir.src, "providers"),
       },
     },
-    plugins: [new DotenvPlugin()],
+    plugins: [
+      new DotenvPlugin(),
+      new webpack.ProvidePlugin({ process: "process/browser" }),
+    ],
     module: {
       rules: [
         {

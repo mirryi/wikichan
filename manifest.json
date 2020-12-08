@@ -15,5 +15,5 @@
   },
   "browser_action": {},
   "icons": {},
-  "permissions": ["http://*/*", "https://*/*", "storage"]
+  "permissions": ["http://*/*", "https://*/*", "*://*/*", "storage"]
 }

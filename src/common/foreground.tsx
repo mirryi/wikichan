@@ -96,14 +96,16 @@ function injectFrame(
   const inlineStyles = Array.from(stylesDiv.children).map((st) => st.innerHTML);
 
   const ext = (
-    <Float
-      ref={floatRef}
-      frameWidth={frameWidth}
-      frameHeight={frameHeight}
-      inlineStyles={inlineStyles}
-    >
-      <RootComponent ref={rootRef} providers={providerMerge} />
-    </Float>
+    <React.StrictMode>
+      <Float
+        ref={floatRef}
+        frameWidth={frameWidth}
+        frameHeight={frameHeight}
+        inlineStyles={inlineStyles}
+      >
+        <RootComponent ref={rootRef} providers={providerMerge} />
+      </Float>
+    </React.StrictMode>
   );
 
   const tmp = doc.createElement("div");
