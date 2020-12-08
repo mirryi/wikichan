@@ -1,4 +1,5 @@
-CREATE TABLE storage (
-  key TEXT NOT NULL UNIQUE,
-  value TEXT NOT NULL
+CREATE TABLE IF NOT EXISTS storage (
+  key TEXT NOT NULL PRIMARY KEY,
+  value TEXT NOT NULL,
+  expires INTEGER
 );
