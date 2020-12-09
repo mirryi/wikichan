@@ -7,6 +7,9 @@
   "author": "Eric Zhao",
   "license": "GPL-3.0",
   "scripts": {
+    "lint:eslint": "eslint --ext .ts,.tsx src",
+    "lint:types": "tsc --noEmit -p .",
+    "lint": "yarn lint:eslint && yarn lint:types",
     "dev:ujs": "yarn dev --env target=ujs",
     "dev:firefox": "yarn dev --env target=firefox",
     "dev:chrome": "yarn dev --env target=chrome",
