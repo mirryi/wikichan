@@ -6,7 +6,7 @@ import { Provider, ProviderMerge } from "@providers";
 import { CachedWikipediaProvider, WikipediaLanguage } from "@providers/wikipedia";
 import { CachedOwlBotProvider } from "@providers/owlbot";
 
-import { StorageMessenger } from "./browser/storage";
+import StorageMessenger from "./browser/StorageMessenger";
 
 (function (): void {
   if (self !== top) {

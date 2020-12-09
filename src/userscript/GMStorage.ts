@@ -1,6 +1,6 @@
-import Storage from "@common/storage";
+import PlatformStorage from "@common/PlatformStorage";
 
-class GMStorage implements Storage {
+class GMStorage implements PlatformStorage {
   prefix: string;
 
   private static readonly DELIMIT = ":::::";

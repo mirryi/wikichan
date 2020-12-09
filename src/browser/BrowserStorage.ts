@@ -1,73 +1,8 @@
 import { browser } from "webextension-polyfill-ts";
 
-import Storage from "@common/storage";
+import PlatformStorage from "@common/PlatformStorage";
 
-import RuntimeMessage from "./message";
-
-export type StorageMessage = StorageGetMessage | StorageSetMessage | StorageListMessage;
-
-export interface StorageGetMessage extends RuntimeMessage {
-  kind: "cache::get";
-  key: string;
-}
-
-export interface StorageSetMessage extends RuntimeMessage {
-  kind: "cache::set";
-  key: string;
-  value: string;
-  duration?: number;
-}
-
-export interface StorageListMessage extends RuntimeMessage {
-  kind: "cache::list";
-}
-
-export function isStorageGetMessage(object: RuntimeMessage): object is StorageGetMessage {
-  return object.kind === "cache::get";
-}
-
-export function isStorageSetMessage(object: RuntimeMessage): object is StorageSetMessage {
-  return object.kind === "cache::set";
-}
-
-export function isStorageListMessage(
-  object: RuntimeMessage,
-): object is StorageListMessage {
-  return object.kind === "cache::list";
-}
-
-export class StorageMessenger implements Storage {
-  async set(key: string, val: string, duration?: number): Promise<void> {
-    const message: StorageSetMessage = {
-      kind: "cache::set",
-      key: key,
-      value: val,
-      duration: duration,
-    };
-    return await browser.runtime.sendMessage(message).then(() => {
-      return;
-    });
-  }
-
-  async get(key: string): Promise<string | undefined> {
-    const message: StorageGetMessage = {
-      kind: "cache::get",
-      key: key,
-    };
-
-    return await browser.runtime.sendMessage(message);
-  }
-
-  async list(): Promise<Record<string, string>> {
-    const message: StorageListMessage = {
-      kind: "cache::list",
-    };
-
-    return await browser.runtime.sendMessage(message);
-  }
-}
-
-class BrowserStorage implements Storage {
+class BrowserStorage implements PlatformStorage {
   prefix: string;
 
   private static readonly DELIMIT = ":::::";

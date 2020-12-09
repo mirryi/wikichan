@@ -7,7 +7,7 @@ import { Provider, ProviderMerge } from "@providers";
 import { WikipediaLanguage, CachedWikipediaProvider } from "@providers/wikipedia";
 import { CachedOwlBotProvider } from "@providers/owlbot";
 
-import GMStorage from "./userscript/storage";
+import GMStorage from "./userscript/GMStorage";
 
 (function (): void {
   if (self !== top) {

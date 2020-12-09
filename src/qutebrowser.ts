@@ -7,15 +7,15 @@ import { Provider, ProviderMerge } from "@providers";
 import { WikipediaLanguage, CachedWikipediaProvider } from "@providers/wikipedia";
 import { CachedOwlBotProvider } from "@providers/owlbot";
 
-// import ServerCache from "./qutebrowser/storage";
-import GMCache from "./userscript/storage";
+// import ServerStorage from "./qutebrowser/ServerStorage";
+import GMStorage from "./userscript/GMStorage";
 
 (function (): void {
   if (self !== top) {
     return;
   }
 
-  const gmCache = new GMCache("");
+  const gmCache = new GMStorage("");
   // const globalCache = new ServerCache("http://127.0.0.1:5000");
 
   const defaultCacheDuration = 24 * 60 * 60;

@@ -1,9 +1,7 @@
-import Storage from "@common/storage";
+import PlatformStorage from "@common/PlatformStorage";
 
-class ServerCache implements Storage {
+class QutebrowserStorage implements PlatformStorage {
   address: string;
-
-  private static delimit = ":::::";
 
   constructor(address: string) {
     this.address = address;
@@ -27,4 +25,4 @@ class ServerCache implements Storage {
   }
 }
 
-export default ServerCache;
+export default QutebrowserStorage;

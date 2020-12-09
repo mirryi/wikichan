@@ -2,14 +2,15 @@ import "core-js/stable";
 import "regenerator-runtime/runtime";
 import { browser } from "webextension-polyfill-ts";
 
-import BrowserStorage, {
+import BrowserStorage from "./browser/BrowserStorage";
+import {
+  RuntimeMessage,
   StorageGetMessage,
   StorageSetMessage,
   isStorageGetMessage,
   isStorageSetMessage,
   isStorageListMessage,
-} from "./browser/storage";
-import RuntimeMessage from "./browser/message";
+} from "./browser/StorageMessage";
 
 (function (): void {
   const cache = new BrowserStorage("");
@@ -30,6 +31,7 @@ import RuntimeMessage from "./browser/message";
   };
 
   browser.runtime.onMessage.addListener(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     async (m: any): Promise<any> => {
       if (!m.kind) {
         return Promise.reject("invalid message structure");
