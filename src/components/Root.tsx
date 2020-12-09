@@ -4,9 +4,9 @@ import { takeUntil } from "rxjs/operators";
 
 import { Item, ProviderMerge } from "@providers";
 
-import ItemComponent from "./item";
-import SearchComponent from "./search";
-import styles from "./root.module.scss";
+import ItemComponent from "./Item";
+import SearchComponent from "./Search";
+import styles from "./Root.module.scss";
 
 export interface RootProps {
   providers: ProviderMerge;

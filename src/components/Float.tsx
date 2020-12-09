@@ -1,7 +1,7 @@
 import React, { Component, CSSProperties, ReactNode, RefObject } from "react";
 import Frame from "react-frame-component";
 
-import styles from "./float.module.scss";
+import styles from "./Float.module.scss";
 
 export interface FloatProps {
   frameWidth: number;

@@ -1,6 +1,6 @@
 import React, { ChangeEvent, Component, ReactNode } from "react";
 
-import styles from "./search.module.scss";
+import styles from "./Search.module.scss";
 
 export interface SearchProps {
   placeholderText: string;

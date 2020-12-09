@@ -2,8 +2,8 @@ import React, { RefObject } from "react";
 import ReactDOM from "react-dom";
 import { fromEvent } from "rxjs";
 
-import Float from "@components/float";
-import RootComponent from "@components/root";
+import Float from "@components/Float";
+import RootComponent from "@components/Root";
 import { ProviderMerge } from "@providers";
 
 import { ExpandMode, TextSource } from "./selector";
