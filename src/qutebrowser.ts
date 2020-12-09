@@ -10,8 +10,8 @@ import {
 } from "@providers/wikipedia";
 import { CachedProvider as CachedOwlBotProvider } from "@providers/owlbot";
 
-// import ServerStorage from "./qutebrowser/ServerStorage";
-import GMStorage from "./userscript/GMStorage";
+// import ServerStorage from "./platform/qutebrowser/ServerStorage";
+import GMStorage from "./platform/userscript/GMStorage";
 
 (function (): void {
   if (self !== top) {

@@ -10,7 +10,7 @@ import {
 } from "@providers/wikipedia";
 import { CachedProvider as CachedOwlBotProvider } from "@providers/owlbot";
 
-import GMStorage from "./userscript/GMStorage";
+import GMStorage from "./platform/userscript/GMStorage";
 
 (function (): void {
   if (self !== top) {

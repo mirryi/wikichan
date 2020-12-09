@@ -9,7 +9,7 @@ import {
 } from "@providers/wikipedia";
 import { CachedProvider as CachedOwlBotProvider } from "@providers/owlbot";
 
-import StorageMessenger from "./browser/StorageMessenger";
+import StorageMessenger from "./platform/browser/StorageMessenger";
 
 (function (): void {
   if (self !== top) {

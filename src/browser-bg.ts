@@ -2,7 +2,7 @@ import "core-js/stable";
 import "regenerator-runtime/runtime";
 import { browser } from "webextension-polyfill-ts";
 
-import BrowserStorage from "./browser/BrowserStorage";
+import BrowserStorage from "./platform/browser/BrowserStorage";
 import {
   RuntimeMessage,
   StorageGetMessage,
@@ -10,7 +10,7 @@ import {
   isStorageGetMessage,
   isStorageSetMessage,
   isStorageListMessage,
-} from "./browser/StorageMessage";
+} from "./platform/browser/StorageMessage";
 
 (function (): void {
   const cache = new BrowserStorage("");
