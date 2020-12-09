@@ -1,4 +1,9 @@
-export class TextSource {
+export enum ExpandMode {
+  word,
+  character,
+}
+
+export default class TextSource {
   range: Range;
 
   constructor(range: Range) {
@@ -182,11 +187,6 @@ export class TextSource {
 
     return expandedRange.startContainer.textContent.charAt(expandedRange.startOffset);
   }
-}
-
-export enum ExpandMode {
-  word,
-  character,
 }
 
 /**

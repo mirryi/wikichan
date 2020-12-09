@@ -6,7 +6,7 @@ import Float from "@components/Float";
 import RootComponent from "@components/Root";
 import { ProviderMerge } from "@providers";
 
-import { ExpandMode, TextSource } from "./selector";
+import TextSource, { ExpandMode } from "./TextSource";
 
 // eslint-disable-next-line no-useless-escape
 const PUNCT_RE = /[\u2000-\u206F\u2E00-\u2E7F\\'!"#$%&()*+,\-.\/:;<=>?@\[\]^_`{|}~]/g;
