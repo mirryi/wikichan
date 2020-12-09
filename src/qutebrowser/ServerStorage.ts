@@ -1,6 +1,6 @@
 import PlatformStorage from "@common/PlatformStorage";
 
-class QutebrowserStorage implements PlatformStorage {
+class ServerStorage implements PlatformStorage {
   address: string;
 
   constructor(address: string) {
@@ -25,4 +25,4 @@ class QutebrowserStorage implements PlatformStorage {
   }
 }
 
-export default QutebrowserStorage;
+export default ServerStorage;
