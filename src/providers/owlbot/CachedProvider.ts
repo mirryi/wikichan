@@ -1,12 +1,12 @@
-import Cache from "@common/cache";
+import PlatformStorage from "@common/PlatformStorage";
 import { CachedProvider } from "@providers";
 
-import { OwlBotItem, OwlBotProvider } from "./index";
+import OwlBotItem from "./Item";
+import OwlBotProvider from "./Provider";
 
 class CachedOwlBotProvider extends CachedProvider<OwlBotItem> {
-  constructor(token: string, cache: Cache, cacheDuration: number) {
-    super(new OwlBotProvider(token), cache, cacheDuration);
-    this.cache = cache;
+  constructor(token: string, Storage: PlatformStorage, StorageDuration: number) {
+    super(new OwlBotProvider(token), Storage, StorageDuration);
   }
 
   serializeItem(item: OwlBotItem): string {

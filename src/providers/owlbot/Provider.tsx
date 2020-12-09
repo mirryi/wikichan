@@ -4,29 +4,12 @@ import { distinct, filter, map } from "rxjs/operators";
 import { sanitize } from "dompurify";
 import htmlReactParse from "html-react-parser";
 
-import { Provider, Item } from "@providers";
+import Provider from "@providers/Provider";
 
-import CachedOwlBotProvider from "./cached";
-import styles from "./index.module.scss";
+import OwlBotItem from "./Item";
+import styles from "./Provider.module.scss";
 
-export { CachedOwlBotProvider };
-
-export interface OwlBotItem extends Item {
-  title: string;
-  description: string;
-  longDescription?: string;
-
-  tags: Map<string, string | string[]>;
-  urls?: string[];
-
-  definitions: OwlBotDefinition[];
-  pronunciation: string;
-
-  searchTerm: string;
-  provider: OwlBotProvider;
-}
-
-export class OwlBotProvider implements Provider<OwlBotItem> {
+class OwlBotProvider implements Provider<OwlBotItem> {
   token: string;
 
   constructor(token: string) {
@@ -102,7 +85,7 @@ export class OwlBotProvider implements Provider<OwlBotItem> {
   }
 }
 
-export interface OwlBotResponse {
+interface OwlBotResponse {
   definitions: OwlBotDefinition[];
   word: string;
   pronunciation: string;
@@ -115,3 +98,5 @@ interface OwlBotDefinition {
   image_url: string;
   emoji: string | null;
 }
+
+export default OwlBotProvider;

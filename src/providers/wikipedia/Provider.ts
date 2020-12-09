@@ -4,26 +4,11 @@ import { ReactNode } from "react";
 import { empty, from, merge, Observable } from "rxjs";
 import { catchError, distinct, filter, map } from "rxjs/operators";
 
-import { Item, Provider } from "@providers";
-import CachedWikipediaProvider from "./cached";
+import Provider from "@providers/Provider";
 
-export { CachedWikipediaProvider };
+import WikipediaItem from "./Item";
 
-export class WikipediaItem implements Item {
-  title: string;
-  description: string;
-  longDescription?: string;
-
-  tags: Map<string, string | string[]>;
-  urls?: string[];
-
-  searchTerm: string;
-  provider: WikipediaProvider;
-
-  pageid: number;
-}
-
-export class WikipediaProvider implements Provider<WikipediaItem> {
+class WikipediaProvider implements Provider<WikipediaItem> {
   language: WikipediaLanguage;
 
   constructor(language: WikipediaLanguage) {
@@ -130,7 +115,7 @@ export class WikipediaProvider implements Provider<WikipediaItem> {
     return new URL(url);
   }
 
-  renderLongDescription(item: Item): ReactNode {
+  renderLongDescription(item: WikipediaItem): ReactNode {
     const ld = item.longDescription;
     if (!ld) {
       return null;
@@ -194,3 +179,5 @@ type MediaWikiPage = {
   title: string;
   touched?: string;
 };
+
+export default WikipediaProvider;

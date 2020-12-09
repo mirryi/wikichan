@@ -4,8 +4,11 @@ import "gm4-polyfill";
 
 import { register } from "@common/foreground";
 import { Provider, ProviderMerge } from "@providers";
-import { WikipediaLanguage, CachedWikipediaProvider } from "@providers/wikipedia";
-import { CachedOwlBotProvider } from "@providers/owlbot";
+import {
+  WikipediaLanguage,
+  CachedProvider as CachedWikipediaProvider,
+} from "@providers/wikipedia";
+import { CachedProvider as CachedOwlBotProvider } from "@providers/owlbot";
 
 // import ServerStorage from "./qutebrowser/ServerStorage";
 import GMStorage from "./userscript/GMStorage";

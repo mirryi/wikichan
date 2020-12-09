@@ -1,12 +1,16 @@
-import Cache from "@common/cache";
-import { CachedProvider } from "@providers";
+import PlatformStorage from "@common/PlatformStorage";
+import CachedProvider from "@providers/CachedProvider";
 
-import { WikipediaProvider, WikipediaLanguage, WikipediaItem } from "./index";
+import WikipediaProvider, { WikipediaLanguage } from "./Provider";
+import WikipediaItem from "./Item";
 
 class CachedWikipediaProvider extends CachedProvider<WikipediaItem> {
-  constructor(language: WikipediaLanguage, cache: Cache, cacheDuration: number) {
-    super(new WikipediaProvider(language), cache, cacheDuration);
-    this.cache = cache;
+  constructor(
+    language: WikipediaLanguage,
+    storage: PlatformStorage,
+    storageDuration: number,
+  ) {
+    super(new WikipediaProvider(language), storage, storageDuration);
   }
 
   serializeItem(item: WikipediaItem): string {

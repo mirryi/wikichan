@@ -3,8 +3,11 @@ import "regenerator-runtime/runtime";
 
 import { register } from "@common/foreground";
 import { Provider, ProviderMerge } from "@providers";
-import { CachedWikipediaProvider, WikipediaLanguage } from "@providers/wikipedia";
-import { CachedOwlBotProvider } from "@providers/owlbot";
+import {
+  CachedProvider as CachedWikipediaProvider,
+  WikipediaLanguage,
+} from "@providers/wikipedia";
+import { CachedProvider as CachedOwlBotProvider } from "@providers/owlbot";
 
 import StorageMessenger from "./browser/StorageMessenger";
 
