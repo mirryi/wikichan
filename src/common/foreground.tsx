@@ -117,16 +117,15 @@ function injectFrame(
 }
 
 function queriesFromExpansions(ts: TextSource, n: number): string[] {
-  const queries: string[] = [ts.text()];
+  let queries: string[] = [ts.text()];
 
   let stopLeft = false;
   let stopRight = false;
   for (let i = 0; i < n; i++) {
     if (!stopRight) {
       const rex = ts.expandNext(ExpandMode.word);
-      console.log(rex);
       if (rex !== null) {
-        queries.concat(getTexts(rex));
+        queries = queries.concat(getTexts(rex));
       } else {
         stopRight = true;
       }
@@ -135,7 +134,7 @@ function queriesFromExpansions(ts: TextSource, n: number): string[] {
     if (!stopLeft) {
       const lex = ts.expandPrev(ExpandMode.word);
       if (lex !== null) {
-        queries.concat(getTexts(lex));
+        queries = queries.concat(getTexts(lex));
         ts = lex;
       } else {
         stopLeft = true;
@@ -145,7 +144,7 @@ function queriesFromExpansions(ts: TextSource, n: number): string[] {
     if (!stopRight) {
       const rex = ts.expandNext(ExpandMode.word);
       if (rex !== null) {
-        queries.concat(getTexts(rex));
+        queries = queries.concat(getTexts(rex));
         ts = rex;
       }
     }
