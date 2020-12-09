@@ -2,8 +2,8 @@ import React, { RefObject } from "react";
 import ReactDOM from "react-dom";
 import { fromEvent } from "rxjs";
 
-import Float from "@components/Float";
-import RootComponent from "@components/Root";
+import Float from "@view/Float";
+import RootComponent from "@view/Root";
 import { ProviderMerge } from "@providers";
 
 import TextSource, { ExpandMode } from "./TextSource";
@@ -56,6 +56,7 @@ export function register(w: Window, providers: ProviderMerge): void {
 
     // Construct query strings by expanding selection left and right
     const queries = queriesFromExpansions(ts, 5);
+    console.log(queries);
 
     // Start provider searches
     rootRef.current?.searchProviders(queries);
@@ -123,6 +124,7 @@ function queriesFromExpansions(ts: TextSource, n: number): string[] {
   for (let i = 0; i < n; i++) {
     if (!stopRight) {
       const rex = ts.expandNext(ExpandMode.word);
+      console.log(rex);
       if (rex !== null) {
         queries.concat(getTexts(rex));
       } else {
