@@ -6,7 +6,7 @@ import Float from "@view/Float";
 import RootComponent from "@view/Root";
 import { ProviderMerge } from "@providers";
 
-import TextSource, { ExpandMode } from "./TextSource";
+import Selector, { TextSource, ExpandMode } from "./Selector";
 
 // eslint-disable-next-line no-useless-escape
 const PUNCT_RE = /[\u2000-\u206F\u2E00-\u2E7F\\'!"#$%&()*+,\-.\/:;<=>?@\[\]^_`{|}~]/g;
@@ -26,6 +26,7 @@ export function register(w: Window, providers: ProviderMerge): void {
     }
   };
 
+  const selector = new Selector();
   fromEvent(w, "mousemove").subscribe((e: Event) => {
     const me = e as MouseEvent;
     // Only proceed if <Ctrl> is held down
@@ -49,13 +50,13 @@ export function register(w: Window, providers: ProviderMerge): void {
     closeFrame();
 
     // Scrape the text at the current spot
-    const ts = TextSource.getFromPoint(x, y, [1, 0], [1, 0]);
+    const ts = selector.fromPoint(x, y, [1, 0], [1, 0]);
     if (ts === null) {
       return;
     }
 
     // Construct query strings by expanding selection left and right
-    const queries = queriesFromExpansions(ts, 5);
+    const queries = queriesFromExpansions(selector, ts, 5);
     console.log(queries);
 
     // Start provider searches
@@ -116,14 +117,14 @@ function injectFrame(
   return [floatRef, rootRef];
 }
 
-function queriesFromExpansions(ts: TextSource, n: number): string[] {
+function queriesFromExpansions(selector: Selector, ts: TextSource, n: number): string[] {
   let queries: string[] = [ts.text()];
 
   let stopLeft = false;
   let stopRight = false;
   for (let i = 0; i < n; i++) {
     if (!stopRight) {
-      const rex = ts.expandNext(ExpandMode.word);
+      const rex = selector.expandNext(ts, ExpandMode.word);
       if (rex !== null) {
         queries = queries.concat(getTexts(rex));
       } else {
@@ -132,7 +133,7 @@ function queriesFromExpansions(ts: TextSource, n: number): string[] {
     }
 
     if (!stopLeft) {
-      const lex = ts.expandPrev(ExpandMode.word);
+      const lex = selector.expandPrev(ts, ExpandMode.word);
       if (lex !== null) {
         queries = queries.concat(getTexts(lex));
         ts = lex;
@@ -142,7 +143,7 @@ function queriesFromExpansions(ts: TextSource, n: number): string[] {
     }
 
     if (!stopRight) {
-      const rex = ts.expandNext(ExpandMode.word);
+      const rex = selector.expandNext(ts, ExpandMode.word);
       if (rex !== null) {
         queries = queries.concat(getTexts(rex));
         ts = rex;

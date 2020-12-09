@@ -3,29 +3,19 @@ export enum ExpandMode {
   character,
 }
 
-export default class TextSource {
-  range: Range;
-
-  constructor(range: Range) {
-    this.range = range;
-  }
-
-  text(): string {
-    return this.range.toString();
-  }
-
+export default class Selector {
   /**
    * expandNext returns a new TextSource with the next character or text until a break (space, period, etc.) incorporated.
    */
-  expandNext(mode: ExpandMode): TextSource | null {
-    return this.expand(mode, true);
+  expandNext(ts: TextSource, mode: ExpandMode): TextSource | null {
+    return this.expand(ts, mode, true);
   }
 
-  expandPrev(mode: ExpandMode): TextSource | null {
-    return this.expand(mode, false);
+  expandPrev(ts: TextSource, mode: ExpandMode): TextSource | null {
+    return this.expand(ts, mode, false);
   }
 
-  static getFromPoint(
+  fromPoint(
     x: number,
     y: number,
     leftEx: [number, number],
@@ -40,7 +30,7 @@ export default class TextSource {
 
     const expandFor = (mode: ExpandMode, times: number, right: boolean): void => {
       for (let i = 0; i < times; i++) {
-        const ex = right ? ts.expandNext(mode) : ts.expandPrev(mode);
+        const ex = right ? this.expandNext(ts, mode) : this.expandPrev(ts, mode);
         if (ex === null) {
           break;
         }
@@ -56,8 +46,8 @@ export default class TextSource {
     return ts;
   }
 
-  private expand(mode: ExpandMode, right: boolean): TextSource | null {
-    const range = this.range;
+  private expand(ts: TextSource, mode: ExpandMode, right: boolean): TextSource | null {
+    const range = ts.range;
 
     // Return a new TextSource with same range but ending offset increased by one
     if (mode === ExpandMode.character) {
@@ -115,28 +105,28 @@ export default class TextSource {
       return new TextSource(expandedRange);
     } else if (mode === ExpandMode.word) {
       // eslint-disable-next-line @typescript-eslint/no-this-alias
-      let expandedSource: TextSource = this;
+      let expandedSource: TextSource = ts;
 
       const nextChar = right
-        ? expandedSource.nextRightChar()
-        : expandedSource.nextLeftChar();
+        ? this.nextRightChar(expandedSource)
+        : this.nextLeftChar(expandedSource);
       if (!nextChar || matchBreak(nextChar)) {
         return expandedSource;
       }
 
       // eslint-disable-next-line no-constant-condition
       while (true) {
-        const exp = expandedSource.expand(ExpandMode.character, right);
+        const exp = this.expand(expandedSource, ExpandMode.character, right);
         if (exp === null) {
           break;
         }
         expandedSource = exp;
 
         const nextChar = right
-          ? expandedSource.nextRightChar()
-          : expandedSource.nextLeftChar();
+          ? this.nextRightChar(expandedSource)
+          : this.nextLeftChar(expandedSource);
         if (!nextChar || matchBreak(nextChar)) {
-          const exp = expandedSource.expand(ExpandMode.character, right);
+          const exp = this.expand(expandedSource, ExpandMode.character, right);
           if (exp) {
             expandedSource = exp;
           }
@@ -150,13 +140,13 @@ export default class TextSource {
     return null;
   }
 
-  nextRightChar(): string | null {
-    const endText = this.range.endContainer.textContent;
+  nextRightChar(ts: TextSource): string | null {
+    const endText = ts.range.endContainer.textContent;
     if (!endText) {
       return null;
     }
 
-    const expandedSource = this.expandNext(ExpandMode.character);
+    const expandedSource = this.expandNext(ts, ExpandMode.character);
     if (!expandedSource) {
       return null;
     }
@@ -169,13 +159,13 @@ export default class TextSource {
     return expandedRange.endContainer.textContent.charAt(expandedRange.endOffset - 1);
   }
 
-  nextLeftChar(): string | null {
-    const startText = this.range.startContainer.textContent;
+  nextLeftChar(ts: TextSource): string | null {
+    const startText = ts.range.startContainer.textContent;
     if (!startText) {
       return null;
     }
 
-    const expandedSource = this.expandPrev(ExpandMode.character);
+    const expandedSource = this.expandPrev(ts, ExpandMode.character);
     if (!expandedSource) {
       return null;
     }
@@ -186,6 +176,18 @@ export default class TextSource {
     }
 
     return expandedRange.startContainer.textContent.charAt(expandedRange.startOffset);
+  }
+}
+
+export class TextSource {
+  range: Range;
+
+  constructor(range: Range) {
+    this.range = range;
+  }
+
+  text(): string {
+    return this.range.toString();
   }
 }
 
