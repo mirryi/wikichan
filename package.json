@@ -8,7 +8,7 @@
   "license": "GPL-3.0",
   "scripts": {
     "lint:eslint": "eslint --ext .ts,.tsx src",
-    "lint:types": "tsc --noEmit -p .",
+    "lint:types": "tsc --noEmit --skipLibCheck -p .",
     "lint": "yarn lint:eslint && yarn lint:types",
     "dev:ujs": "yarn dev --env target=ujs",
     "dev:firefox": "yarn dev --env target=firefox",
