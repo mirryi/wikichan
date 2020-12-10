@@ -57,7 +57,6 @@ export function register(w: Window, providers: ProviderMerge): void {
 
     // Construct query strings by expanding selection left and right
     const queries = queriesFromExpansions(selector, ts, 5);
-    console.log(queries);
 
     // Start provider searches
     rootRef.current?.searchProviders(queries);
