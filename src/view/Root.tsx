@@ -4,7 +4,7 @@ import { takeUntil } from "rxjs/operators";
 
 import { Item, ProviderMerge } from "@providers";
 
-import ItemComponent from "./Item";
+import ItemListComponent from "./ItemList";
 import SearchComponent from "./Search";
 import styles from "./Root.module.scss";
 
@@ -68,10 +68,6 @@ class RootComponent extends Component<RootProps, RootState> {
   }
 
   render(): ReactNode {
-    const itemRenders = this.state.items.map((item) => {
-      return <ItemComponent key={item.title} data={item} />;
-    });
-
     return (
       <div className={styles.wrapper}>
         <SearchComponent
@@ -81,7 +77,7 @@ class RootComponent extends Component<RootProps, RootState> {
           }}
         />
 
-        <div>{itemRenders}</div>
+        <ItemListComponent items={this.state.items} />
       </div>
     );
   }
