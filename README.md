@@ -3,9 +3,18 @@
 **Wikichan** is a WebExtensions addon and userscript that displays a popup with
 information from Wikipedia and other sources.
 
+## Features
+
+-   Wikipedia article summary source
+-   English dictionary source via OwlBot
+-   Search bar to manually query providers
+-   Open links to source pages
+
+See [To-Do](#to-do) for upcoming features.
+
 ## Usage
 
-While holding the `Ctrl` key, click on a word in any webpage. A popup will
+While holding the `ctrl` key, click on a word in any webpage. A popup will
 appear with information for that word and groups of words around it.
 
 ## Installation
