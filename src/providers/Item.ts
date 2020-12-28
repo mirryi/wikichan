@@ -1,3 +1,5 @@
+import Provider from "./Provider";
+
 interface Item {
   title: string;
   subtitle?: string;

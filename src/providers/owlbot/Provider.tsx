@@ -6,7 +6,7 @@ import htmlReactParse from "html-react-parser";
 
 import Provider from "@providers/Provider";
 
-import OwlBotItem from "./Item";
+import OwlBotItem, { OwlBotDefinition } from "./Item";
 import styles from "./Provider.module.scss";
 
 class OwlBotProvider implements Provider<OwlBotItem> {
@@ -89,14 +89,6 @@ interface OwlBotResponse {
   definitions: OwlBotDefinition[];
   word: string;
   pronunciation: string;
-}
-
-interface OwlBotDefinition {
-  type: string;
-  definition: string;
-  example: string | null;
-  image_url: string;
-  emoji: string | null;
 }
 
 export default OwlBotProvider;
