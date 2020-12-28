@@ -23,7 +23,7 @@ Automated release builds and addon store entries coming soon.
 
 Clone and build from source for your platform.
 
-    git clone https://github.com/Dophin2009/wikichan
+    git clone --recurse-submodules https://github.com/Dophin2009/wikichan
     cd wikichan
     yarn install
 
