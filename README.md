@@ -90,6 +90,7 @@ Pass in the desired target value:
     -   [ ] Enable/disable providers
     -   [ ] Dark/light themes (migrate to styled components?)
     -   [ ] Option to select by character
+    -   [ ] Per-domain settings
 -   [ ] Tabs to show results from individual providers
 -   [ ] Automated release builds
 -   [ ] Testing
