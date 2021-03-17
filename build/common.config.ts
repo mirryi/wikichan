@@ -15,6 +15,9 @@ const common = (production: boolean): webpack.Configuration => {
   return {
     mode: production ? "production" : "development",
     devtool: production ? undefined : "eval-source-map",
+    output: {
+      pathinfo: false,
+    },
     resolve: {
       extensions: [".ts", ".tsx", ".js", ".css", ".sass", ".scss"],
       alias: {
@@ -24,6 +27,7 @@ const common = (production: boolean): webpack.Configuration => {
         "@view": path.resolve(dir.src, "view"),
         "@providers": path.resolve(dir.src, "providers"),
       },
+      symlinks: false,
     },
     plugins: [
       new DotenvPlugin(),
@@ -33,6 +37,7 @@ const common = (production: boolean): webpack.Configuration => {
       rules: [
         {
           test: /\.tsx?$/,
+          include: dir.src,
           use: ["swc-loader"],
         },
         {
@@ -70,7 +75,7 @@ const common = (production: boolean): webpack.Configuration => {
       ],
     },
     optimization: {
-      minimize: true,
+      minimize: production,
       minimizer: [
         new TerserPlugin({
           parallel: true,
@@ -82,6 +87,7 @@ const common = (production: boolean): webpack.Configuration => {
       maxAssetSize: 5000000,
       maxEntrypointSize: 5000000,
     },
+    cache: production ? false : { type: "filesystem" },
     devServer: {
       contentBase: dir.dist,
     },

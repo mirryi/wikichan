@@ -30,7 +30,8 @@
     "build:opera": "yarn build --env target=opera",
     "build:edge": "yarn build --env target=edge",
     "build:qutebrowser": "yarn build --env target=qutebrowser",
-    "build": "yarn dev --env production"
+    "build": "yarn dev --env production",
+    "postinstall": "rm -rf node_modules/.cache/webpack"
   },
   "devDependencies": {
     "@swc/core": "^1.2.40",
