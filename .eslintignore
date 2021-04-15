@@ -1,3 +1,5 @@
-node_modules/
-target/
+# Build artifacts
+node_modules
+dist
+
 **/*.scss.d.ts
