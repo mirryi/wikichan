@@ -1,32 +1,32 @@
 {
-  "compilerOptions": {
-    "baseUrl": ".",
-    "esModuleInterop": true,
-    "downlevelIteration": true,
-    "inlineSources": true,
-    "inlineSourceMap": true,
-    "jsx": "react",
-    "lib": ["DOM", "ES2020"],
-    "module": "ES2020",
-    "moduleResolution": "Node",
-    "noImplicitAny": true,
-    "noImplicitReturns": true,
-    "noImplicitThis": true,
-    "outDir": "dist",
-    "preserveConstEnums": true,
-    "strictNullChecks": true,
-    "strictFunctionTypes": true,
-    "removeComments": true,
-    "target": "ES6",
-    "typeRoots": ["node_modules/@types"],
-    "paths": {
-      "gm4-polyfill": ["lib/gm4-polyfill/gm4-polyfill.js"],
-      "@common/*": ["src/common/*"],
-      "@view/*": ["src/view/*"],
-      "@providers/*": ["src/providers/*"],
-      "@providers": ["src/providers/index.ts"]
-    }
-  },
-  "include": ["src/*"],
-  "exclude": ["node_modules"]
+    "compilerOptions": {
+        "baseUrl": ".",
+        "esModuleInterop": true,
+        "downlevelIteration": true,
+        "inlineSources": true,
+        "inlineSourceMap": true,
+        "jsx": "react",
+        "lib": ["DOM", "ES2020"],
+        "module": "ES2020",
+        "moduleResolution": "Node",
+        "noImplicitAny": true,
+        "noImplicitReturns": true,
+        "noImplicitThis": true,
+        "outDir": "dist",
+        "preserveConstEnums": true,
+        "strictNullChecks": true,
+        "strictFunctionTypes": true,
+        "removeComments": true,
+        "target": "ES6",
+        "typeRoots": ["node_modules/@types"],
+        "paths": {
+            "gm4-polyfill": ["lib/gm4-polyfill/gm4-polyfill.js"],
+            "@common/*": ["src/common/*"],
+            "@view/*": ["src/view/*"],
+            "@providers/*": ["src/providers/*"],
+            "@providers": ["src/providers/index.ts"]
+        }
+    },
+    "include": ["src/*"],
+    "exclude": ["node_modules"]
 }
