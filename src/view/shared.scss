@@ -1,19 +1,19 @@
 $base-size: 16px;
 
 %tag {
-  background-color: #eee !important;
-  border: 0 !important;
-  border-radius: 5px !important;
-  font-size: 0.8 * $base-size !important;
-  padding: 3px !important;
-  text-align: center !important;
+    background-color: #eee !important;
+    border: 0 !important;
+    border-radius: 5px !important;
+    font-size: 0.8 * $base-size !important;
+    padding: 3px !important;
+    text-align: center !important;
 }
 
 %button {
-  @extend %tag;
+    @extend %tag;
 
-  cursor: pointer !important;
-  &:hover {
-    background-color: #ddd !important;
-  }
+    cursor: pointer !important;
+    &:hover {
+        background-color: #ddd !important;
+    }
 }

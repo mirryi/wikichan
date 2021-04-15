@@ -1,18 +1,18 @@
 import Provider from "./Provider";
 
 interface Item {
-  title: string;
-  subtitle?: string;
+    title: string;
+    subtitle?: string;
 
-  description: string;
-  longDescription?: string;
+    description: string;
+    longDescription?: string;
 
-  tags?: Map<string, string | string[]>;
-  urls?: string[];
+    tags?: Map<string, string | string[]>;
+    urls?: string[];
 
-  searchTerm: string;
+    searchTerm: string;
 
-  provider: Provider<Item>;
+    provider: Provider<Item>;
 }
 
 export default Item;

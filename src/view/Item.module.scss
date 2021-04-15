@@ -1,140 +1,140 @@
 @import "./shared";
 
 %url {
-  @extend %tag;
+    @extend %tag;
 
-  a {
-    text-decoration: none !important;
-  }
+    a {
+        text-decoration: none !important;
+    }
 }
 
 .bold {
-  font-weight: bold !important;
+    font-weight: bold !important;
 }
 
 .header {
-  background-color: rgba(255, 255, 255, 0.93) !important;
-  margin: 7px 5px !important;
-  padding-top: 5px !important;
-  position: sticky !important;
-  top: 0 !important;
+    background-color: rgba(255, 255, 255, 0.93) !important;
+    margin: 7px 5px !important;
+    padding-top: 5px !important;
+    position: sticky !important;
+    top: 0 !important;
 }
 
 .minimizeButton {
-  @extend %button;
+    @extend %button;
 
-  background-color: #eee !important;
-  float: right !important;
-  padding: 1px 5px !important;
+    background-color: #eee !important;
+    float: right !important;
+    padding: 1px 5px !important;
 }
 
 .top {
-  display: flex !important;
-  justify-content: space-between !important;
-  margin-bottom: 3px !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    margin-bottom: 3px !important;
 }
 
 .title {
-  color: #000 !important;
-  font-size: 1.4 * $base-size !important;
-  font-weight: bold !important;
-  margin-bottom: 3px !important;
-  max-width: 60% !important;
-  text-decoration: none !important;
-  word-wrap: break-word !important;
+    color: #000 !important;
+    font-size: 1.4 * $base-size !important;
+    font-weight: bold !important;
+    margin-bottom: 3px !important;
+    max-width: 60% !important;
+    text-decoration: none !important;
+    word-wrap: break-word !important;
 }
 
 .tag {
-  @extend %tag;
+    @extend %tag;
 
-  background: #ececec !important;
-  color: #3d3d3d !important;
-  cursor: pointer !important;
-  font-size: 0.6 * $base-size !important;
-  font-stretch: normal !important;
-  margin-right: 4px !important;
-  text-decoration: none !important;
+    background: #ececec !important;
+    color: #3d3d3d !important;
+    cursor: pointer !important;
+    font-size: 0.6 * $base-size !important;
+    font-stretch: normal !important;
+    margin-right: 4px !important;
+    text-decoration: none !important;
 }
 
 .tagList {
-  list-style-type: none !important;
-  margin: 0 !important;
-  padding: 0 !important;
+    list-style-type: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
 
-  li {
-    padding: 1px !important;
-    text-align: left !important;
-  }
+    li {
+        padding: 1px !important;
+        text-align: left !important;
+    }
 }
 
 .providerName {
-  color: #666 !important;
-  margin-bottom: 3px !important;
+    color: #666 !important;
+    margin-bottom: 3px !important;
 }
 
 .searchTerm {
-  @extend %tag;
+    @extend %tag;
 
-  font-style: italic !important;
-  font-weight: normal !important;
+    font-style: italic !important;
+    font-weight: normal !important;
 }
 
 .content {
-  display: block !important;
-  margin: 15px 30px !important;
+    display: block !important;
+    margin: 15px 30px !important;
 
-  > * {
-    margin-bottom: 10px !important;
-  }
+    > * {
+        margin-bottom: 10px !important;
+    }
 }
 
 .description {
-  font-size: 0.8 * $base-size !important;
-  font-style: italic !important;
+    font-size: 0.8 * $base-size !important;
+    font-style: italic !important;
 }
 
 .longDescription {
-  font-size: $base-size !important;
+    font-size: $base-size !important;
 }
 
 .extra {
-  background-color: #f1f1f1 !important;
-  border-radius: 5px !important;
-  padding: 5px !important;
+    background-color: #f1f1f1 !important;
+    border-radius: 5px !important;
+    padding: 5px !important;
 
-  .extraSummary {
-    cursor: pointer !important;
-    font-weight: bold !important;
-  }
-
-  .list {
-    list-style-type: none !important;
-    margin-bottom: 10px !important;
-    margin-top: 10px !important;
-    padding-left: 15px !important;
-
-    .listItem {
-      display: block !important;
-      margin-bottom: 3px !important;
-      overflow: hidden !important;
-      text-overflow: ellipsis !important;
-      white-space: nowrap !important;
-      width: 25 * $base-size !important;
+    .extraSummary {
+        cursor: pointer !important;
+        font-weight: bold !important;
     }
-  }
 
-  .link {
-    $link-color: #555;
+    .list {
+        list-style-type: none !important;
+        margin-bottom: 10px !important;
+        margin-top: 10px !important;
+        padding-left: 15px !important;
 
-    color: $link-color !important;
-
-    a {
-      color: $link-color !important;
+        .listItem {
+            display: block !important;
+            margin-bottom: 3px !important;
+            overflow: hidden !important;
+            text-overflow: ellipsis !important;
+            white-space: nowrap !important;
+            width: 25 * $base-size !important;
+        }
     }
-  }
+
+    .link {
+        $link-color: #555;
+
+        color: $link-color !important;
+
+        a {
+            color: $link-color !important;
+        }
+    }
 }
 
 .tooltip {
-  font-size: 0.7 * $base-size !important;
-  line-break: loose;
+    font-size: 0.7 * $base-size !important;
+    line-break: loose;
 }
