@@ -56,7 +56,7 @@ class BrowserStorage implements PlatformStorage {
     return record;
   }
 
-  private async remove(prefixedKey: string): Promise<void> {
+  private remove(prefixedKey: string): Promise<void> {
     return browser.storage.local.remove(prefixedKey);
   }
 

@@ -22,7 +22,7 @@ abstract class CachedProvider<T extends Item> implements Provider<T> {
   }
 
   search(queries: string[]): Observable<T> {
-    const promises = queries.map(async (q) => {
+    const promises = queries.map((q) => {
       return this.storage.get(this.key(q)).then(
         (v: string | undefined): T | string => {
           if (!v) {
