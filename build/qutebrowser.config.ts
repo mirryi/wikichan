@@ -6,38 +6,41 @@ import CopyPlugin from "copy-webpack-plugin";
 import { dir } from "./common.config";
 
 const config = (production: boolean): Configuration => {
-  const dist = path.resolve(dir.dist, "qutebrowser");
+    const dist = path.resolve(dir.dist, "qutebrowser");
 
-  const copyPatterns = production
-    ? [{ from: path.join(dir.root, "qutebrowser"), to: dist }]
-    : [];
+    const plugins = [
+        new UserscriptPlugin({
+            headers: {
+                name: "[name]",
+                description: "[description]",
+                author: "[author]",
+                version: production ? "[version]" : "[version]-build.[buildNo]",
+                include: "*://*/*",
+                grant: ["GM.setValue", "GM.getValue", "GM.listValues", "GM.deleteValue"],
+            },
+            pretty: false,
+        }),
+    ];
 
-  return {
-    devtool: production ? undefined : "inline-source-map",
-    entry: {
-      wikichan: path.resolve(dir.src, "qutebrowser"),
-    },
-    output: {
-      path: dist,
-      filename: "[name].user.js",
-    },
-    plugins: [
-      new UserscriptPlugin({
-        headers: {
-          name: "[name]",
-          description: "[description]",
-          author: "[author]",
-          version: production ? "[version]" : "[version]-build.[buildNo]",
-          include: "*://*/*",
-          grant: ["GM.setValue", "GM.getValue", "GM.listValues", "GM.deleteValue"],
+    if (production) {
+        plugins.push(
+            new CopyPlugin({
+                patterns: [{ from: path.join(dir.root, "qutebrowser"), to: dist }],
+            }),
+        );
+    }
+
+    return {
+        devtool: production ? undefined : "inline-source-map",
+        entry: {
+            wikichan: path.resolve(dir.src, "qutebrowser"),
         },
-        pretty: false,
-      }),
-      new CopyPlugin({
-        patterns: copyPatterns,
-      }),
-    ],
-  };
+        output: {
+            path: dist,
+            filename: "[name].user.js",
+        },
+        plugins: plugins,
+    };
 };
 
 export default config;
