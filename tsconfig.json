@@ -6,7 +6,10 @@
         "inlineSources": true,
         "inlineSourceMap": true,
         "jsx": "react",
-        "lib": ["DOM", "ES2020"],
+        "lib": [
+            "DOM",
+            "ES2020"
+        ],
         "module": "ES2020",
         "moduleResolution": "Node",
         "noImplicitAny": true,
@@ -18,15 +21,31 @@
         "strictFunctionTypes": true,
         "removeComments": true,
         "target": "ES6",
-        "typeRoots": ["node_modules/@types"],
+        "typeRoots": [
+            "node_modules/@types"
+        ],
         "paths": {
-            "gm4-polyfill": ["lib/gm4-polyfill/gm4-polyfill.js"],
-            "@common/*": ["src/common/*"],
-            "@view/*": ["src/view/*"],
-            "@providers/*": ["src/providers/*"],
-            "@providers": ["src/providers/index.ts"]
+            "gm4-polyfill": [
+                "lib/gm4-polyfill/gm4-polyfill.js"
+            ],
+            "@common/*": [
+                "src/common/*"
+            ],
+            "@providers/*": [
+                "src/providers/*"
+            ],
+            "@providers": [
+                "src/providers/index.ts"
+            ],
+            "@view/*": [
+                "src/view/*"
+            ]
         }
     },
-    "include": ["src/*"],
-    "exclude": ["node_modules"]
+    "include": [
+        "src/*"
+    ],
+    "exclude": [
+        "node_modules"
+    ]
 }

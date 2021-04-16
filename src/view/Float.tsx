@@ -6,7 +6,7 @@ import styles from "./Float.module.scss";
 export interface FloatProps {
     frameWidth: number;
     frameHeight: number;
-    inlineStyles?: string;
+    inlineStyles?: string[];
 }
 
 export interface FloatState {
@@ -42,7 +42,9 @@ class Float extends Component<FloatProps, FloatState> {
             this.state.frameVisibility ? styles.frameVisible : styles.frameHidden,
         ];
 
-        const head = <style>{this.props.inlineStyles}</style>;
+        const head = this.props.inlineStyles?.map((style, i) => (
+            <style key={i}>{style}</style>
+        ));
 
         return (
             <Frame head={head} className={classes.join(" ")} style={style}>
