@@ -2,6 +2,7 @@ import { BuildOptions } from "esbuild";
 
 export interface BuildOpts {
     bo: BuildOptions;
+    pre?: () => Promise<void>;
     post?: () => Promise<void>;
 }
 

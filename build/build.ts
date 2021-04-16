@@ -30,10 +30,16 @@ function buildopts(opts: Opts): BuildOpts {
 async function build(opts: Opts): Promise<void> {
     const bo = buildopts(opts);
     try {
-        await esbuild.build(bo.bo);
-    } catch (_e) {}
+        if (bo.pre) {
+            await bo.pre();
+        }
 
-    await bo.post();
+        await esbuild.build(bo.bo).then((_result) => {});
+
+        if (bo.post) {
+            await bo.post();
+        }
+    } catch (_e) {}
 }
 
 async function serve(opts: Opts): Promise<void> {

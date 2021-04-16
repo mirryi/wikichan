@@ -31,14 +31,14 @@ export function buildopts(opts: Opts): BuildOpts {
             },
         },
         post: async () => {
-            const copyPromises = SERVER_FILES.map((f) =>
-                fs.promises.copyFile(
-                    path.resolve(opts.rootdir, "qutebrowser", f),
-                    path.resolve(outdir, f),
+            await Promise.all(
+                SERVER_FILES.map((f) =>
+                    fs.promises.copyFile(
+                        path.resolve(opts.rootdir, "qutebrowser", f),
+                        path.resolve(outdir, f),
+                    ),
                 ),
             );
-
-            await Promise.all(copyPromises);
         },
     };
 }
