@@ -1,6 +1,3 @@
-import "core-js/stable";
-import "regenerator-runtime/runtime";
-
 import { register } from "@common/foreground";
 import { Provider, ProviderMerge } from "@providers";
 import {

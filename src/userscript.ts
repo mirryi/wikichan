@@ -1,5 +1,3 @@
-import "core-js/stable";
-import "regenerator-runtime/runtime";
 import "gm4-polyfill";
 
 import { register } from "@common/foreground";
