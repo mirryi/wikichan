@@ -1,8 +1,7 @@
 import * as esbuild from "esbuild";
-import { BuildOptions } from "esbuild";
 import * as path from "path";
 
-import { Opts, isPlatform } from "./opts";
+import { Opts, isPlatform, BuildOpts } from "./opts";
 import * as browser from "./browser";
 import * as common from "./common";
 import * as qutebrowser from "./qutebrowser";
@@ -10,9 +9,9 @@ import * as userscript from "./userscript";
 
 import packagejson from "../package.json";
 
-function buildopts(opts: Opts): BuildOptions {
+function buildopts(opts: Opts): BuildOpts {
     const bo = common.buildopts(opts);
-    let sbo: BuildOptions;
+    let sbo: BuildOpts;
     switch (opts.target) {
         case "qutebrowser":
             sbo = qutebrowser.buildopts(opts);
@@ -31,24 +30,27 @@ function buildopts(opts: Opts): BuildOptions {
 async function build(opts: Opts): Promise<void> {
     const bo = buildopts(opts);
     try {
-        await esbuild.build(bo);
+        await esbuild.build(bo.bo);
     } catch (_e) {}
+
+    await bo.post();
 }
 
 async function serve(opts: Opts): Promise<void> {
     const bo = buildopts(opts);
-    bo.watch = {
-        onRebuild(error, _result) {
+    bo.bo.watch = {
+        onRebuild: async (error, _result) => {
             if (error) {
                 console.error("Rebuild failed!");
             } else {
                 console.log("Rebuild succeeded!");
+                await bo.post();
             }
         },
     };
 
     try {
-        await esbuild.build(bo);
+        await esbuild.build(bo.bo);
     } catch (_e) {}
 }
 

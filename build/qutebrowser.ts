@@ -1,23 +1,44 @@
-import { BuildOptions } from "esbuild";
 import * as path from "path";
+import fs from "fs";
 
-import { Opts } from "./opts";
+import { BuildOpts, Opts } from "./opts";
 
-export function buildopts(opts: Opts): BuildOptions {
+const SERVER_FILES = ["schema.sql", "server.py"];
+
+export function buildopts(opts: Opts): BuildOpts {
+    const outdir = path.resolve(opts.outdir, "qutebrowser");
+
     return {
-        entryPoints: [path.resolve(opts.srcdir, "qutebrowser.ts")],
-        outfile: path.resolve(opts.outdir, opts.name + ".user.js"),
+        bo: {
+            entryPoints: [path.resolve(opts.srcdir, "qutebrowser.ts")],
+            outfile: path.resolve(outdir, opts.name + ".user.js"),
 
-        banner: {
-            js: renderBanner({
-                name: opts.name,
-                desc: opts.desc,
-                author: opts.author,
-                version: opts.version,
-                homepage: opts.homepage,
-                include: "*://*/*",
-                grant: ["GM.setValue", "GM.getValue", "GM.listValues", "GM.deleteValue"],
-            }),
+            banner: {
+                js: renderBanner({
+                    name: opts.name,
+                    desc: opts.desc,
+                    author: opts.author,
+                    version: opts.version,
+                    homepage: opts.homepage,
+                    include: "*://*/*",
+                    grant: [
+                        "GM.setValue",
+                        "GM.getValue",
+                        "GM.listValues",
+                        "GM.deleteValue",
+                    ],
+                }),
+            },
+        },
+        post: async () => {
+            const copyPromises = SERVER_FILES.map((f) =>
+                fs.promises.copyFile(
+                    path.resolve(opts.rootdir, "qutebrowser", f),
+                    path.resolve(outdir, f),
+                ),
+            );
+
+            await Promise.all(copyPromises);
         },
     };
 }

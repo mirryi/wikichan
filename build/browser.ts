@@ -1,7 +1,5 @@
-import { BuildOptions } from "esbuild";
+import { BuildOpts, Opts } from "./opts";
 
-import { Opts } from "./opts";
-
-export function buildopts(opts: Opts): BuildOptions {
-    return {};
+export function buildopts(opts: Opts): BuildOpts {
+    return { bo: {} };
 }

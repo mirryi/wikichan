@@ -1,3 +1,10 @@
+import { BuildOptions } from "esbuild";
+
+export interface BuildOpts {
+    bo: BuildOptions;
+    post?: () => Promise<void>;
+}
+
 export interface Opts {
     name: string;
     version: string;
