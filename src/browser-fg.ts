@@ -1,3 +1,4 @@
+import env from "env";
 import { register } from "@common/foreground";
 import { Provider, ProviderMerge } from "@providers";
 import {
@@ -21,7 +22,7 @@ import StorageMessenger from "./platform/browser/StorageMessenger";
     ];
     const providerMerge = new ProviderMerge(providers);
 
-    const owlbotToken = process.env.OWLBOT_TOKEN;
+    const owlbotToken = env.OWLBOT_TOKEN;
     if (!owlbotToken) {
         console.warn("OwlBot API token not provided; cannot query OwlBot");
     } else {
