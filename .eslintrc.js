@@ -8,21 +8,7 @@ module.exports = {
             jsx: true,
         },
     },
-    extends: [
-        "plugin:@typescript-eslint/recommended",
-        "plugin:react/recommended",
-        "prettier/@typescript-eslint",
-        "plugin:no-unsanitized/DOM",
-    ],
-    rules: {
-        "no-use-before-define": "off",
-        "@typescript-eslint/no-use-before-define": [
-            "error",
-            { functions: false, classes: false, variables: true },
-        ],
-        "@typescript-eslint/explicit-function-return-type": ["error"],
-        "@typescript-eslint/no-unused-vars": ["warn", { argsIgnorePattern: "^_" }],
-    },
+    extends: ["plugin:react/recommended", "plugin:no-unsanitized/DOM"],
     settings: {
         react: {
             version: "detect",
@@ -35,4 +21,22 @@ module.exports = {
     globals: {
         process: "readonly",
     },
+    overrides: [
+        {
+            files: ["*.ts", "*.tsx"],
+            extends: ["plugin:@typescript-eslint/recommended", "prettier/@typescript-eslint"],
+            rules: {
+                "no-use-before-define": "off",
+                "@typescript-eslint/no-use-before-define": [
+                    "error",
+                    { functions: false, classes: false, variables: true },
+                ],
+                "@typescript-eslint/explicit-function-return-type": [
+                    "error",
+                    { allowExpressions: true },
+                ],
+                "@typescript-eslint/no-unused-vars": ["warn", { argsIgnorePattern: "^_" }],
+            },
+        },
+    ],
 };

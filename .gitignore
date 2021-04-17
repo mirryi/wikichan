@@ -1,9 +1,6 @@
 # WebExtension artifacts
 web-ext-artifacts
 
-# SCSS typescript definitions
-*.scss.d.ts
-
 # Logs
 logs
 *.log
