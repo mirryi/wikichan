@@ -1,7 +1,7 @@
 import * as esbuild from "esbuild";
 import * as path from "path";
 
-import { Opts, isPlatform, BuildOpts } from "./opts";
+import { Opts, isPlatform, BuildOpts, deepmerge } from "./opts";
 import * as browser from "./browser";
 import * as common from "./common";
 import * as qutebrowser from "./qutebrowser";
@@ -34,6 +34,7 @@ async function build(opts: Opts): Promise<void> {
             await bo.pre();
         }
 
+        // eslint-ignore-next-line @typescript-eslint/no-empty-function
         await esbuild.build(bo.bo).then((_result) => {});
 
         if (bo.post) {
@@ -58,39 +59,6 @@ async function serve(opts: Opts): Promise<void> {
     try {
         await esbuild.build(bo.bo);
     } catch (_e) {}
-}
-
-function deepmerge<T>(target: T, ...sources: T[]): T | undefined {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    function isObject(item: any): boolean {
-        return item && typeof item === "object" && !Array.isArray(item);
-    }
-
-    if (!sources.length) {
-        return target;
-    }
-
-    const source = sources.shift();
-    if (isObject(target) && isObject(source)) {
-        for (const key in source) {
-            if (isObject(source[key])) {
-                if (!target[key]) Object.assign(target, { [key]: {} });
-                deepmerge(target[key], source[key]);
-            } else if (Array.isArray(source[key])) {
-                if (Array.isArray(target[key])) {
-                    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-                    // @ts-ignore
-                    Object.assign(target, { [key]: [...target[key], ...source[key]] });
-                } else {
-                    Object.assign(target, { [key]: source[key] });
-                }
-            } else {
-                Object.assign(target, { [key]: source[key] });
-            }
-        }
-    }
-
-    return deepmerge(target, ...sources);
 }
 
 function exit(message: string): void {
