@@ -6,14 +6,26 @@
     "homepage_url": "https://github.com/Dophin2009/wikichan",
     "content_scripts": [
         {
-            "matches": ["http://*/*", "https://*/*"],
-            "js": ["fg.bundle.js"]
+            "matches": [
+                "http://*/*",
+                "https://*/*"
+            ],
+            "js": [
+                "browser-fg.js"
+            ]
         }
     ],
     "background": {
-        "scripts": ["bg.bundle.js"]
+        "scripts": [
+            "browser-bg.js"
+        ]
     },
     "browser_action": {},
     "icons": {},
-    "permissions": ["http://*/*", "https://*/*", "*://*/*", "storage"]
+    "permissions": [
+        "http://*/*",
+        "https://*/*",
+        "*://*/*",
+        "storage"
+    ]
 }

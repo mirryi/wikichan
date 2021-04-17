@@ -29,18 +29,16 @@ function buildopts(opts: Opts): BuildOpts {
 
 async function build(opts: Opts): Promise<void> {
     const bo = buildopts(opts);
-    try {
-        if (bo.pre) {
-            await bo.pre();
-        }
+    if (bo.pre) {
+        await bo.pre();
+    }
 
-        // eslint-ignore-next-line @typescript-eslint/no-empty-function
-        await esbuild.build(bo.bo).then((_result) => {});
+    // eslint-ignore-next-line @typescript-eslint/no-empty-function
+    await esbuild.build(bo.bo).then((_result) => {});
 
-        if (bo.post) {
-            await bo.post();
-        }
-    } catch (_e) {}
+    if (bo.post) {
+        await bo.post();
+    }
 }
 
 async function serve(opts: Opts): Promise<void> {
@@ -51,14 +49,22 @@ async function serve(opts: Opts): Promise<void> {
                 console.error("Rebuild failed!");
             } else {
                 console.log("Rebuild succeeded!");
-                await bo.post();
+
+                if (bo.post) {
+                    await bo.post();
+                }
+
+                if (bo.pre) {
+                    await bo.pre();
+                }
             }
         },
     };
 
-    try {
-        await esbuild.build(bo.bo);
-    } catch (_e) {}
+    if (bo.pre) {
+        await bo.pre();
+    }
+    await esbuild.build(bo.bo);
 }
 
 function exit(message: string): void {
