@@ -1,6 +1,5 @@
 import "gm4-polyfill";
 
-import env from "env";
 import { register } from "@common/foreground";
 import { Provider, ProviderMerge } from "@providers";
 import {
@@ -27,7 +26,7 @@ import GMStorage from "./platform/userscript/GMStorage";
     ];
     const providerMerge = new ProviderMerge(providers);
 
-    const owlbotToken = env.OWLBOT_TOKEN;
+    const owlbotToken = process.env.OWLBOT_TOKEN;
     if (!owlbotToken) {
         console.warn("OwlBot API token not provided; cannot query OwlBot");
     } else {
