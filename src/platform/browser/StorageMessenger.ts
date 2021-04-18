@@ -1,26 +1,27 @@
 import { browser } from "webextension-polyfill-ts";
 
-import PlatformStorage from "@common/PlatformStorage";
+import PlatformStorage from "@common/storage/PlatformStorage";
+import { TemporaryValue } from "@common/storage/TemporaryStorage";
 import {
+    StorageDelMessage,
     StorageGetMessage,
-    StorageListMessage,
     StorageSetMessage,
 } from "./StorageMessage";
 
-class StorageMessenger implements PlatformStorage {
-    async set(key: string, val: string, duration?: number): Promise<void> {
-        const message: StorageSetMessage = {
+class StorageMessenger<T> implements PlatformStorage<TemporaryValue<T>> {
+    async set(key: string, val: TemporaryValue<T>): Promise<void> {
+        const message: StorageSetMessage<TemporaryValue<T>> = {
             kind: "cache::set",
             key: key,
             value: val,
-            duration: duration,
         };
+
         return await browser.runtime.sendMessage(message).then(() => {
             return;
         });
     }
 
-    async get(key: string): Promise<string | undefined> {
+    async get(key: string): Promise<TemporaryValue<T> | undefined> {
         const message: StorageGetMessage = {
             kind: "cache::get",
             key: key,
@@ -29,9 +30,10 @@ class StorageMessenger implements PlatformStorage {
         return await browser.runtime.sendMessage(message);
     }
 
-    async list(): Promise<Record<string, string>> {
-        const message: StorageListMessage = {
-            kind: "cache::list",
+    async del(key: string): Promise<void> {
+        const message: StorageDelMessage = {
+            kind: "cache::del",
+            key: key,
         };
 
         return await browser.runtime.sendMessage(message);
