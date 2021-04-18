@@ -1,40 +1,20 @@
-import PlatformStorage from "@common/PlatformStorage";
+import TemporaryStorage from "@common/storage/TemporaryStorage";
 import CachedProvider from "@providers/CachedProvider";
 
 import WikipediaProvider, { WikipediaLanguage } from "./Provider";
 import WikipediaItem from "./Item";
 
-class CachedWikipediaProvider extends CachedProvider<WikipediaItem> {
+class CachedWikipediaProvider extends CachedProvider<WikipediaItem, number> {
     constructor(
         language: WikipediaLanguage,
-        storage: PlatformStorage,
+        storage: TemporaryStorage<WikipediaItem>,
         storageDuration: number,
     ) {
         super(new WikipediaProvider(language), storage, storageDuration);
     }
 
-    serializeItem(item: WikipediaItem): string {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const toSerialize = item as any;
-        toSerialize.tags = [...item.tags.entries()];
-        return JSON.stringify(toSerialize);
-    }
-
-    deserializeItem(str: string): WikipediaItem {
-        const parsed = JSON.parse(str);
-        const item = parsed as WikipediaItem;
-        item.tags = new Map(parsed["tags"]);
-        item.provider = this.provider as WikipediaProvider;
-        return item;
-    }
-
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    distinctProperty(item: WikipediaItem): any {
+    distinctProperty(item: WikipediaItem): number {
         return item.pageid;
-    }
-
-    key(k: string): string {
-        return "wikipedia_" + k;
     }
 }
 

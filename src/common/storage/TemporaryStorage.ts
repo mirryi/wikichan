@@ -40,30 +40,29 @@ abstract class TemporaryStorage<T> implements PlatformStorage<StoredValue<T>> {
         await this.inner.set(Object.fromEntries(mapped));
     }
 
-    async get(keys: string[]): Promise<{ [key: string]: TemporaryValue<T> | undefined }> {
+    async get(keys: string[]): Promise<{ [key: string]: TemporaryValue<T> }> {
         const entries = await this.inner.get(keys);
 
         const now = this.epochMilliseconds();
         const mapped = await Promise.all(
             Object.entries(entries).map(
-                async ([key, val]): Promise<[string, TemporaryValue<T> | undefined]> => {
-                    if (val) {
-                        let duration = undefined;
-                        if (val.expires) {
-                            if (val.expires > now) {
-                                return [key, undefined];
-                            }
-
-                            duration = (val.expires - now) / 1000;
+                async ([key, val]): Promise<[string, TemporaryValue<T>] | undefined> => {
+                    let duration = undefined;
+                    if (val.expires) {
+                        if (val.expires > now) {
+                            return undefined;
                         }
-                        return [key, { duration, payload: val.payload }];
+
+                        duration = (val.expires - now) / 1000;
                     }
-                    return [key, undefined];
+                    return [key, { duration, payload: val.payload }];
                 },
             ),
         );
 
-        return Object.fromEntries(mapped);
+        return Object.fromEntries(
+            mapped.filter((x): x is [string, TemporaryValue<T>] => !!x),
+        );
     }
 
     async del(keys: string[]): Promise<void> {
