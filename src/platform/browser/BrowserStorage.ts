@@ -12,48 +12,34 @@ abstract class BrowserStorage<T> implements PlatformStorage<T> {
     }
 
     async set(entries: { [key: string]: T }): Promise<void> {
-        // Asynchronously stringify values.
-        const iter = Object.entries(entries);
-        const serialized = await Promise.all(
-            iter.map(async ([key, val]) => [key, JSON.stringify(val)]),
-        );
-
-        const item = Object.fromEntries(serialized);
-        await this.inner.set(item);
+        await this.inner.set(entries);
     }
 
-    async get(keys: string[]): Promise<{ [key: string]: T | undefined }> {
+    async get(keys: string[]): Promise<{ [key: string]: T }> {
         const item = await this.inner.get(keys);
 
         // Asynchronously parse and validate values.
         const parsed = Object.entries(item).map(
-            async ([key, val]): Promise<[string, T | undefined]> => {
-                if (!item[key] || typeof [key] !== "string") {
-                    return [key, undefined];
+            async ([key, val]): Promise<[string, T] | undefined> => {
+                if (item[key] && (await this.checkValid(val))) {
+                    // Safety: `parsed` is a `T` as checked by `this.checkValid`.
+                    // eslint-ignore-next-line @typescript-eslint/consistent-type-assertions
+                    return [key, val as T];
                 }
 
-                try {
-                    const parsed = JSON.parse(val);
-                    if (await this.checkValid(parsed)) {
-                        // Safety: `parsed` is a `T` as checked by `this.checkValid`.
-                        // eslint-ignore-next-line @typescript-eslint/consistent-type-assertions
-                        return [key, parsed as T];
-                    }
-                } catch (_e: unknown) {}
-
-                return [key, undefined];
+                return undefined;
             },
         );
 
         const entries = await Promise.all(parsed);
-        return Object.fromEntries(entries);
+        return Object.fromEntries(entries.filter((x): x is [string, T] => !!x));
     }
 
     async del(keys: string[]): Promise<void> {
         await this.inner.remove(keys);
     }
 
-    abstract checkValid(val: T): Promise<boolean>;
+    abstract checkValid(val: any): Promise<boolean>;
 }
 
 export default BrowserStorage;

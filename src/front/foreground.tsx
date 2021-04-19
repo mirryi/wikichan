@@ -100,9 +100,9 @@ function injectFrame(
         <React.StrictMode>
             <Float
                 ref={floatRef}
-                frameWidth={frameWidth}
-                frameHeight={frameHeight}
-                inlineStyles={inlineStyles}
+                width={frameWidth}
+                height={frameHeight}
+                styles={inlineStyles}
             >
                 <RootComponent ref={rootRef} providers={providerMerge} />
             </Float>

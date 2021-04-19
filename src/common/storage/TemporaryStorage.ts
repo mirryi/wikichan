@@ -11,7 +11,7 @@ export interface TemporaryValue<T> {
     payload: T;
 }
 
-abstract class TemporaryStorage<T> implements PlatformStorage<StoredValue<T>> {
+class TemporaryStorage<T> implements PlatformStorage<StoredValue<T>> {
     private inner: PlatformStorage<StoredValue<T>>;
 
     constructor(inner: PlatformStorage<StoredValue<T>>) {
@@ -68,8 +68,6 @@ abstract class TemporaryStorage<T> implements PlatformStorage<StoredValue<T>> {
     async del(keys: string[]): Promise<void> {
         await this.inner.del(keys);
     }
-
-    abstract checkValid(val: StoredValue<T>): Promise<boolean>;
 
     private epochMilliseconds(): number {
         return Date.now();

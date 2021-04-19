@@ -4,9 +4,9 @@ import Frame from "react-frame-component";
 import styles from "./Float.module.scss";
 
 export interface FloatProps {
-    frameWidth: number;
-    frameHeight: number;
-    inlineStyles?: string[];
+    width: number;
+    height: number;
+    styles?: string[];
 }
 
 export interface FloatState {
@@ -31,8 +31,8 @@ class Float extends Component<FloatProps, FloatState> {
 
     render(): ReactNode {
         const style: CSSProperties = {
-            width: this.props.frameWidth,
-            height: this.props.frameHeight,
+            width: this.props.width,
+            height: this.props.height,
             left: this.state.frameLeft,
             top: this.state.frameTop,
         };
@@ -42,13 +42,11 @@ class Float extends Component<FloatProps, FloatState> {
             this.state.frameVisibility ? styles.frameVisible : styles.frameHidden,
         ];
 
-        const head = this.props.inlineStyles?.map((style, i) => (
-            <style key={i}>{style}</style>
-        ));
+        const head = this.props.styles?.map((style, i) => <style key={i}>{style}</style>);
 
         return (
             <Frame head={head} className={classes.join(" ")} style={style}>
-                <div style={{ maxHeight: this.props.frameHeight }} ref={this.innerRef}>
+                <div style={{ maxHeight: this.props.height }} ref={this.innerRef}>
                     {this.props.children}
                 </div>
             </Frame>
@@ -69,8 +67,8 @@ class Float extends Component<FloatProps, FloatState> {
         const offset = this.calculateOffset(
             left,
             top,
-            this.props.frameWidth,
-            this.props.frameHeight,
+            this.props.width,
+            this.props.height,
         );
         this.setState({
             frameVisibility: true,
@@ -86,9 +84,9 @@ class Float extends Component<FloatProps, FloatState> {
     containsPoint(x: number, y: number): boolean {
         return (
             x > this.state.frameLeft &&
-            x < this.state.frameLeft + this.props.frameWidth &&
+            x < this.state.frameLeft + this.props.width &&
             y > this.state.frameTop &&
-            y < this.state.frameTop + this.props.frameHeight
+            y < this.state.frameTop + this.props.height
         );
     }
 

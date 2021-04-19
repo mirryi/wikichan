@@ -1,4 +1,5 @@
-import { register } from "@common/foreground";
+import Front from "@front/Front";
+import { register } from "@front/foreground";
 import { Provider, ProviderMerge } from "@providers";
 import {
     CachedProvider as CachedWikipediaProvider,

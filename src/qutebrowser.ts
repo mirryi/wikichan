@@ -1,6 +1,6 @@
 import "gm4-polyfill";
 
-import { register } from "@common/foreground";
+import { register } from "@front/foreground";
 import { Provider, ProviderMerge } from "@providers";
 import {
     WikipediaLanguage,
@@ -16,7 +16,7 @@ import GMStorage from "./platform/userscript/GMStorage";
         return;
     }
 
-    const gmCache = new GMStorage("");
+    const gmCache = new GMStorage();
     // const globalCache = new ServerCache("http://127.0.0.1:5000");
 
     const defaultCacheDuration = 24 * 60 * 60;

@@ -27,15 +27,19 @@ module.exports = {
             extends: ["plugin:@typescript-eslint/recommended", "prettier/@typescript-eslint"],
             rules: {
                 "no-use-before-define": "off",
-                "@typescript-eslint/no-use-before-define": [
+                "@typescript-eslint/consistent-type-assertions": [
                     "error",
-                    { functions: false, classes: false, variables: true },
+                    { assertionStyle: "never" },
                 ],
                 "@typescript-eslint/explicit-function-return-type": [
                     "error",
                     { allowExpressions: true },
                 ],
                 "@typescript-eslint/no-unused-vars": ["warn", { argsIgnorePattern: "^_" }],
+                "@typescript-eslint/no-use-before-define": [
+                    "error",
+                    { functions: false, classes: false, variables: true },
+                ],
             },
         },
     ],

@@ -1,6 +1,6 @@
 import "gm4-polyfill";
 
-import { register } from "@common/foreground";
+import { register } from "@front/foreground";
 import { Provider, ProviderMerge } from "@providers";
 import {
     WikipediaLanguage,
@@ -15,7 +15,7 @@ import GMStorage from "./platform/userscript/GMStorage";
         return;
     }
 
-    const cache = new GMStorage("");
+    const cache = new GMStorage();
     const defaultCacheDuration = 24 * 60 * 60;
 
     const providers: Provider[] = [
