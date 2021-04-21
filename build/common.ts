@@ -15,6 +15,7 @@ export function buildopts(opts: Opts): BuildOpts {
             bundle: true,
             minify: true,
             sourcemap: !opts.production ? "inline" : false,
+            target: "es2015",
             plugins: [
                 stylePlugin({
                     minify: true,
