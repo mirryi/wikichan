@@ -1,60 +1,43 @@
 {
     "compilerOptions": {
+        "alwaysStrict": true,
         "baseUrl": ".",
         "esModuleInterop": true,
         "downlevelIteration": true,
         "inlineSources": true,
         "inlineSourceMap": true,
         "jsx": "react",
-        "lib": [
-            "DOM",
-            "ES2020"
-        ],
+        "lib": ["DOM", "ES2020"],
         "module": "ES2020",
         "moduleResolution": "Node",
+        "noFallthroughCasesInSwitch": true,
         "noImplicitAny": true,
+        "noImplicitOverride": true,
         "noImplicitReturns": true,
         "noImplicitThis": true,
+        "noPropertyAccessFromIndexSignature": true,
+        "noUncheckedIndexedAccess": true,
         "outDir": "dist",
         "preserveConstEnums": true,
-        "strictNullChecks": true,
+        "strictBindCallApply": true,
         "strictFunctionTypes": true,
+        "strictNullChecks": true,
+        "strictPropertyInitialization": true,
         "removeComments": true,
         "target": "ES6",
-        "typeRoots": [
-            "node_modules/@types"
-        ],
+        "typeRoots": ["node_modules/@types"],
         "paths": {
-            "gm4-polyfill": [
-                "lib/gm4-polyfill/gm4-polyfill.js"
-            ],
-            "@back/*": [
-                "src/back/*"
-            ],
-            "@common/*": [
-                "src/common/*"
-            ],
-            "@front/*": [
-                "src/front/*"
-            ],
-            "@providers/*": [
-                "src/providers/*"
-            ],
-            "@providers": [
-                "src/providers/index.ts"
-            ],
-            "@util": [
-                "src/util/index.ts"
-            ],
-            "@view/*": [
-                "src/view/*"
-            ]
+            "gm4-polyfill": ["lib/gm4-polyfill/gm4-polyfill.js"],
+            "@back/*": ["src/back/*"],
+            "@common/*": ["src/common/*"],
+            "@front/*": ["src/front/*"],
+            "@providers/*": ["src/providers/*"],
+            "@providers": ["src/providers/index.ts"],
+            "@shared/*": ["src/shared/*"],
+            "@util": ["src/util/index.ts"],
+            "@view/*": ["src/view/*"]
         }
     },
-    "include": [
-        "src/*"
-    ],
-    "exclude": [
-        "node_modules"
-    ]
+    "include": ["src/*"],
+    "exclude": ["node_modules"]
 }
