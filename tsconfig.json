@@ -34,6 +34,7 @@
             "@providers": ["src/providers/index.ts"],
             "@shared/*": ["src/shared/*"],
             "@util": ["src/util/index.ts"],
+            "@util/*": ["src/util/*"],
             "@view/*": ["src/view/*"]
         }
     },
