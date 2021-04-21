@@ -1,54 +1,45 @@
-import { observable, autorun } from "mobx";
-
+import { ProviderOptions, ProvidersOptions } from "@shared/options";
 import { Provider } from "@providers";
 
-import BackStorage, { InnerStorage, OptionsHandle } from "./BackStorage";
-import Options from "./Settings";
+import { BackStorage, InnerStorage } from "./BackStorage";
+import { OptionsManager } from "./OptionsManager";
+import { QueryItemManager, InnerTunnel } from "./QueryItemManager";
 
-class Back {
+export class Back {
     storage: BackStorage;
-    optionsStorageHandle: OptionsHandle;
-    options: Options;
+    optionsManager: OptionsManager;
 
-    providers: Provider[];
+    queryItemManager: QueryItemManager;
 
-    constructor(innerStorage: InnerStorage) {
-        this.storage = new BackStorage(innerStorage);
+    private constructor(
+        storage: BackStorage,
+        optionsManager: OptionsManager,
+        queryItemManager: QueryItemManager,
+    ) {
+        this.storage = storage;
+        this.optionsManager = optionsManager;
+
+        this.queryItemManager = queryItemManager;
     }
 
-    async load(): Promise<void> {
-        // Load the options from storage.
-        await this.loadOptions();
+    static async load(
+        platformStorage: InnerStorage,
+        platformTunnel: InnerTunnel,
+    ): Promise<Back> {
+        const storage = new BackStorage(platformStorage);
 
-        // Initialize the providers from the stored options;
-        this.providers = Object.entries(this.options.providers).reduce(
-            (providers, [name, { enabled }]) => {
-                if (enabled) {
-                    // providers.push()
-                }
-                return providers;
-            },
-            [],
-        );
-    }
+        // Load options manager.
+        const optionsStorageHandle = storage.optionsHandle()!;
+        const optionsManager = await OptionsManager.load(optionsStorageHandle);
+        // const options = optionsManager.options;
 
-    async loadOptions(): Promise<void> {
-        this.optionsStorageHandle = this.storage.optionsHandle();
-        // TODO: proper key
-        const settingsKey = "root";
-        const loadedSettings = await this.optionsStorageHandle.get([settingsKey]);
-        if (loadedSettings[settingsKey]) {
-            this.options = loadedSettings[settingsKey];
-        } else {
-            this.options = Options.Default();
-        }
+        // Initialize the providers from the stored options.
+        // const providers = loadProviders(options.back.providers);
+        const providers: Provider[] = [];
 
-        // When settings changes, persist to storage.
-        this.options = observable(this.options);
-        autorun(() => {
-            this.optionsStorageHandle.set({ settingsKey: this.options });
-        });
+        // Initialize the query handler.
+        const queryItemManager = await QueryItemManager.load(platformTunnel, providers);
+
+        return new Back(storage, optionsManager, queryItemManager);
     }
 }
-
-export default Back;
