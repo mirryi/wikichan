@@ -29,7 +29,7 @@ export class BrowserFrontTunnel<I, O> implements FrontTunnel<I, O> {
 
     private _connected: boolean;
 
-    constructor(name: string) {
+    constructor(name: string = "") {
         this.name = name;
 
         // Receiver is initially no-op.
