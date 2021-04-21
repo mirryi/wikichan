@@ -1,6 +1,8 @@
 import { observable, autorun, IReactionDisposer } from "mobx";
 
 import { Options } from "@shared/options";
+import { DeepPartial } from "@util";
+import { deepmerge } from "@util/deepmerge";
 
 import { OptionsHandle } from "./BackStorage";
 
@@ -29,6 +31,11 @@ export class OptionsManager {
         const options = loaded[OPTIONS_KEY] || Options.Default();
 
         return new OptionsManager(options, storageHandle);
+    }
+
+    // TODO: reexport the newOptions type from message module.
+    change(newOptions: DeepPartial<Options>) {
+        this.options = deepmerge(this.options, newOptions);
     }
 
     async load(): Promise<void> {
