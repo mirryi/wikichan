@@ -1,4 +1,4 @@
-import { FrontExchange as IFrontExchange } from "@common/messaging/exchange";
+import { FrontExchange as FrontExchange } from "@common/messaging/exchange";
 import { BackMessage, FrontMessage } from "@shared/messaging";
 import { Options } from "@shared/options";
 
@@ -53,5 +53,5 @@ export class Exchange {
 }
 
 export namespace Exchange {
-    export type Inner = IFrontExchange<BackMessage, FrontMessage>;
+    export type Inner = FrontExchange<BackMessage, FrontMessage>;
 }
