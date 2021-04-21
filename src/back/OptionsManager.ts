@@ -1,4 +1,4 @@
-import { observable, autorun, IReactionDisposer } from "mobx";
+import { observable, autorun } from "mobx";
 
 import { Options } from "@shared/options";
 import { DeepPartial } from "@util";
@@ -12,17 +12,12 @@ export class OptionsManager {
     options: Options;
 
     private storageHandle: OptionsHandle;
-    private autoSaveDispose: IReactionDisposer;
 
     private constructor(options: Options, storageHandle: OptionsHandle) {
         this.storageHandle = storageHandle;
 
         this.options = observable(options);
-        this.autoSaveDispose = autorun(async () => await this.save());
-    }
-
-    close(): void {
-        this.autoSaveDispose();
+        autorun(async () => await this.save());
     }
 
     static async load(storageHandle: OptionsHandle): Promise<OptionsManager> {
