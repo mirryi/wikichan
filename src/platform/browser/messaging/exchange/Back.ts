@@ -43,7 +43,7 @@ export class BrowserBackExchange<I, O> implements BackExchange<I, O> {
         this.receiver = cb;
     }
 
-    private async receive(im: I): Promise<O> {
+    private async receive(im: I): Promise<O | undefined> {
         return await this.receiver(im);
     }
 }
