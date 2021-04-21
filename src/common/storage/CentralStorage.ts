@@ -1,113 +1,129 @@
-import PlatformStorage from "./PlatformStorage";
+import { PlatformStorage } from "./PlatformStorage";
 
-class CentralStorage {
+export class CentralStorage {
     private inner: PlatformStorage<unknown>;
-    private handles: { [key: string]: StorageHandle<unknown> };
+    private handles: { [key: string]: CentralStorage.Handle<unknown> };
 
     constructor(inner: PlatformStorage<unknown>) {
         this.inner = inner;
         this.handles = {};
     }
 
-    registerHandle<T>(
-        prefix: string,
-        validator: (val: unknown) => Promise<boolean>,
-    ): StorageHandle<T> {
-        const handle = new StorageHandle<T>(
-            new CentralStorageInterface<T>(this.inner, validator),
-        );
+    /**
+     * Register a new storage handle for a given type and prefix.
+     *
+     * If a handle with this prefix is already registered, do nothing and
+     * return undefined.
+     */
+    registerHandle<T>(prefix: string): CentralStorage.Handle<T> | undefined {
+        if (this.handles[prefix]) {
+            return undefined;
+        }
 
+        const handle = new CentralStorage.Handle<T>(
+            new StorageInterface<T>(this.inner, prefix),
+        );
         this.handles[prefix] = handle;
         return handle;
     }
 
+    /**
+     * Unregister the storage handle with the given prefix, if it exists.
+     */
     unregisterHandle(prefix: string): void {
         const handle = this.handles[prefix];
-        handle.unregister();
-        delete this.handles[prefix];
+        if (handle) {
+            handle.unregister();
+            delete this.handles[prefix];
+        }
+    }
+}
+
+export namespace CentralStorage {
+    export class Handle<T> implements PlatformStorage<T> {
+        private inner: StorageInterface<T>;
+
+        constructor(inner: StorageInterface<T>) {
+            this.inner = inner;
+        }
+
+        unregister(): void {
+            this.set = async (_entries: { [key: string]: T }) => {
+                throw new UnregisteredHandleError();
+            };
+            this.get = async (_keys: string[]) => {
+                throw new UnregisteredHandleError();
+            };
+            this.del = async (_keys: string[]) => {
+                throw new UnregisteredHandleError();
+            };
+        }
+
+        async set(entries: { [key: string]: T }): Promise<void> {
+            await this.inner.set(entries);
+        }
+
+        async get(keys: string[]): Promise<{ [key: string]: T }> {
+            return this.inner.get(keys);
+        }
+
+        async del(keys: string[]): Promise<void> {
+            await this.inner.del(keys);
+        }
+    }
+
+    export class UnregisteredHandleError extends Error {
+        constructor() {
+            super("Attempted to use an unregistered storage handle");
+        }
     }
 }
 
 /**
- * Storage interface exposed to `StorageHandler`s by `CentralStorage`.
- *
- * The inner storage of `CentralStorage` is typed by `unknown`; it's the
- * responsibility of this class to validate retrieved objects.
+ * Storage interface exposed to `CentralStorage.Handle`s by `CentralStorage`.
  */
-class CentralStorageInterface<T> implements PlatformStorage<T> {
+class StorageInterface<T> implements PlatformStorage<T> {
     private inner: PlatformStorage<unknown>;
-    private checkValid: (val: unknown) => Promise<boolean>;
+    private prefix: string;
 
-    /**
-     * Creates a new `CentralStorageInterface`.
-     */
-    constructor(
-        inner: PlatformStorage<unknown>,
-        validator: (val: unknown) => Promise<boolean>,
-    ) {
+    private deprefixRegex: RegExp;
+
+    constructor(inner: PlatformStorage<unknown>, prefix: string) {
         this.inner = inner;
-        this.checkValid = async (val: unknown) => validator(val);
+        this.prefix = prefix;
+
+        this.deprefixRegex = new RegExp(`^(${this.prefix})`);
     }
 
     async set(entries: { [key: string]: T }): Promise<void> {
-        await this.inner.set(entries);
+        // Prefix keys before setting.
+        const pairs = Object.entries(entries).map(([k, v]) => [this.prefixKey(k), v]);
+        // Access storage.
+        const newEntries = Object.fromEntries(pairs);
+
+        await this.inner.set(newEntries);
     }
 
     async get(keys: string[]): Promise<{ [key: string]: T }> {
-        const pairs = await this.inner.get(keys);
-        const entries = await Promise.all(
-            Object.entries(pairs).map(async ([key, val]) => {
-                if (await this.checkValid(val)) {
-                    return [key, val as T];
-                }
-                return undefined;
-            }),
-        );
+        // Prefix keys before accessing storage.
+        const prefixedKeys = keys.map((k) => this.prefixKey(k));
+        // Access storage.
+        const entries = await this.inner.get(prefixedKeys);
+        // De-prefix keys to get user-facing keys.
+        const pairs = Object.entries(entries).map(([k, v]) => [this.deprefixKey(k), v]);
 
-        return Object.fromEntries(entries.filter((x): x is [string, T] => !!x));
+        return Object.fromEntries(pairs);
     }
 
     async del(keys: string[]): Promise<void> {
         await this.inner.del(keys);
     }
-}
 
-export class StorageHandle<T> implements PlatformStorage<T> {
-    private inner: CentralStorageInterface<T>;
-
-    constructor(inner: CentralStorageInterface<T>) {
-        this.inner = inner;
+    prefixKey(key: string): string {
+        return `${this.prefix}__${key}`;
     }
 
-    unregister(): void {
-        this.set = async (_entries: { [key: string]: T }) => {
-            throw new UnregisteredHandleError();
-        };
-        this.get = async (_keys: string[]) => {
-            throw new UnregisteredHandleError();
-        };
-        this.del = async (_keys: string[]) => {
-            throw new UnregisteredHandleError();
-        };
-    }
-
-    async set(entries: { [key: string]: T }): Promise<void> {
-        await this.inner.set(entries);
-    }
-
-    async get(keys: string[]): Promise<{ [key: string]: T }> {
-        return this.inner.get(keys);
-    }
-
-    async del(keys: string[]): Promise<void> {
-        await this.inner.del(keys);
+    deprefixKey(prefixedKey: string): string {
+        return prefixedKey.replace(this.deprefixRegex, "");
     }
 }
-
-export class UnregisteredHandleError extends Error {
-    constructor() {
-        super("Attempted to use an unregistered storage handle");
-    }
-}
-
-export default CentralStorage;

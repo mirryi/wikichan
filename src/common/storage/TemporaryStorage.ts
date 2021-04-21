@@ -1,17 +1,6 @@
-import PlatformStorage from "./PlatformStorage";
+import { PlatformStorage } from "./PlatformStorage";
 
-export class StoredValue<T> {
-    expires?: number;
-    payload: T;
-}
-
-export interface TemporaryValue<T> {
-    // Storage duration, in seconds.
-    duration?: number;
-    payload: T;
-}
-
-class TemporaryStorage<T> implements PlatformStorage<StoredValue<T>> {
+export class TemporaryStorage<T> implements PlatformStorage<StoredValue<T>> {
     private inner: PlatformStorage<StoredValue<T>>;
 
     constructor(inner: PlatformStorage<StoredValue<T>>) {
@@ -74,4 +63,18 @@ class TemporaryStorage<T> implements PlatformStorage<StoredValue<T>> {
     }
 }
 
-export default TemporaryStorage;
+export namespace TemporaryStorage {
+    export interface StoredValue<T> {
+        expires?: number;
+        payload: T;
+    }
+
+    export interface TemporaryValue<T> {
+        // Storage duration, in seconds.
+        duration?: number;
+        payload: T;
+    }
+}
+
+import StoredValue = TemporaryStorage.StoredValue;
+import TemporaryValue = TemporaryStorage.TemporaryValue;
