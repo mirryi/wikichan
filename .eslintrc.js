@@ -35,6 +35,7 @@ module.exports = {
                     "error",
                     { allowExpressions: true },
                 ],
+                "@typescript-eslint/no-namespace": ["off"],
                 "@typescript-eslint/no-unused-vars": ["warn", { argsIgnorePattern: "^_" }],
                 "@typescript-eslint/no-use-before-define": [
                     "error",
