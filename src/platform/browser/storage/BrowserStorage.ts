@@ -4,7 +4,7 @@ import { PlatformStorage } from "@common/storage";
 
 type StorageArea = Storage.StorageArea;
 
-class BrowserStorage<T> implements PlatformStorage<T> {
+export class BrowserStorage<T> implements PlatformStorage<T> {
     private inner: StorageArea;
 
     constructor(inner: StorageArea) {
@@ -23,5 +23,3 @@ class BrowserStorage<T> implements PlatformStorage<T> {
         await this.inner.remove(keys);
     }
 }
-
-export default BrowserStorage;
