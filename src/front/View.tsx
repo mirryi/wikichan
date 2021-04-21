@@ -1,10 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import { Observable } from "rxjs";
 
+import { Item } from "@providers";
 import Float from "@view/Float";
 import RootComponent from "@view/Root";
 
-import { Item } from "@providers";
+import { switchMap } from "rxjs/operators";
 
 export interface ViewProps {
     frameHeight: number;
@@ -13,19 +15,28 @@ export interface ViewProps {
     handleQueries: (queries: string[]) => void;
 }
 
-class View {
+export class View {
     private props: ViewProps;
 
     private floatRef: React.RefObject<Float>;
     private rootRef: React.RefObject<RootComponent>;
 
+    private _registered: boolean;
+
     constructor(props: ViewProps) {
         this.props = props;
         this.floatRef = React.createRef<Float>();
         this.rootRef = React.createRef<RootComponent>();
+
+        this._registered = false;
     }
 
-    render(w: Window) {
+    register(w: Window, itemsStream: Observable<Item[]>): void {
+        if (this._registered) {
+            return;
+        }
+        this._registered = true;
+
         const doc = w.document;
 
         const inlineStyles = Array.from(doc.querySelectorAll(".wikichan-styles")).map(
@@ -49,29 +60,37 @@ class View {
 
         const tmp = doc.createElement("div");
         ReactDOM.render(component, tmp);
-        doc.body.appendChild(tmp.childNodes[0]);
+        // Safety: previous line inserts React compnonent as first child of
+        // tmp.
+        // eslint-ignore-next-line @typescript-eslint/no-non-null-assertion
+        doc.body.appendChild(tmp.childNodes[0]!);
+
+        // Handle the item stream.
+        itemsStream
+            .pipe(
+                // TODO: not sure if this is good design?
+                switchMap(
+                    (items): Promise<void> =>
+                        new Promise((resolve, _reject) => {
+                            this.root?.setState({ items }, () => resolve());
+                        }),
+                ),
+            )
+            .subscribe();
+
+        return;
+    }
+
+    registered(): boolean {
+        return this._registered;
     }
 
     handleQueries(queries: string[]): void {
         this.props.handleQueries(queries);
     }
 
-    async pushItem(item: Item): Promise<void> {
-        return new Promise((resolve, _reject) => {
-            const root = this.rootRef.current;
-            root?.setState(
-                {
-                    items: [...root.state.items, item],
-                },
-                () => resolve(),
-            );
-        });
-    }
-
-    async clearItems(): Promise<void> {
-        return new Promise((resolve, _reject) => {
-            this.rootRef.current?.setState({ items: [] }, () => resolve());
-        });
+    close(): void {
+        this.float?.close();
     }
 
     get float(): Float | null {
@@ -82,5 +101,3 @@ class View {
         return this.rootRef.current;
     }
 }
-
-export default View;

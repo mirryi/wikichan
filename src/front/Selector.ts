@@ -3,7 +3,7 @@ export enum ExpandMode {
     character,
 }
 
-export default class Selector {
+export class Selector {
     /**
      * expandNext returns a new TextSource with the next character or text until a break (space, period, etc.) incorporated.
      */
