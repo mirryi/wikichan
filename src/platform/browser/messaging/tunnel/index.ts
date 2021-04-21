@@ -197,4 +197,3 @@ export class BrowserBackTunnel<I, O> implements BackTunnel<I, O> {
 export namespace BrowserBackTunnel {
     export type PortFilter = (name: string) => boolean;
 }
-export * from "./Front";
