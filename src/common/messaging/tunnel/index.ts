@@ -5,7 +5,7 @@ export interface Sender<I, O> {
     send(om: O): Promise<I | undefined>;
 }
 
-export interface Receiver<I, O> {
+export interface Receiver<I> {
     /**
      * Define the callback for when the tunnel receives an incoming message.
      */

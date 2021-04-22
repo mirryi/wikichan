@@ -21,7 +21,7 @@ export class ObservableTunnel<I, O> {
 
     async connect(): Promise<void> {
         await this.inner.connect();
-        this.received = this.connectedReceived;
+        this.received = () => this.connectedReceived();
     }
 
     async send(om: O): Promise<void> {

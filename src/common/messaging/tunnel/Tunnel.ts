@@ -1,6 +1,6 @@
 import { Sender, Receiver } from ".";
 
-export interface Tunnel<I, O> extends Sender<void, O>, Receiver<I, O> {
+export interface Tunnel<I, O> extends Sender<void, O>, Receiver<I> {
     /**
      * Make/listen for a connection. If the tunnel is already connected, this
      * should do nothing.
