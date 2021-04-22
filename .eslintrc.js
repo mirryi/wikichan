@@ -42,7 +42,10 @@ module.exports = {
                 ],
                 "@typescript-eslint/no-inferrable-types": ["off"],
                 "@typescript-eslint/no-namespace": ["off"],
-                "@typescript-eslint/no-unused-vars": ["warn", { argsIgnorePattern: "^_" }],
+                "@typescript-eslint/no-unused-vars": [
+                    "warn",
+                    { argsIgnorePattern: "^_", ignoreRestSiblings: true },
+                ],
                 "@typescript-eslint/no-use-before-define": [
                     "error",
                     { functions: false, classes: false, variables: true },
