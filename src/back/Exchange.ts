@@ -2,22 +2,21 @@ import { BackExchange } from "@common/messaging/exchange";
 import { BackMessage, FrontMessage } from "@shared/messaging";
 import { Options } from "@shared/options";
 
-export type InnerExchange = BackExchange<FrontMessage, BackMessage>;
 export interface Handlers {
     getOptions: () => Promise<Options>;
     changeOptions: (im: Omit<FrontMessage.ChangeOptions, "kind">) => Promise<void>;
 }
 
 export class Exchange {
-    private inner: InnerExchange;
+    private inner: Exchange.Inner;
     private handlers: Handlers;
 
-    private constructor(inner: InnerExchange, handlers: Handlers) {
+    private constructor(inner: Exchange.Inner, handlers: Handlers) {
         this.inner = inner;
         this.handlers = handlers;
     }
 
-    static async load(inner: InnerExchange, handlers: Handlers): Promise<Exchange> {
+    static async load(inner: Exchange.Inner, handlers: Handlers): Promise<Exchange> {
         const self = new Exchange(inner, handlers);
 
         // Wait for exchange to connect.
@@ -37,4 +36,8 @@ export class Exchange {
 
         return self;
     }
+}
+
+export namespace Exchange {
+    export type Inner = BackExchange<FrontMessage, BackMessage>;
 }

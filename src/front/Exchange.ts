@@ -1,11 +1,11 @@
-import { FrontExchange as FrontExchange } from "@common/messaging/exchange";
+import { FrontExchange } from "@common/messaging/exchange";
 import { BackMessage, FrontMessage } from "@shared/messaging";
 import { Options } from "@shared/options";
 
-import ChangeOptions = FrontMessage.ChangeOptions;
+type ChangeOptions = FrontMessage.ChangeOptions;
 
-import GetOptionsResult = BackMessage.GetOptionsResult;
-import ChangeOptionsResult = BackMessage.ChangeOptionsResult;
+type GetOptionsResult = BackMessage.GetOptionsResult;
+type ChangeOptionsResult = BackMessage.ChangeOptionsResult;
 
 type Request<T extends FrontMessage> = Omit<T, "kind">;
 type Result<T extends BackMessage> = Omit<T, "kind">;

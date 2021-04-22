@@ -5,8 +5,6 @@ import { BackTunnel, ObservableTunnel } from "@common/messaging/tunnel";
 import { QueryRequest, QueryResponse } from "@shared/messaging";
 import { Provider } from "@providers";
 
-export type InnerTunnel = BackTunnel<QueryRequest, QueryResponse>;
-
 export class QueryItemManager {
     private tunnel: ObservableTunnel<QueryRequest, QueryResponse>;
     private providers: Provider[];
@@ -20,7 +18,7 @@ export class QueryItemManager {
     }
 
     static async load(
-        platformTunnel: InnerTunnel,
+        platformTunnel: QueryItemManager.InnerTunnel,
         providers: Provider[],
     ): Promise<QueryItemManager> {
         const innerTunnel = new ObservableTunnel(platformTunnel);
@@ -54,4 +52,8 @@ export class QueryItemManager {
     private async send(om: QueryResponse): Promise<void> {
         await this.tunnel.send(om);
     }
+}
+
+export namespace QueryItemManager {
+    export type InnerTunnel = BackTunnel<QueryRequest, QueryResponse>;
 }

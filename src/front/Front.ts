@@ -12,6 +12,9 @@ import { View } from "./View";
 // TODO: move to a separate entrypoint.
 setLogger("wikichan::front");
 
+export type InnerExchange = Exchange.Inner;
+export type InnerTunnel = QueryItemManager.InnerTunnel;
+
 export class Front {
     private view: View;
     private inputHandler: InputHandler;
