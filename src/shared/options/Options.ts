@@ -13,8 +13,4 @@ export namespace Options {
             front: FrontOptions.Default(),
         };
     }
-
-    export function guard(x: any): x is Options {
-        return !!x && BackOptions.guard(x.back);
-    }
 }
