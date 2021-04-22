@@ -22,7 +22,7 @@ export class BrowserBackExchange<I, O> implements BackExchange<I, O> {
         if (!this._connected) {
             this._connected = true;
 
-            this.send = this.connectedSend;
+            this.send = (om: O) => this.connectedSend(om);
             browser.runtime.onMessage.addListener((im) => this.receive(im));
         }
     }

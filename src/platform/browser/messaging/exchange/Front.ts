@@ -6,6 +6,7 @@ import {
 
 import { browser } from "webextension-polyfill-ts";
 
+// TODO: validate input and output messages.
 export class BrowserFrontExchange<I, O> implements BackExchange<I, O> {
     /**
      * Callback to be executed when an incoming message is received.
@@ -24,7 +25,7 @@ export class BrowserFrontExchange<I, O> implements BackExchange<I, O> {
             this._connected = true;
 
             // Enable send method.
-            this.send = this.connectedSend;
+            this.send = (om: O) => this.connectedSend(om);
             // Begin to listen for incoming messages.
             browser.runtime.onMessage.addListener((im) => this.receive(im));
         }
@@ -39,12 +40,14 @@ export class BrowserFrontExchange<I, O> implements BackExchange<I, O> {
     }
 
     async connectedSend(om: O): Promise<I> {
+        // Safety: message are unvalidated for now. See TODO above.
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-return
         return await browser.runtime.sendMessage(undefined, om);
     }
 
     onReceive(cb: Receiver.Callback<I, O>): void {
         this.receiver = cb;
-        this.receive = this.connectedReceive;
+        this.receive = (im: I) => this.connectedReceive(im);
     }
 
     private async receive(_im: I): Promise<O | undefined> {
@@ -54,7 +57,7 @@ export class BrowserFrontExchange<I, O> implements BackExchange<I, O> {
     private async connectedReceive(im: I): Promise<O | undefined> {
         // Safety: connectedReceive is only called after onReceive is called;
         // receiver is no longer undefined.
-        // eslint-ignore-next-line @typescript-eslint/no-non-null-assertion
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         return await this.receiver!(im);
     }
 }

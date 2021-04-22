@@ -46,15 +46,24 @@ export class BrowserFrontTunnel<I, O> implements FrontTunnel<I, O> {
                 const port = browser.runtime.connect(undefined, { name: this.name });
 
                 // Listen for connection confirmation message from other side.
-                const initialListener = (im: any) => {
+                //
+                // Safety: listener takes any arg
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any,
+                const initialListener = (im: any): void => {
                     // When received, resolve promise and enable tunnel functions.
-                    if (im.__status === "CONNECTED") {
+                    //
+                    // Safety: fine for purposes
+                    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+                    if (!!im && typeof im === "object" && im.__status === "CONNECTED") {
                         this._connected = true;
-                        this.send = this.connectedSend;
-                        this.receive = this.connectedReceive;
+                        this.send = (om: O) => this.connectedSend(om);
+                        this.receive = (im: I) => this.connectedReceive(im);
 
                         port.onMessage.removeListener(initialListener);
+                        // Safety: returning a promise is correct in this scenario?
+                        // eslint-disable-next-line @typescript-eslint/no-misused-promises
                         port.onMessage.addListener((im) => this.receive(im));
+
                         resolve();
                     }
                 };
@@ -139,8 +148,8 @@ export class BrowserBackTunnel<I, O> implements BackTunnel<I, O> {
                         // receive methods.
                         if (this._status === "connecting") {
                             this._status = "connected";
-                            this.send = this.connectedSend;
-                            this.receive = this.connectedReceive;
+                            this.send = (om: O) => this.connectedSend(om);
+                            this.receive = (im: I) => this.connectedReceive(im);
                         }
 
                         // Send a message to the port indicating that the
@@ -151,7 +160,9 @@ export class BrowserBackTunnel<I, O> implements BackTunnel<I, O> {
                         port.postMessage(connectedMessage);
 
                         // Begin to accept messages on the port.
-                        port.onMessage.addListener(async (im) => await this.receive(im));
+                        // Safety: returning a promise is correct in this scenario?
+                        // eslint-disable-next-line @typescript-eslint/no-misused-promises
+                        port.onMessage.addListener((im) => this.receive(im));
 
                         // Resolve as connected.
                         resolve();
