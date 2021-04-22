@@ -5,6 +5,7 @@ import { FrontTunnel, ObservableTunnel } from "@common/messaging/tunnel";
 import { Item } from "@providers";
 import { QueryRequest, QueryResponse } from "@shared/messaging";
 
+export type InnerTunnel = FrontTunnel<QueryResponse, QueryRequest>;
 export class QueryItemManager {
     /**
      * Tunnel by which query requests and response are sent and received.
@@ -15,7 +16,7 @@ export class QueryItemManager {
     private currentItems: Item[];
     private _itemsStream: Observable<Item[]>;
 
-    private constructor(tunnel: QueryItemManager.InnerTunnel) {
+    private constructor(tunnel: InnerTunnel) {
         this.tunnel = new ObservableTunnel(tunnel);
 
         this.batchn = 0;
@@ -59,8 +60,4 @@ export class QueryItemManager {
     itemsStream(): Observable<Item[]> {
         return this._itemsStream;
     }
-}
-
-export namespace QueryItemManager {
-    export type InnerTunnel = FrontTunnel<QueryResponse, QueryRequest>;
 }

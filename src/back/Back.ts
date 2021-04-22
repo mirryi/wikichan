@@ -1,16 +1,12 @@
 import { Provider } from "@providers";
-import { debug, info, setLogger } from "@util/logging";
+import { debug, info } from "@util/logging";
 
 import { BackStorage, InnerStorage } from "./BackStorage";
-import { Exchange } from "./Exchange";
+import { Exchange, InnerExchange } from "./Exchange";
 import { OptionsManager } from "./OptionsManager";
-import { QueryItemManager } from "./QueryItemManager";
+import { QueryItemManager, InnerTunnel } from "./QueryItemManager";
 
-// TODO: move to a separate entrypoint.
-setLogger("wikichan::back");
-
-export type InnerExchange = Exchange.Inner;
-export type InnerTunnel = QueryItemManager.InnerTunnel;
+export { InnerStorage, InnerExchange, InnerTunnel };
 
 export class Back {
     storage: BackStorage;

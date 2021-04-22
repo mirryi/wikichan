@@ -10,14 +10,15 @@ type ChangeOptionsResult = BackMessage.ChangeOptionsResult;
 type Request<T extends FrontMessage> = Omit<T, "kind">;
 type Result<T extends BackMessage> = Omit<T, "kind">;
 
+export type InnerExchange = FrontExchange<BackMessage, FrontMessage>;
 export class Exchange {
-    private inner: Exchange.Inner;
+    private inner: InnerExchange;
 
-    private constructor(inner: Exchange.Inner) {
+    private constructor(inner: InnerExchange) {
         this.inner = inner;
     }
 
-    static async load(inner: Exchange.Inner): Promise<Exchange> {
+    static async load(inner: InnerExchange): Promise<Exchange> {
         const self = new Exchange(inner);
         await self.inner.connect();
 
@@ -50,8 +51,4 @@ export class Exchange {
         // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
         return result as T;
     }
-}
-
-export namespace Exchange {
-    export type Inner = FrontExchange<BackMessage, FrontMessage>;
 }

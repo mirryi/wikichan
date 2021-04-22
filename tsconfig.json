@@ -28,8 +28,10 @@
         "paths": {
             "gm4-polyfill": ["lib/gm4-polyfill/gm4-polyfill.js"],
             "@back/*": ["src/back/*"],
+            "@back": ["src/back/index.ts"],
             "@common/*": ["src/common/*"],
             "@front/*": ["src/front/*"],
+            "@front": ["src/front/index.ts"],
             "@providers/*": ["src/providers/*"],
             "@providers": ["src/providers/index.ts"],
             "@shared/*": ["src/shared/*"],

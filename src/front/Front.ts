@@ -1,19 +1,15 @@
 import { autorun, observable } from "mobx";
 
 import { Options } from "@shared/options";
-import { debug, info, setLogger } from "@util/logging";
+import { debug, info } from "@util/logging";
 
-import { Exchange } from "./Exchange";
+import { Exchange, InnerExchange } from "./Exchange";
 import { InputEvent, InputHandler } from "./InputHandler";
-import { QueryItemManager } from "./QueryItemManager";
+import { QueryItemManager, InnerTunnel } from "./QueryItemManager";
 import { SelectionManager } from "./SelectionManager";
 import { View } from "./View";
 
-// TODO: move to a separate entrypoint.
-setLogger("wikichan::front");
-
-export type InnerExchange = Exchange.Inner;
-export type InnerTunnel = QueryItemManager.InnerTunnel;
+export { InnerExchange, InnerTunnel };
 
 export class Front {
     private view: View;
@@ -61,8 +57,8 @@ export class Front {
     }
 
     static async load(
-        platformExchange: Exchange.Inner,
-        platformTunnel: QueryItemManager.InnerTunnel,
+        platformExchange: InnerExchange,
+        platformTunnel: InnerTunnel,
     ): Promise<Front> {
         info("Initializing...");
         // Connect message exchange.

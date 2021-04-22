@@ -7,16 +7,17 @@ export interface Handlers {
     changeOptions: (im: Omit<FrontMessage.ChangeOptions, "kind">) => Promise<void>;
 }
 
+export type InnerExchange = BackExchange<FrontMessage, BackMessage>;
 export class Exchange {
-    private inner: Exchange.Inner;
+    private inner: InnerExchange;
     private handlers: Handlers;
 
-    private constructor(inner: Exchange.Inner, handlers: Handlers) {
+    private constructor(inner: InnerExchange, handlers: Handlers) {
         this.inner = inner;
         this.handlers = handlers;
     }
 
-    static async load(inner: Exchange.Inner, handlers: Handlers): Promise<Exchange> {
+    static async load(inner: InnerExchange, handlers: Handlers): Promise<Exchange> {
         const self = new Exchange(inner, handlers);
 
         // Wait for exchange to connect.
@@ -36,8 +37,4 @@ export class Exchange {
 
         return self;
     }
-}
-
-export namespace Exchange {
-    export type Inner = BackExchange<FrontMessage, BackMessage>;
 }
