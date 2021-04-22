@@ -1,35 +1,29 @@
-import Front from "@front/Front";
-import { register } from "@front/foreground";
-import { Provider, ProviderMerge } from "@providers";
+import * as mobx from "mobx";
+
+import { Front } from "@front/Front";
 import {
-    CachedProvider as CachedWikipediaProvider,
-    WikipediaLanguage,
-} from "@providers/wikipedia";
-import { CachedProvider as CachedOwlBotProvider } from "@providers/owlbot";
+    BackMessage,
+    FrontMessage,
+    QueryRequest,
+    QueryResponse,
+} from "@shared/messaging";
 
-import StorageMessenger from "./platform/browser/StorageMessenger";
+import { BrowserFrontExchange } from "./platform/browser/messaging/exchange";
+import { BrowserFrontTunnel } from "./platform/browser/messaging/tunnel";
 
-(function (): void {
+(async () => {
     if (self !== top) {
         return;
     }
 
-    const cache = new StorageMessenger();
-    const defaultCacheDuration = 24 * 60 * 60;
+    mobx.configure({
+        useProxies: "never",
+    });
 
-    const providers: Provider[] = [
-        new CachedWikipediaProvider(WikipediaLanguage.EN, cache, defaultCacheDuration),
-    ];
-    const providerMerge = new ProviderMerge(providers);
+    const exchange = new BrowserFrontExchange<BackMessage, FrontMessage>();
+    const tunnel = new BrowserFrontTunnel<QueryResponse, QueryRequest>();
 
-    const owlbotToken = process.env.OWLBOT_TOKEN;
-    if (!owlbotToken) {
-        console.warn("OwlBot API token not provided; cannot query OwlBot");
-    } else {
-        providers.push(
-            new CachedOwlBotProvider(owlbotToken as string, cache, defaultCacheDuration),
-        );
-    }
+    await Front.load(exchange, tunnel);
 
-    register(window, providerMerge);
+    await front.register(window);
 })();
