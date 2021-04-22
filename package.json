@@ -72,7 +72,7 @@
         "mobx": "^6.2.0",
         "react": "^16.13.1",
         "react-dom": "^16.13.1",
-        "react-frame-component": "^5.0.0-alpha.0",
+        "react-frame-component": "^5.0.0",
         "rxjs": "^6.5.5",
         "webextension-polyfill-ts": "^0.15.0"
     },

@@ -4074,10 +4074,10 @@ react-dom@^16.13.1:
     prop-types "^15.6.2"
     scheduler "^0.19.1"
 
-react-frame-component@^5.0.0-alpha.0:
-  version "5.0.0-alpha.0"
-  resolved "https://registry.yarnpkg.com/react-frame-component/-/react-frame-component-5.0.0-alpha.0.tgz#703bcb06bcf4492485d7283dff3fc69f1a2910f7"
-  integrity sha512-jinNOFXLrdkM2jVDqmhEt8yKxl6Z+b9GnKC12Md1NXOGIHwwv6NbW15a6zEdE/OFRC/uHV2PuWq5ZjoaJMtK8g==
+react-frame-component@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/react-frame-component/-/react-frame-component-5.0.0.tgz#8a7e60e7fe7e2b52bfc0854325d63c01d0788510"
+  integrity sha512-JyoPSU6H96sd4l76EUvzB/cNkvhW74OK43A1m7kmgc14QztodV39l9g7DwVgkVeKpSqnpMYhrKcvehHZzfXBGA==
 
 react-is@^16.8.1:
   version "16.13.1"
