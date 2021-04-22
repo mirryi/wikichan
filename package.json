@@ -85,7 +85,7 @@
         "*.{js}": [
             "eslint"
         ],
-        "*.{js,ts,tsx}": [
+        "*.{ts,tsx}": [
             "eslint --ext .ts,.tsx"
         ]
     }
