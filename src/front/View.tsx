@@ -62,7 +62,7 @@ export class View {
         ReactDOM.render(component, tmp);
         // Safety: previous line inserts React compnonent as first child of
         // tmp.
-        // eslint-ignore-next-line @typescript-eslint/no-non-null-assertion
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         doc.body.appendChild(tmp.childNodes[0]!);
 
         // Handle the item stream.

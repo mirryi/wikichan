@@ -58,7 +58,7 @@ export class InputHandler {
 
         const moveEvents = fromEvent(w, "mousemove").pipe(
             // Safety: event should be a MouseEvent.
-            // eslint-ignore-next-line @typescript-eslint/consistent-type-assertions
+            // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
             map((e) => e as MouseEvent),
             // Ensure that required holdkeys are held.
             filter((e) => {
@@ -80,7 +80,7 @@ export class InputHandler {
             map(
                 (e): InputEvent.Mouseclick => {
                     // Safety: event should be a MouseEvent.
-                    // eslint-ignore-next-line @typescript-eslint/consistent-type-assertions
+                    // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
                     const me = e as MouseEvent;
                     return { kind: "MOUSECLICK", x: me.x, y: me.y, inner: me };
                 },

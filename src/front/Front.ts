@@ -1,12 +1,16 @@
 import { autorun, observable } from "mobx";
 
 import { Options } from "@shared/options";
+import { debug, info, setLogger } from "@util/logging";
 
 import { Exchange } from "./Exchange";
 import { InputEvent, InputHandler } from "./InputHandler";
 import { QueryItemManager } from "./QueryItemManager";
 import { SelectionManager } from "./SelectionManager";
 import { View } from "./View";
+
+// TODO: move to a separate entrypoint.
+setLogger("wikichan::front");
 
 export class Front {
     private view: View;
@@ -57,13 +61,17 @@ export class Front {
         platformExchange: Exchange.Inner,
         platformTunnel: QueryItemManager.InnerTunnel,
     ): Promise<Front> {
+        info("Initializing...");
         // Connect message exchange.
+        debug("Connecting message exchange...");
         const exchange = await Exchange.load(platformExchange);
 
         // Load settings from back.
+        debug("Retrieving options from background...");
         const options = await exchange.getOptions();
 
         // Initialize query-item manager.
+        debug("Connecting tunnel...");
         const queryItemManager = await QueryItemManager.load(platformTunnel);
 
         return new Front(exchange, queryItemManager, options);

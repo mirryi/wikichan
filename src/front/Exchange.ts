@@ -47,7 +47,7 @@ export class Exchange {
     private extractResponse<T extends BackMessage>(response: BackMessage): Result<T> {
         const { kind: _kind, ...result } = response;
         // Safety: Exchanges should guarantee that correct types are returned.
-        // eslint-ignore-next-line @typescript-eslint/consistent-type-assertion
+        // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
         return result as T;
     }
 }

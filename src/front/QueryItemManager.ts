@@ -35,9 +35,8 @@ export class QueryItemManager {
             // Ignore items from previous batches.
             filter((itemResult) => itemResult.batchn === self.batchn),
             map((itemResult) => {
-                const { batchn: _, item } = itemResult;
                 // Push self item to the list.
-                self.currentItems.push(item);
+                self.currentItems.push(itemResult.item);
 
                 return self.currentItems;
             }),
@@ -54,7 +53,7 @@ export class QueryItemManager {
         this.currentItems = [];
 
         // Request items.
-        this.tunnel.send({ batchn: this.batchn, queries });
+        void this.tunnel.send({ batchn: this.batchn, queries });
     }
 
     itemsStream(): Observable<Item[]> {
