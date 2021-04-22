@@ -1,12 +1,12 @@
-let logger: string = "wikichan";
+let logger = "wikichan";
 
-export const setLogger = (name: string) => {
+export const setLogger = (name: string): void => {
     logger = name;
 };
 
-const timestamp = () => new Date().toISOString();
+const timestamp = (): string => new Date().toISOString();
 
-const prefix = (level: "error" | "warn" | "info" | "debug") => {
+const prefix = (level: "error" | "warn" | "info" | "debug"): [string, string, string] => {
     let color;
     let padding = "";
     switch (level) {
@@ -33,11 +33,11 @@ const prefix = (level: "error" | "warn" | "info" | "debug") => {
     ];
 };
 
-export const error = (...messages: unknown[]) =>
+export const error = (...messages: unknown[]): void =>
     console.error(...prefix("error"), ...messages);
-export const warn = (...messages: unknown[]) =>
+export const warn = (...messages: unknown[]): void =>
     console.warn(...prefix("warn"), ...messages);
-export const info = (...messages: unknown[]) =>
+export const info = (...messages: unknown[]): void =>
     console.info(...prefix("info"), ...messages);
-export const debug = (...messages: unknown[]) =>
+export const debug = (...messages: unknown[]): void =>
     console.debug(...prefix("debug"), ...messages);
