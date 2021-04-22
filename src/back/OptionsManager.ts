@@ -29,7 +29,7 @@ export class OptionsManager {
     }
 
     // TODO: reexport the newOptions type from message module.
-    change(newOptions: DeepPartial<Options>) {
+    change(newOptions: DeepPartial<Options>): void {
         this.options = deepmerge(this.options, newOptions);
     }
 

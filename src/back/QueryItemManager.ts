@@ -38,9 +38,9 @@ export class QueryItemManager {
                 );
 
                 const itemStream = merge(...searches);
-                itemStream.subscribe((item) => {
-                    self.send({ batchn: request.batchn, item });
-                });
+                itemStream.pipe(
+                    map((item) => self.send({ batchn: request.batchn, item })),
+                );
             }),
         );
 

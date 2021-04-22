@@ -5,6 +5,7 @@ import {
     ValidatedStorage,
 } from "@common/storage";
 import { Options } from "@shared/options";
+import { isOptions } from "@shared/options/guard";
 import { Immutable } from "@util";
 
 import StoredValue = TemporaryStorage.StoredValue;
@@ -29,9 +30,7 @@ export class BackStorage extends CentralStorage {
 
         const handle = this.registerHandle<Options>(PREFIXES.SETTINGS);
         if (handle) {
-            this._optionsHandle = new ValidatedStorage(handle, async (x) =>
-                Options.guard(x),
-            );
+            this._optionsHandle = new ValidatedStorage(handle, isOptions);
             return this._optionsHandle;
         }
         return undefined;
@@ -39,7 +38,7 @@ export class BackStorage extends CentralStorage {
 
     cacheHandle<T>(
         prefix: string,
-        validator: (x: unknown) => Promise<boolean>,
+        validator: (x: unknown) => x is T,
     ): CacheHandle<T> | undefined {
         if (prefix in Object.values(PREFIXES)) {
             return undefined;
@@ -47,13 +46,19 @@ export class BackStorage extends CentralStorage {
 
         const handle = this.registerHandle<StoredValue<T>>(prefix);
         if (handle) {
-            const wrappedValidator = async (x: unknown) => {
-                // eslint-ignore-next-line @typescript-eslint/no-explicit-any
-                const v = x as any;
+            const wrappedValidator = (x: unknown): x is StoredValue<T> => {
+                // Safety: necessary for type guard
+                /* eslint-disable @typescript-eslint/consistent-type-assertions */
+                if (typeof x !== "object") {
+                    return false;
+                }
+
+                const expires = (x as StoredValue<T>).expires;
                 return (
-                    (v?.expires === undefined || typeof v?.expires === "number") &&
-                    validator(v?.payload)
+                    (expires === undefined || typeof expires === "number") &&
+                    validator((x as StoredValue<T>).payload)
                 );
+                /* eslint-enable @typescript-eslint/consistent-type-assertions */
             };
 
             return new TemporaryStorage(new ValidatedStorage(handle, wrappedValidator));
