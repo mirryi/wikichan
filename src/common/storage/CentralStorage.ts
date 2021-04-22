@@ -97,7 +97,10 @@ class StorageInterface<T> implements PlatformStorage<T> {
 
     async set(entries: { [key: string]: T }): Promise<void> {
         // Prefix keys before setting.
-        const pairs = Object.entries(entries).map(([k, v]) => [this.prefixKey(k), v]);
+        const pairs = Object.entries(entries).map(([k, v]): [string, T] => [
+            this.prefixKey(k),
+            v,
+        ]);
         // Access storage.
         const newEntries = Object.fromEntries(pairs);
 
@@ -110,7 +113,12 @@ class StorageInterface<T> implements PlatformStorage<T> {
         // Access storage.
         const entries = await this.inner.get(prefixedKeys);
         // De-prefix keys to get user-facing keys.
-        const pairs = Object.entries(entries).map(([k, v]) => [this.deprefixKey(k), v]);
+        const pairs = Object.entries(entries).map(([k, v]): [string, T] => [
+            this.deprefixKey(k),
+            // Safety: StorageInterface doesn't guarantee type safety of values.
+            // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+            v as T,
+        ]);
 
         return Object.fromEntries(pairs);
     }

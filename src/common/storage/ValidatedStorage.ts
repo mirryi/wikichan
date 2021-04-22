@@ -1,12 +1,12 @@
 import { PlatformStorage } from "./PlatformStorage";
 
-type Validator = ValidatedStorage.Validator;
+type Validator<T> = ValidatedStorage.Validator<T>;
 
 export class ValidatedStorage<T> implements PlatformStorage<T> {
     private inner: PlatformStorage<T>;
-    private validator: Validator;
+    private validator: Validator<T>;
 
-    constructor(inner: PlatformStorage<T>, validator: Validator) {
+    constructor(inner: PlatformStorage<T>, validator: Validator<T>) {
         this.inner = inner;
         this.validator = validator;
     }
@@ -19,8 +19,8 @@ export class ValidatedStorage<T> implements PlatformStorage<T> {
         const pairs = await this.inner.get(keys);
         const entries = await Promise.all(
             Object.entries(pairs).map(async ([key, val]) => {
-                if (await this.validator(val)) {
-                    return [key, val as T];
+                if (this.validator(val)) {
+                    return [key, val];
                 }
                 return undefined;
             }),
@@ -35,5 +35,5 @@ export class ValidatedStorage<T> implements PlatformStorage<T> {
 }
 
 export namespace ValidatedStorage {
-    export type Validator = (val: unknown) => Promise<boolean>;
+    export type Validator<T> = (val: unknown) => val is T;
 }
