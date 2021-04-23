@@ -1,12 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { Observable } from "rxjs";
+import { switchMap } from "rxjs/operators";
 
 import { Item } from "@providers";
-import Float from "@view/Float";
+import { Float } from "@view/Float";
 import { Root } from "@view/Root";
-
-import { switchMap } from "rxjs/operators";
 
 export interface ViewProps {
     frameHeight: number;
@@ -41,25 +40,11 @@ export class View {
         this._registered = true;
 
         const doc = w.document;
-
-        const inlineStyles = Array.from(doc.querySelectorAll(".wikichan-styles")).map(
+        const inlineStyles = Array.from(
+            doc.querySelectorAll(".wikichan-styles"),
             (tag) => tag.innerHTML,
         );
-        const component = (
-            <React.StrictMode>
-                <Float
-                    ref={this.floatRef}
-                    width={this.props.frameWidth}
-                    height={this.props.frameHeight}
-                    styles={inlineStyles}
-                >
-                    <Root
-                        ref={this.rootRef}
-                        handleSearch={(query: string) => this.handleQueries([query])}
-                    />
-                </Float>
-            </React.StrictMode>
-        );
+        const component = this.component(inlineStyles);
 
         const tmp = doc.createElement("div");
         ReactDOM.render(component, tmp);
@@ -87,18 +72,41 @@ export class View {
         return;
     }
 
+    private component(inlineStyles: string[]): JSX.Element {
+        return (
+            <React.StrictMode>
+                <Float
+                    ref={this.floatRef}
+                    width={this.props.frameWidth}
+                    height={this.props.frameHeight}
+                    styles={inlineStyles}
+                >
+                    <Root
+                        ref={this.rootRef}
+                        handleSearch={(query: string) => this.handleQueries([query])}
+                    />
+                </Float>
+            </React.StrictMode>
+        );
+    }
+
+    /**
+     * Returns true if this View is registered.
+     */
     registered(): boolean {
         return this._registered;
     }
 
-    handleQueries(queries: string[]): void {
-        this.props.handleQueries(queries);
-    }
-
+    /**
+     * Set the position to open the float at the next time it is opened.
+     */
     setPosition(x: number, y: number): void {
         this.position = [x, y];
     }
 
+    /**
+     * Close the float.
+     */
     close(): void {
         this.float?.close();
     }
@@ -109,5 +117,9 @@ export class View {
 
     get root(): Root | null {
         return this.rootRef.current;
+    }
+
+    private handleQueries(queries: string[]): void {
+        this.props.handleQueries(queries);
     }
 }

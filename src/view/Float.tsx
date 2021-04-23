@@ -15,7 +15,7 @@ export interface FloatState {
     top: number;
 }
 
-class Float extends Component<FloatProps, FloatState> {
+export class Float extends Component<FloatProps, FloatState> {
     innerRef: RefObject<HTMLDivElement>;
 
     constructor(props: FloatProps) {
@@ -108,5 +108,3 @@ class Float extends Component<FloatProps, FloatState> {
         return offset;
     }
 }
-
-export default Float;
