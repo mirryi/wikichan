@@ -101,10 +101,13 @@ export class Front {
         switch (e.kind) {
             // Pass mousemove events to the selection manager.
             case "MOUSEMOVE":
+                const x = e.x;
+                const y = e.y;
                 // TODO: get n from options
-                const queries = this.selectionManager.selectNewIntoQueries(e.x, e.y, 5);
+                const queries = this.selectionManager.selectNewIntoQueries(x, y, 5);
                 if (queries) {
                     this.view?.close();
+                    this.view?.setPosition(x, y);
                     this.handleQueries(queries);
                 }
                 break;

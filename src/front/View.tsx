@@ -17,6 +17,7 @@ export interface ViewProps {
 
 export class View {
     private props: ViewProps;
+    private position: [number, number];
 
     private floatRef: React.RefObject<Float>;
     private rootRef: React.RefObject<Root>;
@@ -25,6 +26,8 @@ export class View {
 
     constructor(props: ViewProps) {
         this.props = props;
+        this.position = [0, 0];
+
         this.floatRef = React.createRef<Float>();
         this.rootRef = React.createRef<Root>();
 
@@ -72,7 +75,10 @@ export class View {
                 switchMap(
                     (items): Promise<void> =>
                         new Promise((resolve, _reject) => {
-                            this.root?.setState({ items }, () => resolve());
+                            this.root?.setState({ items }, () => {
+                                this.float?.open(...this.position);
+                                resolve();
+                            });
                         }),
                 ),
             )
@@ -89,8 +95,8 @@ export class View {
         this.props.handleQueries(queries);
     }
 
-    open(x: number, y: number): void {
-        this.float?.open(x, y);
+    setPosition(x: number, y: number): void {
+        this.position = [x, y];
     }
 
     close(): void {
