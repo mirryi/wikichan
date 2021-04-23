@@ -63,7 +63,6 @@ export class BrowserFrontTunnel<I, O> implements FrontTunnel<I, O> {
                         // Safety: returning a promise is correct in this scenario?
                         // eslint-disable-next-line @typescript-eslint/no-misused-promises
                         port.onMessage.addListener((im) => this.receive(im));
-
                         resolve();
                     }
                 };
@@ -135,8 +134,7 @@ export class BrowserBackTunnel<I, O> implements BackTunnel<I, O> {
             if (this._status === "disconnected") {
                 this._status = "connecting";
 
-                // Begin to listen for content script connections.
-                browser.runtime.onConnect.addListener((port) => {
+                const listener = (port: Runtime.Port): void => {
                     // If the connection is from an ID'd tab and name passes
                     // the filter, save the port and begin listening for messages.
                     // TODO: handle undefined case?
@@ -163,11 +161,21 @@ export class BrowserBackTunnel<I, O> implements BackTunnel<I, O> {
                         // Safety: returning a promise is correct in this scenario?
                         // eslint-disable-next-line @typescript-eslint/no-misused-promises
                         port.onMessage.addListener((im) => this.receive(im));
-
-                        // Resolve as connected.
-                        resolve();
                     }
-                });
+                };
+
+                // Begin to listen for content script connections.
+                const initialListener = (port: Runtime.Port): void => {
+                    listener(port);
+
+                    browser.runtime.onConnect.removeListener(initialListener);
+                    browser.runtime.onConnect.addListener(listener);
+
+                    // Resolve as connected.
+                    resolve();
+                };
+
+                browser.runtime.onConnect.addListener(initialListener);
             }
         });
     }
