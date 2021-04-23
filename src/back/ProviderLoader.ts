@@ -1,9 +1,9 @@
 import { Provider } from "@providers";
-import { Provider as WikipediaProvider, WikipediaLanguage } from "@providers/wikipedia";
+import { WikipediaProvider, Language } from "@providers/wikipedia";
 import { ProviderOptions, ProvidersOptions } from "@shared/options";
 
 const NAME_MAP: { [key: string]: (opts: ProviderOptions) => Provider } = {
-    "WIKI::EN": (_opts) => new WikipediaProvider(WikipediaLanguage.EN),
+    "WIKI::EN": (_opts) => new WikipediaProvider(Language.EN),
 } as const;
 
 export class ProviderLoader {

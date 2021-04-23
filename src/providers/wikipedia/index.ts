@@ -1,5 +1,4 @@
-import Item from "./Item";
-import Provider, { WikipediaLanguage } from "./Provider";
-import CachedProvider from "./CachedProvider";
+export * from "./Item";
+export * from "./Provider";
 
-export { Item, Provider, CachedProvider, WikipediaLanguage };
+export * as renderer from "./renderer";

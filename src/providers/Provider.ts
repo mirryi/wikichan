@@ -1,15 +1,8 @@
-import { ReactNode } from "react";
 import { Observable } from "rxjs";
 
-import Item from "./Item";
+import { Item } from "./Item";
 
-interface Provider<T extends Item = Item> {
-    name(): string;
-
+export interface Provider<T extends Item = Item> {
     search(queries: string[]): Observable<T>;
-
-    renderf?(item: T): ReactNode;
-    renderLongDescription?(item: T): ReactNode;
+    uniq(stream: Observable<T>): Observable<T>;
 }
-
-export default Provider;

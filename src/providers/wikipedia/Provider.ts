@@ -1,35 +1,35 @@
-import { sanitize } from "dompurify";
-import htmlReactParse from "html-react-parser";
-import { ReactNode } from "react";
-import { empty, from, merge, Observable } from "rxjs";
-import { catchError, distinct, filter, map } from "rxjs/operators";
+import axios, { AxiosInstance } from "axios";
+import { from, merge, Observable } from "rxjs";
+import { distinct, filter, map } from "rxjs/operators";
 
-import Provider from "@providers/Provider";
+import { isNotUndefined } from "@util/guards";
 
-import WikipediaItem from "./Item";
+import { Provider } from "..";
+import { WikipediaItem } from "./Item";
 
-class WikipediaProvider implements Provider<WikipediaItem> {
-    language: WikipediaLanguage;
+const RENDERER = "WIKI";
 
-    constructor(language: WikipediaLanguage) {
+export class WikipediaProvider implements Provider<WikipediaItem> {
+    private language: Language;
+
+    private client: AxiosInstance;
+
+    constructor(language: Language) {
         this.language = language;
-    }
 
-    name(): string {
-        return this.language.name + " Wikipedia";
+        this.client = axios.create({ baseURL: language.baseURL() });
     }
 
     search(queries: string[]): Observable<WikipediaItem> {
         const observables = queries.map((q) => {
             const req = this.request(q);
             return from(req).pipe(
-                filter((v) => !!v),
+                filter(isNotUndefined),
                 map((data) => {
-                    data = data as MediaWikiResponse;
-                    const seen: Map<string, boolean> = new Map();
-                    const entries: MediaWikiPage[] = Object.entries(data.pages)
+                    const seen = new Map();
+                    const entries = Object.entries(data.pages)
                         .filter(([k]) => {
-                            if (Number(k) === -1 || seen.get(k) !== undefined) {
+                            if (Number(k) === -1 || seen.has(k)) {
                                 return false;
                             }
                             seen.set(k, true);
@@ -38,98 +38,86 @@ class WikipediaProvider implements Provider<WikipediaItem> {
                         .map(([, v]) => v);
 
                     if (entries.length < 1) {
-                        throw new Error("no pages found");
+                        return undefined;
                     }
 
                     return entries[0];
                 }),
-                map((entry) => {
-                    if (!entry.pageid) {
-                        throw new Error("no pageid found");
-                    }
-                    const item: WikipediaItem = {
-                        pageid: entry.pageid,
-                        title: entry.title,
-                        urls: [entry.fullurl, entry.editurl],
-                        description: entry.description
-                            ? entry.description
-                            : "No description.",
-                        longDescription: entry.extract,
-                        tags: new Map([["lang", this.language.id]]),
-                        searchTerm: q,
-                        provider: this,
-                    };
-
-                    if (entry.categories) {
-                        item.tags?.set(
-                            "categories",
-                            entry.categories.map((c) => c.title),
-                        );
-                    }
-                    if (entry.extlinks) {
-                        item.urls?.push(...entry.extlinks.map((link) => link["*"]));
-                    }
-                    if (entry.terms?.alias) {
-                        item.tags?.set("aliases", entry.terms.alias);
-                    }
-
-                    return item;
-                }),
-                catchError(() => {
-                    return empty();
-                }),
+                filter(isNotUndefined),
+                filter((entry) => entry.pageid !== undefined),
+                map((entry) => this.convertResponse(entry, q)),
             );
         });
-        return merge(...observables).pipe(distinct((item) => item.pageid));
+        return this.uniq(merge(...observables));
     }
 
-    async request(query: string): Promise<MediaWikiResponse | null> {
-        const url = this.queryString(query);
+    uniq(stream: Observable<WikipediaItem>): Observable<WikipediaItem> {
+        return stream.pipe(distinct((item) => item.pageid));
+    }
+
+    private convertResponse(entry: MediaWikiPage, query: string): WikipediaItem {
+        const tags: WikipediaItem["tags"] = { lang: this.language.id };
+        if (entry.categories) {
+            tags["categories"] = entry.categories.map((c) => c.title);
+        }
+        if (entry.terms?.alias) {
+            tags["aliases"] = entry.terms.alias;
+        }
+
+        const urls = [entry.fullurl, entry.editurl];
+        if (entry.extlinks) {
+            urls.push(...entry.extlinks.map((link) => link["*"]));
+        }
+
+        const item: WikipediaItem = {
+            // Safety: entries with undefined pageid's were just filtered out
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+            pageid: entry.pageid!,
+            title: entry.title,
+            urls,
+            description: entry.description ? entry.description : "No description.",
+            longDescription: entry.extract,
+            tags,
+            searchTerm: query,
+            meta: {
+                renderer: RENDERER,
+            },
+        };
+
+        return item;
+    }
+
+    private async request(query: string): Promise<MediaWikiResponse | undefined> {
+        const url = this.queryString(query).toString();
         try {
-            const res = await fetch(url.toString());
-
-            if (!res.ok) {
-                return null;
-            }
-
-            const data = await res.json();
-            return data["query"] as MediaWikiResponse;
-        } catch (error) {
-            return null;
+            const response = await this.client.get<{ query: MediaWikiResponse }>(url);
+            return response.data.query;
+        } catch (e: unknown) {
+            return undefined;
         }
     }
 
-    queryString(query: string): URL {
+    private queryString(query: string): URL {
         let url = `${this.language.baseURL()}/w/api.php?`;
-        const params = new Map([
-            ["origin", "*"],
-            ["format", "json"],
-            ["action", "query"],
-            ["prop", "info|description|categories|extlinks|pageterms|extracts&exintro"],
-            ["inprop", "url"],
-            ["redirects", "1"],
-            ["titles", encodeURIComponent(query)],
-        ]);
+        const params = {
+            origin: "*",
+            format: "json",
+            action: "query",
+            prop: "info|description|categories|extlinks|pageterms|extracts&exintro",
+            inprop: "url",
+            redirects: "1",
+            titles: encodeURIComponent(query),
+        };
 
-        for (const [k, v] of params) {
+        for (const [k, v] of Object.entries(params)) {
             url += `${k}=${v}&`;
         }
+
         return new URL(url);
-    }
-
-    renderLongDescription(item: WikipediaItem): ReactNode {
-        const ld = item.longDescription;
-        if (!ld) {
-            return null;
-        }
-
-        const html = sanitize(ld);
-        const components = htmlReactParse(html);
-        return components;
     }
 }
 
-export class WikipediaLanguage {
+export class Language {
     id: string;
     name: string;
     disambID: string;
@@ -140,11 +128,13 @@ export class WikipediaLanguage {
         this.disambID = disambID;
     }
 
-    baseURL(): URL {
-        return new URL(`https://${this.id.toLowerCase()}.wikipedia.org`);
+    baseURL(): string {
+        return `https://${this.id.toLowerCase()}.wikipedia.org`;
     }
+}
 
-    static readonly EN = new WikipediaLanguage(
+export namespace Language {
+    export const EN = new Language(
         "EN",
         "English",
         "Category:All article disambiguation pages",
@@ -153,7 +143,7 @@ export class WikipediaLanguage {
 
 type MediaWikiResponse = {
     normalized: { from: string; to: string }[];
-    pages: Map<number, MediaWikiPage>;
+    pages: { [n: number]: MediaWikiPage };
 };
 
 type MediaWikiPage = {
@@ -181,5 +171,3 @@ type MediaWikiPage = {
     title: string;
     touched?: string;
 };
-
-export default WikipediaProvider;

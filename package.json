@@ -67,6 +67,7 @@
         "web-ext": "^6.0.0"
     },
     "dependencies": {
+        "axios": "^0.21.1",
         "dompurify": "^2.0.10",
         "html-react-parser": "^0.10.3",
         "mobx": "^6.2.0",
