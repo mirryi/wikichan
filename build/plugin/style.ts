@@ -59,7 +59,23 @@ const plugin = (opts?: Opts): esbuild.Plugin => {
                                       json: { [key: string]: string },
                                       _outpath: string,
                                   ) {
+                                      // Save JSON for later.
                                       contentMap.set(inpath, JSON.stringify(json));
+
+                                      const classes = Object.keys(json);
+                                      const declarations = classes
+                                          .map((c) => `${c}: string;`)
+                                          .join("\n    ");
+
+                                      const definition = `declare const styles: {
+    ${declarations}
+}
+
+export = styles;`;
+                                      void fs.promises.writeFile(
+                                          inpath + ".d.ts",
+                                          definition,
+                                      );
                                   },
                               }),
                           ]
