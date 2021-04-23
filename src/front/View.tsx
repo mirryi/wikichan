@@ -4,7 +4,7 @@ import { Observable } from "rxjs";
 
 import { Item } from "@providers";
 import Float from "@view/Float";
-import RootComponent from "@view/Root";
+import { Root } from "@view/Root";
 
 import { switchMap } from "rxjs/operators";
 
@@ -19,14 +19,14 @@ export class View {
     private props: ViewProps;
 
     private floatRef: React.RefObject<Float>;
-    private rootRef: React.RefObject<RootComponent>;
+    private rootRef: React.RefObject<Root>;
 
     private _registered: boolean;
 
     constructor(props: ViewProps) {
         this.props = props;
         this.floatRef = React.createRef<Float>();
-        this.rootRef = React.createRef<RootComponent>();
+        this.rootRef = React.createRef<Root>();
 
         this._registered = false;
     }
@@ -50,7 +50,7 @@ export class View {
                     height={this.props.frameHeight}
                     styles={inlineStyles}
                 >
-                    <RootComponent
+                    <Root
                         ref={this.rootRef}
                         handleSearch={(query: string) => this.handleQueries([query])}
                     />
@@ -101,7 +101,7 @@ export class View {
         return this.floatRef.current;
     }
 
-    get root(): RootComponent | null {
+    get root(): Root | null {
         return this.rootRef.current;
     }
 }

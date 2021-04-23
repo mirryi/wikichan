@@ -10,9 +10,9 @@ export interface FloatProps {
 }
 
 export interface FloatState {
-    frameVisibility: boolean;
-    frameLeft: number;
-    frameTop: number;
+    open: boolean;
+    left: number;
+    top: number;
 }
 
 class Float extends Component<FloatProps, FloatState> {
@@ -22,9 +22,9 @@ class Float extends Component<FloatProps, FloatState> {
         super(props);
 
         this.state = {
-            frameVisibility: false,
-            frameLeft: 0,
-            frameTop: 0,
+            open: false,
+            left: 0,
+            top: 0,
         };
         this.innerRef = React.createRef();
     }
@@ -33,17 +33,17 @@ class Float extends Component<FloatProps, FloatState> {
         const style: CSSProperties = {
             width: this.props.width,
             height: this.props.height,
-            left: this.state.frameLeft,
-            top: this.state.frameTop,
+            left: this.state.left,
+            top: this.state.top,
         };
+
+        const head =
+            this.props.styles?.map((style, i) => <style key={i}>{style}</style>) ?? [];
 
         const classes = [
             styles.frame,
-            this.state.frameVisibility ? styles.frameVisible : styles.frameHidden,
+            this.state.open ? styles.frameVisible : styles.frameHidden,
         ];
-
-        const head = this.props.styles?.map((style, i) => <style key={i}>{style}</style>);
-
         return (
             <Frame head={head} className={classes.join(" ")} style={style}>
                 <div style={{ maxHeight: this.props.height }} ref={this.innerRef}>
@@ -71,22 +71,22 @@ class Float extends Component<FloatProps, FloatState> {
             this.props.height,
         );
         this.setState({
-            frameVisibility: true,
-            frameLeft: left + offset.x,
-            frameTop: top + offset.y,
+            open: true,
+            left: left + offset.x,
+            top: top + offset.y,
         });
     }
 
     hideFrame(): void {
-        this.setState({ frameVisibility: false });
+        this.setState({ open: false });
     }
 
     containsPoint(x: number, y: number): boolean {
         return (
-            x > this.state.frameLeft &&
-            x < this.state.frameLeft + this.props.width &&
-            y > this.state.frameTop &&
-            y < this.state.frameTop + this.props.height
+            x > this.state.left &&
+            x < this.state.left + this.props.width &&
+            y > this.state.top &&
+            y < this.state.top + this.props.height
         );
     }
 
