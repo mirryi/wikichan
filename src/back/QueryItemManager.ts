@@ -29,19 +29,22 @@ export class QueryItemManager {
         await self.connect();
 
         // Listen for requests and pass queries to providers.
-        self.tunnel.received().pipe(
-            map((request) => {
-                const queries = request.queries;
-                const searches = self.providers.map((provider) =>
-                    provider.search(queries),
-                );
+        self.tunnel
+            .received()
+            .pipe(
+                map((request) => {
+                    const queries = request.queries;
+                    const searches = self.providers.map((provider) =>
+                        provider.search(queries),
+                    );
 
-                const itemStream = merge(...searches);
-                itemStream.pipe(
-                    map((item) => self.send({ batchn: request.batchn, item })),
-                );
-            }),
-        );
+                    const itemStream = merge(...searches);
+                    itemStream
+                        .pipe(map((item) => self.send({ batchn: request.batchn, item })))
+                        .subscribe();
+                }),
+            )
+            .subscribe();
 
         return self;
     }

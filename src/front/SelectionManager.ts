@@ -14,7 +14,8 @@ export class SelectionManager {
         if (!source) {
             return undefined;
         } else {
-            return buildQueries(this._selector, source, n);
+            const queries = buildQueries(this._selector, source, n);
+            return [...new Set(queries)];
         }
     }
 

@@ -4,6 +4,7 @@ import { debug, info } from "@util/logging";
 import { BackStorage, InnerStorage } from "./BackStorage";
 import { Exchange, InnerExchange } from "./Exchange";
 import { OptionsManager } from "./OptionsManager";
+import { ProviderLoader } from "./ProviderLoader";
 import { QueryItemManager, InnerTunnel } from "./QueryItemManager";
 
 export { InnerStorage, InnerExchange, InnerTunnel };
@@ -48,8 +49,11 @@ export class Back {
         const options = optionsManager.options;
 
         // Initialize the providers from the stored options.
-        // const providers = loadProviders(options.back.providers);
-        const providers: Provider[] = [];
+        const providerLoader = new ProviderLoader();
+        // const providers: Provider[] = providerLoader.loadAll(options.back.providers);
+        const providers: Provider[] = providerLoader.loadAll({
+            "WIKI::EN": { enabled: true, cached: false },
+        });
 
         // Load message exchange.
         debug("Connecting messgage exchange...");

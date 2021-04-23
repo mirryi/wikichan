@@ -73,6 +73,7 @@ export class Front {
         debug("Connecting tunnel...");
         const queryItemManager = await QueryItemManager.load(platformTunnel);
 
+        info("Finished initializing!");
         return new Front(exchange, queryItemManager, options);
     }
 

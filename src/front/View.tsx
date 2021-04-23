@@ -89,6 +89,10 @@ export class View {
         this.props.handleQueries(queries);
     }
 
+    open(x: number, y: number): void {
+        this.float?.open(x, y);
+    }
+
     close(): void {
         this.float?.close();
     }
