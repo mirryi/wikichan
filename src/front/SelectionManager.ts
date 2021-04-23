@@ -85,7 +85,6 @@ function buildQueries(selector: Selector, ts: TextSource, n: number): string[] {
     return queries;
 }
 
-// eslint-disable-next-line no-useless-escape
 const PUNCT_RE = /[\u2000-\u206F\u2E00-\u2E7F\\'!"#$%&()*+,\-.\/:;<=>?@\[\]^_`{|}~]/g;
 const SPACE_RE = /\s+/g;
 function getTexts(ts: TextSource): string[] {

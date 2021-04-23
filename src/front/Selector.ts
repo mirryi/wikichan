@@ -104,7 +104,6 @@ export class Selector {
 
             return new TextSource(expandedRange);
         } else if (mode === ExpandMode.word) {
-            // eslint-disable-next-line @typescript-eslint/no-this-alias
             let expandedSource: TextSource = ts;
 
             const nextChar = right
@@ -114,7 +113,6 @@ export class Selector {
                 return expandedSource;
             }
 
-            // eslint-disable-next-line no-constant-condition
             while (true) {
                 const exp = this.expand(expandedSource, ExpandMode.character, right);
                 if (exp === null) {
