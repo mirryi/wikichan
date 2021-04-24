@@ -1,4 +1,4 @@
-import React, { Component, ReactNode } from "react";
+import React from "react";
 
 import { Item } from "@providers";
 
@@ -7,32 +7,19 @@ import { Search } from "./Search";
 import styles from "./Root.module.scss";
 
 export interface RootProps {
+    items: Item[];
     handleSearch: (query: string) => void;
 }
 
-export interface RootState {
-    items: Item[];
-}
+export const Root = (props: RootProps): JSX.Element => {
+    return (
+        <div className={styles.wrapper}>
+            <Search
+                placeholderText="Search"
+                callback={(query: string): void => props.handleSearch(query)}
+            />
 
-export class Root extends Component<RootProps, RootState> {
-    constructor(props: RootProps) {
-        super(props);
-
-        this.state = {
-            items: [],
-        };
-    }
-
-    render(): ReactNode {
-        return (
-            <div className={styles.wrapper}>
-                <Search
-                    placeholderText="Search"
-                    callback={(query: string): void => this.props.handleSearch(query)}
-                />
-
-                <ItemList items={this.state.items} />
-            </div>
-        );
-    }
-}
+            <ItemList items={props.items} />
+        </div>
+    );
+};

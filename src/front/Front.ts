@@ -7,12 +7,12 @@ import { Exchange, InnerExchange } from "./Exchange";
 import { InputEvent, InputHandler } from "./InputHandler";
 import { QueryItemManager, InnerTunnel } from "./QueryItemManager";
 import { SelectionManager } from "./SelectionManager";
-import { View } from "./View";
+import { ViewManager } from "./ViewManager";
 
 export { InnerExchange, InnerTunnel };
 
 export class Front {
-    private view: View;
+    private view: ViewManager;
     private inputHandler: InputHandler;
     private selectionManager: SelectionManager;
 
@@ -28,9 +28,9 @@ export class Front {
         queryItemManager: QueryItemManager,
         options: Options,
     ) {
-        this.view = new View({
-            frameHeight: 400,
-            frameWidth: 600,
+        this.view = new ViewManager({
+            height: 400,
+            width: 600,
             handleQueries: (queries: string[]) => this.handleQueries(queries),
         });
         this.selectionManager = new SelectionManager();
@@ -115,7 +115,7 @@ export class Front {
             case "MOUSECLICK":
                 // When user clicks outside of floating frame, close the frame
                 // and clear the most recent selection.
-                if (!this.view.float?.containsPoint(e.x, e.y)) {
+                if (!this.view?.containsPoint(e.x, e.y)) {
                     this.view.close();
                     this.selectionManager.clearCurrent();
                 }
