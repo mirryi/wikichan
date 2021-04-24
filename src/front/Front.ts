@@ -1,4 +1,5 @@
 import { autorun, observable } from "mobx";
+import { switchMap } from "rxjs/operators";
 
 import { Options } from "@shared/options";
 import { debug, info } from "@util/logging";
@@ -85,8 +86,19 @@ export class Front {
         this._registered = true;
 
         // Register the UI into the window.
+        this.view.register(w);
+
+        // Handle the item stream.
         const itemStream = this.queryItemManager.itemsStream();
-        this.view.register(w, itemStream);
+        itemStream
+            .pipe(
+                // TODO: not sure if this is good design?
+                switchMap(async (items) => {
+                    await this.view?.setItems(items);
+                    this.view?.open();
+                }),
+            )
+            .subscribe();
 
         // Register the input handler and define handler for input events.
         const inputStream = this.inputHandler.register(w);

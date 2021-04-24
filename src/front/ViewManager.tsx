@@ -1,7 +1,5 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { Observable } from "rxjs";
-import { switchMap } from "rxjs/operators";
 
 import { Item } from "@providers";
 import { View, ViewProps } from "@view/View";
@@ -22,7 +20,7 @@ export class ViewManager {
         this._registered = false;
     }
 
-    register(w: Window, itemsStream: Observable<Item[]>): void {
+    register(w: Window): void {
         if (this._registered) {
             return;
         }
@@ -46,17 +44,6 @@ export class ViewManager {
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         doc.body.appendChild(tmp.childNodes[0]!);
 
-        // Handle the item stream.
-        itemsStream
-            .pipe(
-                // TODO: not sure if this is good design?
-                switchMap(async (items) => {
-                    await this.view()?.setItems(items);
-                    this.view()?.open();
-                }),
-            )
-            .subscribe();
-
         return;
     }
 
@@ -69,6 +56,14 @@ export class ViewManager {
      */
     registered(): boolean {
         return this._registered;
+    }
+
+    async setItems(items: Item[]): Promise<void> {
+        await this.view()?.setItems(items);
+    }
+
+    open(): void {
+        this.view()?.open();
     }
 
     /**
