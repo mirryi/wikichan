@@ -46,14 +46,13 @@ export class Back {
         const optionsStorageHandle = storage.optionsHandle()!;
         debug("Loading options from local storage...");
         const optionsManager = await OptionsManager.load(optionsStorageHandle);
+        // TODO: option validation is not complete.
         const options = optionsManager.options;
 
         // Initialize the providers from the stored options.
-        const providerLoader = new ProviderLoader();
-        // const providers: Provider[] = providerLoader.loadAll(options.back.providers);
-        const providers: Provider[] = providerLoader.loadAll({
-            "WIKI::EN": { enabled: true, cached: false },
-        });
+        const providers: Provider[] = await ProviderLoader.loadAll(
+            options.back.providers,
+        );
 
         // Load message exchange.
         debug("Connecting messgage exchange...");

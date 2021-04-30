@@ -50,6 +50,7 @@ export class OwlBotProvider implements Provider<OwlBotItem> {
             pronunciation: d.pronunciation,
             searchTerm: query,
             meta: {
+                source: { name: "OwlBot" },
                 renderer: RENDERER,
             },
         };

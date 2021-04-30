@@ -5,19 +5,17 @@ import { distinct, filter, map } from "rxjs/operators";
 import { isNotUndefined } from "@util/guards";
 
 import { Provider } from "..";
-import { WikipediaItem } from "./Item";
+import { Lang, WikipediaItem, Wikipedia, wikipedias } from ".";
 
 const RENDERER = "WIKI";
 
-export class WikipediaProvider implements Provider<WikipediaItem> {
-    private language: Language;
+export class WikipediaProvider<C extends Lang> implements Provider<WikipediaItem> {
+    private wiki: Wikipedia<C>;
 
-    private client: AxiosInstance;
+    private client: AxiosInstance = axios.create();
 
-    constructor(language: Language) {
-        this.language = language;
-
-        this.client = axios.create({ baseURL: language.baseURL() });
+    constructor(langcode: C) {
+        this.wiki = wikipedias[langcode];
     }
 
     search(queries: string[]): Observable<WikipediaItem> {
@@ -56,7 +54,7 @@ export class WikipediaProvider implements Provider<WikipediaItem> {
     }
 
     private convertResponse(entry: MediaWikiPage, query: string): WikipediaItem {
-        const tags: WikipediaItem["tags"] = { lang: this.language.id };
+        const tags: WikipediaItem["tags"] = { lang: this.wiki.code };
         if (entry.categories) {
             tags["categories"] = entry.categories.map((c) => c.title);
         }
@@ -80,6 +78,7 @@ export class WikipediaProvider implements Provider<WikipediaItem> {
             tags,
             searchTerm: query,
             meta: {
+                source: { name: this.wiki.name },
                 renderer: RENDERER,
             },
         };
@@ -98,7 +97,7 @@ export class WikipediaProvider implements Provider<WikipediaItem> {
     }
 
     private queryString(query: string): URL {
-        let url = `${this.language.baseURL()}/w/api.php?`;
+        let url = `https://${this.wiki.code}.wikipedia.org/w/api.php?`;
         const params = {
             origin: "*",
             format: "json",
@@ -115,30 +114,6 @@ export class WikipediaProvider implements Provider<WikipediaItem> {
 
         return new URL(url);
     }
-}
-
-export class Language {
-    id: string;
-    name: string;
-    disambID: string;
-
-    constructor(id: string, name: string, disambID: string) {
-        this.id = id;
-        this.name = name;
-        this.disambID = disambID;
-    }
-
-    baseURL(): string {
-        return `https://${this.id.toLowerCase()}.wikipedia.org`;
-    }
-}
-
-export namespace Language {
-    export const EN = new Language(
-        "EN",
-        "English",
-        "Category:All article disambiguation pages",
-    );
 }
 
 type MediaWikiResponse = {
