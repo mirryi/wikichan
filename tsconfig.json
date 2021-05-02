@@ -18,6 +18,7 @@
         "noUncheckedIndexedAccess": true,
         "outDir": "dist",
         "preserveConstEnums": true,
+        "resolveJsonModule": true,
         "strictBindCallApply": true,
         "strictFunctionTypes": true,
         "strictNullChecks": true,
