@@ -1,28 +1,12 @@
-import { Provider, ProvidersOptions, ALL_LOADERS } from "@providers";
-import { Entries, StringLiteral } from "@util";
+import { Provider, ProvidersOptions, LOADERS } from "@providers";
+import { Entries } from "@util";
 
-type LoaderName = keyof typeof ALL_LOADERS;
-type Loaders = {
-    [Name in LoaderName]: ReturnType<typeof ALL_LOADERS[Name]>;
-};
-
-const LOADERS = ((): Loaders => {
-    const pairs = Object.entries(ALL_LOADERS).map(([name, loaderfn]) => [
-        name,
-        loaderfn(),
-    ]);
-
-    // Safety: Above mapping maps to correct pairs.
-    // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
-    return Object.fromEntries(pairs) as Loaders;
-})();
-
-const load = async <K extends LoaderName>(
-    name: StringLiteral<K>,
-    opts: ProvidersOptions[StringLiteral<K>],
+const load = async <K extends keyof typeof LOADERS>(
+    name: K,
+    opts: ProvidersOptions[K],
 ): Promise<Provider> => {
     const loader = LOADERS[name];
-    // TODO: Better way to accomplish these type shenanigans?
+    // Safety: The types of the loader parameter and options must match.
     // eslint-disable-next-line @typescript-eslint/consistent-type-assertions, @typescript-eslint/no-explicit-any
     return await loader.load(opts.specific as any);
 };

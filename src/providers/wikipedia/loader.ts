@@ -26,15 +26,17 @@ type WikipediaLoaderConfig<C extends Lang> = LoaderConfig<
     WikipediaProvider<C>
 >;
 export type WikipediaLoaderConfigs = {
-    [C in Lang as `wiki::${C}`]: WikipediaLoaderConfig<C>;
+    [C in Lang as `wiki.${C}`]: WikipediaLoaderConfig<C>;
 };
 
 export const ALL = ((): WikipediaLoaderConfigs => {
-    const pairs = Object.values(wikipedias).map((wiki) => {
-        const key = `wiki::${wiki.code}` as const;
+    const pairs = Object.entries(wikipedias).map(([code, wiki]) => {
+        const key = `wiki.${code}`;
         const config: WikipediaLoaderConfig<typeof wiki.code> = {
             getLoader: () => new WikipediaProviderLoader<typeof wiki.code>(wiki.code),
-            defaultOptions: () => ({}),
+            defaultOptions: () => {
+                return {};
+            },
         };
         return [key, config] as const;
     });

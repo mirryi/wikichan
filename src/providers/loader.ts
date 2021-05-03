@@ -1,16 +1,12 @@
 import { Item, Provider } from ".";
-import { WIKIPEDIA_LOADERS as WIKIPEDIA_LOADERS } from "./wikipedia";
-import { OwlBotProviderLoader } from "./owlbot";
+import { ALL as WIKIPEDIA_LOADERS } from "./wikipedia";
+import { ALL as OWLBOT_LOADERS } from "./owlbot";
 
-export interface LoaderConfig<C, T extends Item, P extends Provider<T>> {
-    getLoader: () => Loader<C, T, P>;
-    defaultOptions: () => C;
-}
-
-export interface Loader<C, T extends Item, P extends Provider<T>> {
-    load(opts: C): Promise<P>;
-    reload(opts: C, provider: P): Promise<P>;
-}
+const ALL_CONFIGS = {
+    ...WIKIPEDIA_LOADERS,
+    ...OWLBOT_LOADERS,
+} as const;
+type AllConfigsType = typeof ALL_CONFIGS;
 
 export interface ProviderOptions<C> {
     enabled: boolean;
@@ -20,30 +16,64 @@ export interface ProviderOptions<C> {
 }
 
 export namespace ProviderOptions {
-    type Self<C> = ProviderOptions<C>;
-
-    export function Default<C>(specificDefault: () => C): Self<C> {
+    export function Default<C>(specificDefault: () => C): ProviderOptions<C> {
         // TODO: Disable by default
-        return { enabled: true, cached: true, specific: specificDefault() };
+        return { enabled: false, cached: true, specific: specificDefault() };
     }
 }
 
-/*
- * Utility type to extract the specific provider options type from a Loader class.
- */
-type ExtractOptionsType<L> = L extends Loader<infer C, Item, Provider<Item>> ? C : never;
+export interface LoaderConfig<C, T extends Item, P extends Provider<T>> {
+    /*
+     * Get the loader for this provider type.
+     */
+    getLoader: () => Loader<C, T, P>;
+    defaultOptions: () => C;
+}
 
+export interface Loader<C, T extends Item, P extends Provider<T>> {
+    load(opts: C): Promise<P>;
+    reload(opts: C, provider: P): Promise<P>;
+}
+
+type ExtractOptionsType<L> = L extends LoaderConfig<infer C, Item, Provider<Item>>
+    ? C
+    : never;
 export type ProvidersOptions = {
-    [Name in keyof typeof ALL_LOADERS]: ProviderOptions<
-        ExtractOptionsType<ReturnType<typeof ALL_LOADERS[Name]>>
+    [Name in keyof AllConfigsType]: ProviderOptions<
+        ExtractOptionsType<AllConfigsType[Name]>
     >;
 };
 
 export namespace ProvidersOptions {
-    export const Default = (): ProvidersOptions => {};
+    export const Default: () => ProvidersOptions = (() => {
+        const pairs = Object.entries(ALL_CONFIGS).map(([name, config]) => {
+            const opts = ProviderOptions.Default(config.defaultOptions);
+            // TODO: Temporary
+            if (name === "wiki.en" || name === "wiki.fr") {
+                opts.enabled = true;
+            }
+            return [name, opts] as const;
+        });
+
+        // Safety: Above mapping creates the correct pairs.
+        // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+        return () => Object.fromEntries(pairs) as ProvidersOptions;
+    })();
 }
 
-export const ALL_LOADERS = {
-    ...WIKIPEDIA_LOADERS,
-    owlbot: () => new OwlBotProviderLoader(),
-} as const;
+type ExtractLoaderType<L> = L extends LoaderConfig<unknown, Item, Provider<Item>>
+    ? ReturnType<L["getLoader"]>
+    : never;
+type Loaders = {
+    [Name in keyof AllConfigsType]: ExtractLoaderType<AllConfigsType[Name]>;
+};
+export const LOADERS: Loaders = (() => {
+    const pairs = Object.entries(ALL_CONFIGS).map(([name, config]) => [
+        name,
+        config.getLoader(),
+    ]);
+
+    // Safety: Above mapping creates the correct pairs.
+    // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+    return Object.fromEntries(pairs) as Loaders;
+})();
