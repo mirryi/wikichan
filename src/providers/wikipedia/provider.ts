@@ -67,10 +67,11 @@ export class WikipediaProvider<C extends Lang> implements Provider<WikipediaItem
             urls.push(...entry.extlinks.map((link) => link["*"]));
         }
 
+        // Safety: entries with undefined pageid's were just filtered out
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        const pageid = entry.pageid!;
         const item: WikipediaItem = {
-            // Safety: entries with undefined pageid's were just filtered out
-            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-            pageid: entry.pageid!,
+            pageid,
             title: entry.title,
             urls,
             description: entry.description ? entry.description : "No description.",
@@ -78,7 +79,8 @@ export class WikipediaProvider<C extends Lang> implements Provider<WikipediaItem
             tags,
             searchTerm: query,
             meta: {
-                source: { name: this.wiki.name },
+                uid: pageid.toString(),
+                source: { uid: `wiki.${this.wiki.name}`, name: this.wiki.name },
                 renderer: RENDERER,
             },
         };

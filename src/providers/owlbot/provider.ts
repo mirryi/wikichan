@@ -7,6 +7,8 @@ import { isNotUndefined } from "@util/guards";
 import { Provider } from "..";
 import { OwlBotItem, OwlBotDefinition } from "./item";
 
+const UID = "owlbot";
+const NAME = "OwlBot";
 const RENDERER = "OWLBOT";
 
 export class OwlBotProvider implements Provider<OwlBotItem> {
@@ -41,8 +43,9 @@ export class OwlBotProvider implements Provider<OwlBotItem> {
     }
 
     private convertResponse(d: OwlBotResponse, query: string): OwlBotItem {
+        const title = d.word;
         return {
-            title: d.word,
+            title,
             description: d.pronunciation ? `/${d.pronunciation}/` : "",
             tags: {},
             urls: [`https://owlbot.info/?q=${query}`],
@@ -50,7 +53,8 @@ export class OwlBotProvider implements Provider<OwlBotItem> {
             pronunciation: d.pronunciation,
             searchTerm: query,
             meta: {
-                source: { name: "OwlBot" },
+                uid: title,
+                source: { uid: UID, name: NAME },
                 renderer: RENDERER,
             },
         };

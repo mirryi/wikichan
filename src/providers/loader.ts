@@ -49,7 +49,7 @@ export namespace ProvidersOptions {
         const pairs = Object.entries(ALL_CONFIGS).map(([name, config]) => {
             const opts = ProviderOptions.Default(config.defaultOptions);
             // TODO: Temporary
-            if (name === "wiki.en" || name === "wiki.fr") {
+            if (name === "wiki.en") {
                 opts.enabled = true;
             }
             return [name, opts] as const;

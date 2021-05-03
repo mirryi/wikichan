@@ -41,7 +41,7 @@ export const ItemDetails = (props: ItemProps): JSX.Element => {
             <div className={styles.header}>
                 <div>
                     <span className={[styles.providerName, styles.bold].join(" ")}>
-                        {/* provider.name() */}
+                        {data.meta.source.name}
                     </span>
                 </div>
                 <div className={styles.top}>

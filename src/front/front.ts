@@ -94,7 +94,7 @@ export class Front {
             .pipe(
                 // TODO: not sure if this is good design?
                 switchMap(async (items) => {
-                    await this.view?.setItems(items);
+                    this.view?.setItems(items);
                     this.view?.open();
                 }),
             )
@@ -136,6 +136,6 @@ export class Front {
     }
 
     private handleQueries(queries: string[]): void {
-        this.queryItemManager.send(queries);
+        void this.queryItemManager.send(queries);
     }
 }

@@ -9,9 +9,9 @@ interface ItemListProps {
 }
 
 export const ItemList = (props: ItemListProps): JSX.Element => (
-    <div>
+    <>
         {props.items.map((item) => (
             <ItemDetails key={item.title} data={item} />
         ))}
-    </div>
+    </>
 );

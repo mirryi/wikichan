@@ -53,10 +53,8 @@ export class View extends Component<ViewProps, ViewState> {
         );
     }
 
-    setItems(items: Item[]): Promise<void> {
-        return new Promise((resolve, _reject) => {
-            this.setState({ items }, () => resolve());
-        });
+    setItems(items: Item[]): void {
+        this.setState({ items });
     }
 
     /**

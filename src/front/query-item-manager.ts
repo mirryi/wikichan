@@ -37,7 +37,9 @@ export class QueryItemManager {
             filter((itemResult) => itemResult.batchn === self.batchn),
             map((itemResult) => {
                 // Push self item to the list.
-                self.currentItems.push(itemResult.item);
+                if (itemResult.batchn === self.batchn) {
+                    self.currentItems.push(itemResult.item);
+                }
 
                 return self.currentItems;
             }),
@@ -46,7 +48,7 @@ export class QueryItemManager {
         return self;
     }
 
-    send(queries: string[]): void {
+    async send(queries: string[]): Promise<void> {
         // Increment batch number and clear current items.
         this.batchn += 1;
         // TODO: received item could pass filter before increment and push
@@ -54,7 +56,7 @@ export class QueryItemManager {
         this.currentItems = [];
 
         // Request items.
-        void this.tunnel.send({ batchn: this.batchn, queries });
+        await this.tunnel.send({ batchn: this.batchn, queries });
     }
 
     itemsStream(): Observable<Item[]> {

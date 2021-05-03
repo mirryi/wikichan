@@ -14,7 +14,9 @@ export interface Item {
 }
 
 export interface ItemMeta {
-    source: { name: string };
+    uid: string;
+
+    source: { uid: string; name: string };
 
     /**
      * Identifier for special renderer to be used when displaying this item

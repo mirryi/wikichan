@@ -58,8 +58,8 @@ export class ViewManager {
         return this._registered;
     }
 
-    async setItems(items: Item[]): Promise<void> {
-        await this.view()?.setItems(items);
+    setItems(items: Item[]): void {
+        this.view()?.setItems(items);
     }
 
     open(): void {
