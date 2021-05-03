@@ -6,7 +6,12 @@ import { Renderer } from "../..";
 import { OwlBotItem } from "..";
 import styles from "./renderer.module.scss";
 
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+export interface OwlBotRendererOptions {}
+
 export class OwlBotRenderer implements Renderer<OwlBotItem> {
+    constructor(private opts: OwlBotRendererOptions) {}
+
     longDescription(item: OwlBotItem): JSX.Element | undefined {
         const elements = item.definitions.map((def) => {
             const definition = this.renderRawHTML(def.definition);
