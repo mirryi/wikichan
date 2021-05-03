@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import React from "react";
 import { sanitize } from "dompurify";
 import htmlReactParse from "html-react-parser";
 
@@ -6,14 +6,14 @@ import { Renderer } from "../..";
 import { WikipediaItem } from "..";
 
 export class WikipediaRenderer implements Renderer<WikipediaItem> {
-    longDescription(item: WikipediaItem): ReactNode {
+    longDescription(item: WikipediaItem): JSX.Element | undefined {
         const ld = item.longDescription;
         if (!ld) {
-            return null;
+            return <></>;
         }
 
         const html = sanitize(ld);
         const components = htmlReactParse(html);
-        return components;
+        return <>{components}</>;
     }
 }
