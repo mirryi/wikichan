@@ -1,4 +1,4 @@
-import { PlatformStorage } from "./PlatformStorage";
+import { PlatformStorage } from "./platform";
 
 export class TemporaryStorage<T> implements PlatformStorage<StoredValue<T>> {
     private inner: PlatformStorage<StoredValue<T>>;

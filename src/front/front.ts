@@ -4,11 +4,11 @@ import { switchMap } from "rxjs/operators";
 import { Options } from "@shared/options";
 import { debug, info } from "@util/logging";
 
-import { Exchange, InnerExchange } from "./Exchange";
-import { InputEvent, InputHandler } from "./InputHandler";
-import { QueryItemManager, InnerTunnel } from "./QueryItemManager";
-import { SelectionManager } from "./SelectionManager";
-import { ViewManager } from "./ViewManager";
+import { Exchange, InnerExchange } from "./exchange";
+import { InputEvent, InputHandler } from "./input-handler";
+import { QueryItemManager, InnerTunnel } from "./query-item-manager";
+import { SelectionManager } from "./selection-manager";
+import { ViewManager } from "./view-manager";
 
 export { InnerExchange, InnerTunnel };
 

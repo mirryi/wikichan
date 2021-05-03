@@ -4,7 +4,7 @@ import htmlReactParse from "html-react-parser";
 
 import { Renderer } from "../..";
 import { OwlBotItem } from "..";
-import styles from "./Renderer.module.scss";
+import styles from "./renderer.module.scss";
 
 export class OwlBotRenderer implements Renderer<OwlBotItem> {
     longDescription(item: OwlBotItem): JSX.Element | undefined {

@@ -1,4 +1,4 @@
-import { PlatformStorage } from "./PlatformStorage";
+import { PlatformStorage } from "./platform";
 
 type Validator<T> = ValidatedStorage.Validator<T>;
 

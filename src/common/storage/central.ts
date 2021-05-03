@@ -1,4 +1,4 @@
-import { PlatformStorage } from "./PlatformStorage";
+import { PlatformStorage } from "./platform";
 
 export class CentralStorage {
     private inner: PlatformStorage<unknown>;

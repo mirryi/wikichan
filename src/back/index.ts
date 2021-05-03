@@ -2,7 +2,7 @@ import * as mobx from "mobx";
 
 import { setLogger } from "@util/logging";
 
-import { Back, InnerExchange, InnerTunnel, InnerStorage } from "./Back";
+import { Back, InnerExchange, InnerTunnel, InnerStorage } from "./back";
 export { InnerExchange, InnerTunnel, InnerStorage };
 
 export const load = async (

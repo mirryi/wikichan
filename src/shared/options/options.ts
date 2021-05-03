@@ -1,5 +1,5 @@
-import { BackOptions } from "./BackOptions";
-import { FrontOptions } from "./FrontOptions";
+import { BackOptions } from "./back-options";
+import { FrontOptions } from "./front-options";
 
 export interface Options {
     back: BackOptions;

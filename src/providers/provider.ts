@@ -3,7 +3,7 @@ import { mergeMap, tap } from "rxjs/operators";
 
 import { TemporaryStorage } from "@common/storage";
 
-import { Item } from "./Item";
+import { Item } from "./item";
 
 export interface Provider<T extends Item = Item> {
     search(queries: string[]): Observable<T>;

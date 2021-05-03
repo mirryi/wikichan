@@ -1,11 +1,11 @@
 import { Provider } from "@providers";
 import { debug, info } from "@util/logging";
 
-import { BackStorage, InnerStorage } from "./BackStorage";
-import { Exchange, InnerExchange } from "./Exchange";
-import { OptionsManager } from "./OptionsManager";
-import { ProviderLoader } from "./ProviderLoader";
-import { QueryItemManager, InnerTunnel } from "./QueryItemManager";
+import { BackStorage, InnerStorage } from "./back-storage";
+import { Exchange, InnerExchange } from "./exchange";
+import { OptionsManager } from "./options-manager";
+import { ProviderLoader } from "./provider-loader";
+import { QueryItemManager, InnerTunnel } from "./query-item-manager";
 
 export { InnerStorage, InnerExchange, InnerTunnel };
 

@@ -1,2 +1,2 @@
-export * from "./Back";
-export * from "./Front";
+export * from "./back";
+export * from "./front";

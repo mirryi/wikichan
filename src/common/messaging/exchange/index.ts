@@ -16,6 +16,6 @@ export namespace Receiver {
     export type Callback<I, O> = (im: I) => Promise<O | undefined>;
 }
 
-export * from "./Exchange";
-export * from "./BackExchange";
-export * from "./FrontExchange";
+export * from "./exchange";
+export * from "./back-exchange";
+export * from "./front-exchange";

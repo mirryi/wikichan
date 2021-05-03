@@ -1,4 +1,4 @@
-import { Item } from "./Item";
+import { Item } from "./item";
 
 export type RenderFunc<T> = (item: T) => JSX.Element | undefined;
 

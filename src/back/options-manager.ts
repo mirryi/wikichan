@@ -4,7 +4,7 @@ import { Options } from "@shared/options";
 import { DeepPartial } from "@util";
 import { deepmerge } from "@util/deepmerge";
 
-import { OptionsHandle } from "./BackStorage";
+import { OptionsHandle } from "./back-storage";
 
 const OPTIONS_KEY = "root";
 
