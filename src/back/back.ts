@@ -15,12 +15,14 @@ export class Back {
 
     exchange: Exchange;
 
+    providerLoader: ProviderLoader;
     queryItemManager: QueryItemManager;
 
     private constructor(
         storage: BackStorage,
         optionsManager: OptionsManager,
         exchange: Exchange,
+        providerLoader: ProviderLoader,
         queryItemManager: QueryItemManager,
     ) {
         this.storage = storage;
@@ -28,6 +30,7 @@ export class Back {
 
         this.exchange = exchange;
 
+        this.providerLoader = providerLoader;
         this.queryItemManager = queryItemManager;
     }
 
@@ -50,7 +53,8 @@ export class Back {
         const options = optionsManager.options;
 
         // Initialize the providers from the stored options.
-        const providers: Provider[] = await ProviderLoader.loadAll(
+        const providerLoader = new ProviderLoader(storage);
+        const providers: Provider[] = await providerLoader.loadAll(
             options.back.providers,
         );
 
@@ -65,7 +69,13 @@ export class Back {
         debug("Connecting tunnel...");
         const queryItemManager = await QueryItemManager.load(platformTunnel, providers);
 
-        const back = new Back(storage, optionsManager, exchange, queryItemManager);
+        const back = new Back(
+            storage,
+            optionsManager,
+            exchange,
+            providerLoader,
+            queryItemManager,
+        );
         info("Finished initializing!");
         return back;
     }

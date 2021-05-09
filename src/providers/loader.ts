@@ -10,7 +10,9 @@ type AllConfigsType = typeof ALL_CONFIGS;
 
 export interface ProviderOptions<C> {
     enabled: boolean;
+
     cached: boolean;
+    cacheDuration: number;
 
     specific: C;
 }
@@ -18,7 +20,12 @@ export interface ProviderOptions<C> {
 export namespace ProviderOptions {
     export function Default<C>(specificDefault: () => C): ProviderOptions<C> {
         // TODO: Disable by default
-        return { enabled: false, cached: true, specific: specificDefault() };
+        return {
+            enabled: false,
+            cached: true,
+            cacheDuration: 24 * 60 * 60,
+            specific: specificDefault(),
+        };
     }
 }
 
@@ -27,13 +34,31 @@ export interface LoaderConfig<C, T extends Item, P extends Provider<T>> {
      * Get the loader for this provider type.
      */
     getLoader: () => Loader<C, T, P>;
-    defaultOptions: () => C;
 }
 
 export interface Loader<C, T extends Item, P extends Provider<T>> {
-    load(opts: C): Promise<P>;
-    reload(opts: C, provider: P): Promise<P>;
+    load(opts: C): P;
+    reload(opts: C, provider: P): P;
+    defaultOptions: () => C;
+
+    cachedValidator: () => (x: unknown) => x is T;
 }
+
+type ExtractLoaderPairType<L> = L extends LoaderConfig<unknown, Item, Provider<Item>>
+    ? ReturnType<L["getLoader"]>
+    : never;
+type Loaders = {
+    [Name in keyof AllConfigsType]: ExtractLoaderPairType<AllConfigsType[Name]>;
+};
+export const LOADERS: Loaders = (() => {
+    const pairs = Object.entries(ALL_CONFIGS).map(
+        ([name, config]) => [name, config.getLoader()] as const,
+    );
+
+    // Safety: Above mapping creates the correct pairs.
+    // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+    return Object.fromEntries(pairs) as Loaders;
+})();
 
 type ExtractOptionsType<L> = L extends LoaderConfig<infer C, Item, Provider<Item>>
     ? C
@@ -46,8 +71,8 @@ export type ProvidersOptions = {
 
 export namespace ProvidersOptions {
     export const Default: () => ProvidersOptions = (() => {
-        const pairs = Object.entries(ALL_CONFIGS).map(([name, config]) => {
-            const opts = ProviderOptions.Default(config.defaultOptions);
+        const pairs = Object.entries(LOADERS).map(([name, config]) => {
+            const opts = ProviderOptions.Default(() => config.defaultOptions());
             // TODO: Temporary
             if (name === "wiki.en") {
                 opts.enabled = true;
@@ -60,20 +85,3 @@ export namespace ProvidersOptions {
         return () => Object.fromEntries(pairs) as ProvidersOptions;
     })();
 }
-
-type ExtractLoaderType<L> = L extends LoaderConfig<unknown, Item, Provider<Item>>
-    ? ReturnType<L["getLoader"]>
-    : never;
-type Loaders = {
-    [Name in keyof AllConfigsType]: ExtractLoaderType<AllConfigsType[Name]>;
-};
-export const LOADERS: Loaders = (() => {
-    const pairs = Object.entries(ALL_CONFIGS).map(([name, config]) => [
-        name,
-        config.getLoader(),
-    ]);
-
-    // Safety: Above mapping creates the correct pairs.
-    // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
-    return Object.fromEntries(pairs) as Loaders;
-})();

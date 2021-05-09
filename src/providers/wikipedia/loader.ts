@@ -8,15 +8,26 @@ export class WikipediaProviderLoader<C extends Lang>
     implements Loader<WikipediaOptions, WikipediaItem, WikipediaProvider<C>> {
     constructor(private langcode: C) {}
 
-    async load(_opts: WikipediaOptions): Promise<WikipediaProvider<C>> {
+    load(_opts: WikipediaOptions): WikipediaProvider<C> {
         return new WikipediaProvider(this.langcode);
     }
 
-    async reload(
+    reload(
         _opts: WikipediaOptions,
         provider: WikipediaProvider<C>,
-    ): Promise<WikipediaProvider<C>> {
+    ): WikipediaProvider<C> {
         return provider;
+    }
+
+    defaultOptions(): WikipediaOptions {
+        return {};
+    }
+
+    // TODO: Implementation needed.
+    cachedValidator(): (x: unknown) => x is WikipediaItem {
+        return (x: unknown): x is WikipediaItem => {
+            return x !== undefined && x !== null && typeof x === "object";
+        };
     }
 }
 
@@ -34,9 +45,6 @@ export const ALL = ((): WikipediaLoaderConfigs => {
         const key = `wiki.${code}`;
         const config: WikipediaLoaderConfig<typeof wiki.code> = {
             getLoader: () => new WikipediaProviderLoader<typeof wiki.code>(wiki.code),
-            defaultOptions: () => {
-                return {};
-            },
         };
         return [key, config] as const;
     });

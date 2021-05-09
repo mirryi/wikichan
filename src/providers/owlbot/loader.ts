@@ -8,15 +8,23 @@ export interface OwlBotOptions {
 
 export class OwlBotProviderLoader
     implements Loader<OwlBotOptions, OwlBotItem, OwlBotProvider> {
-    async load(opts: OwlBotOptions): Promise<OwlBotProvider> {
+    load(opts: OwlBotOptions): OwlBotProvider {
         return new OwlBotProvider(opts.apiToken);
     }
 
-    async reload(
-        opts: OwlBotOptions,
-        _provider: OwlBotProvider,
-    ): Promise<OwlBotProvider> {
+    reload(opts: OwlBotOptions, _provider: OwlBotProvider): OwlBotProvider {
         return new OwlBotProvider(opts.apiToken);
+    }
+
+    defaultOptions(): OwlBotOptions {
+        return { apiToken: "" };
+    }
+
+    // TODO: Implementation needed.
+    cachedValidator(): (x: unknown) => x is OwlBotItem {
+        return (x: unknown): x is OwlBotItem => {
+            return x !== undefined && x !== null && typeof x === "object";
+        };
     }
 }
 
@@ -24,8 +32,5 @@ type OwlBotLoaderConfig = LoaderConfig<OwlBotOptions, OwlBotItem, OwlBotProvider
 export const ALL: { owlbot: OwlBotLoaderConfig } = {
     owlbot: {
         getLoader: () => new OwlBotProviderLoader(),
-        defaultOptions: () => ({
-            apiToken: "",
-        }),
     },
 };
