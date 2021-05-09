@@ -29,4 +29,8 @@ export class MemoryStorage<T> implements PlatformStorage<T> {
     async del(keys: string[]): Promise<void> {
         await Promise.all(keys.map(async (key) => this.map.delete(key)));
     }
+
+    inner(): Map<string, T> {
+        return this.map;
+    }
 }
