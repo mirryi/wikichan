@@ -1,11 +1,9 @@
 import { PlatformStorage } from "./platform";
 
 export class CentralStorage {
-    private inner: PlatformStorage<unknown>;
     private handles: { [key: string]: CentralStorage.Handle<unknown> };
 
-    constructor(inner: PlatformStorage<unknown>) {
-        this.inner = inner;
+    constructor(private inner: PlatformStorage<unknown>) {
         this.handles = {};
     }
 
@@ -41,11 +39,7 @@ export class CentralStorage {
 
 export namespace CentralStorage {
     export class Handle<T> implements PlatformStorage<T> {
-        private inner: StorageInterface<T>;
-
-        constructor(inner: StorageInterface<T>) {
-            this.inner = inner;
-        }
+        constructor(private inner: StorageInterface<T>) {}
 
         unregister(): void {
             this.set = async (_entries: { [key: string]: T }) => {
@@ -83,15 +77,9 @@ export namespace CentralStorage {
  * Storage interface exposed to `CentralStorage.Handle`s by `CentralStorage`.
  */
 class StorageInterface<T> implements PlatformStorage<T> {
-    private inner: PlatformStorage<unknown>;
-    private prefix: string;
-
     private deprefixRegex: RegExp;
 
-    constructor(inner: PlatformStorage<unknown>, prefix: string) {
-        this.inner = inner;
-        this.prefix = prefix;
-
+    constructor(private inner: PlatformStorage<unknown>, private prefix: string) {
         this.deprefixRegex = new RegExp(`^(${this.prefix})`);
     }
 

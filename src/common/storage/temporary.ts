@@ -1,11 +1,7 @@
 import { PlatformStorage } from "./platform";
 
 export class TemporaryStorage<T> implements PlatformStorage<StoredValue<T>> {
-    private inner: PlatformStorage<StoredValue<T>>;
-
-    constructor(inner: PlatformStorage<StoredValue<T>>) {
-        this.inner = inner;
-    }
+    constructor(private inner: PlatformStorage<StoredValue<T>>) {}
 
     async set(entries: { [key: string]: TemporaryValue<T> }): Promise<void> {
         const iter = Object.entries(entries);

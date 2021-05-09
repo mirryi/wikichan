@@ -3,13 +3,7 @@ import { PlatformStorage } from "./platform";
 type Validator<T> = ValidatedStorage.Validator<T>;
 
 export class ValidatedStorage<T> implements PlatformStorage<T> {
-    private inner: PlatformStorage<T>;
-    private validator: Validator<T>;
-
-    constructor(inner: PlatformStorage<T>, validator: Validator<T>) {
-        this.inner = inner;
-        this.validator = validator;
-    }
+    constructor(private inner: PlatformStorage<T>, private validator: Validator<T>) {}
 
     async set(entries: { [key: string]: T }): Promise<void> {
         await this.inner.set(entries);
