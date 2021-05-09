@@ -8,7 +8,7 @@
         "inlineSourceMap": true,
         "jsx": "react",
         "lib": ["DOM", "ES2020"],
-        "module": "ES2020",
+        "module": "commonjs",
         "moduleResolution": "Node",
         "noFallthroughCasesInSwitch": true,
         "noImplicitAny": true,
@@ -41,6 +41,6 @@
             "@view/*": ["src/view/*"]
         }
     },
-    "include": ["src/*"],
+    "include": ["src/**/*.ts"],
     "exclude": ["node_modules"]
 }
