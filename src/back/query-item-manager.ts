@@ -7,16 +7,10 @@ import { Provider } from "@providers";
 
 export type InnerTunnel = BackTunnel<QueryRequest, QueryResponse>;
 export class QueryItemManager {
-    private tunnel: ObservableTunnel<QueryRequest, QueryResponse>;
-    private providers: Provider[];
-
     constructor(
-        inner: ObservableTunnel<QueryRequest, QueryResponse>,
-        providers: Provider[],
-    ) {
-        this.tunnel = inner;
-        this.providers = providers;
-    }
+        private tunnel: ObservableTunnel<QueryRequest, QueryResponse>,
+        private providers: Provider[],
+    ) {}
 
     static async load(
         platformTunnel: InnerTunnel,

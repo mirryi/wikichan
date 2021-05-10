@@ -9,10 +9,7 @@ export interface Handlers {
 
 export type InnerExchange = BackExchange<FrontMessage, BackMessage>;
 export class Exchange {
-    private inner: InnerExchange;
-    private handlers: Handlers;
-
-    private constructor(inner: InnerExchange, handlers: Handlers) {
+    private constructor(private inner: InnerExchange, private handlers: Handlers) {
         this.inner = inner;
         this.handlers = handlers;
     }

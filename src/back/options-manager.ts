@@ -11,11 +11,7 @@ const OPTIONS_KEY = "root";
 export class OptionsManager {
     options: Options;
 
-    private storageHandle: OptionsHandle;
-
-    private constructor(options: Options, storageHandle: OptionsHandle) {
-        this.storageHandle = storageHandle;
-
+    private constructor(options: Options, private storageHandle: OptionsHandle) {
         this.options = observable(options);
         autorun(async () => await this.save());
     }
@@ -30,6 +26,8 @@ export class OptionsManager {
 
     // TODO: reexport the newOptions type from message module.
     change(newOptions: DeepPartial<Options>): void {
+        // TODO: This is probably wrong; need to ensure that the new `options`
+        // is still being observed.
         this.options = deepmerge(this.options, newOptions);
     }
 
