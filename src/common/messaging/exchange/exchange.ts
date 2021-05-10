@@ -6,20 +6,16 @@ export interface Exchange<I, O> extends Sender<I, O>, Receiver<I, O> {
     connected(): boolean;
 }
 
-export class DisconnectedExchangeError extends Error {
-    type: "send" | "receive";
+export type ExchangeErrorType = "send" | "receive";
 
-    constructor(type: "send" | "receive") {
+export class DisconnectedExchangeError extends Error {
+    constructor(type: ExchangeErrorType) {
         super(`Attempted to ${type} via a disconnected exchange`);
-        this.type = type;
     }
 }
 
 export class UnsupportedOperationError extends Error {
-    type: "send" | "receive";
-
-    constructor(type: "send" | "receive") {
+    constructor(type: ExchangeErrorType) {
         super(`Unsupported operation ${type}`);
-        this.type = type;
     }
 }

@@ -15,11 +15,10 @@ export interface Tunnel<I, O> extends Sender<void, O>, Receiver<I> {
     connected(): boolean;
 }
 
-export class DisconnectedTunnelError extends Error {
-    type: "send" | "receive";
+export type TunnelErrorType = "send" | "receive";
 
-    constructor(type: "send" | "receive") {
+export class DisconnectedTunnelError extends Error {
+    constructor(type: TunnelErrorType) {
         super(`Attempted to ${type} via a disconnected tunnel`);
-        this.type = type;
     }
 }
