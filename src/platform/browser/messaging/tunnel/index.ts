@@ -14,11 +14,6 @@ interface ConnectionEstablishedMessage {
 
 export class BrowserFrontTunnel<I, O> implements FrontTunnel<I, O> {
     /**
-     * Name to be passed as the port name on connection.
-     */
-    private name: string;
-
-    /**
      * Connection port.
      */
     private port?: Runtime.Port;
@@ -29,9 +24,12 @@ export class BrowserFrontTunnel<I, O> implements FrontTunnel<I, O> {
 
     private _connected: boolean;
 
-    constructor(name: string = "") {
-        this.name = name;
-
+    constructor(
+        /**
+         * Name to be passed as the port name on connection.
+         */
+        private name: string = "",
+    ) {
         // Receiver is initially no-op.
         this.receiver = async (_im: I) => undefined;
 

@@ -5,9 +5,7 @@ import { PlatformStorage } from "@common/storage";
 type StorageArea = Storage.StorageArea;
 
 export class BrowserStorage<T> implements PlatformStorage<T> {
-    private inner: StorageArea;
-
-    constructor(inner: StorageArea) {
+    constructor(private inner: StorageArea) {
         this.inner = inner;
     }
 
