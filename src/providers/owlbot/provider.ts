@@ -12,12 +12,9 @@ const NAME = "OwlBot";
 const RENDERER = "OWLBOT";
 
 export class OwlBotProvider implements Provider<OwlBotItem> {
-    private token: string;
     private client: AxiosInstance;
 
-    constructor(token: string) {
-        this.token = token;
-
+    constructor(private token: string) {
         this.client = axios.create({
             baseURL: "https://owlbot.info/api/v4",
         });

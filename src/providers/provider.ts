@@ -11,21 +11,13 @@ export interface Provider<T extends Item = Item> {
 }
 
 export class CachedProvider<T extends Item> implements Provider<T> {
-    private inner: Provider<T>;
-    private storage: TemporaryStorage<T>;
-    private storageDuration: number;
-
     private caching: boolean;
 
     constructor(
-        inner: Provider<T>,
-        storage: TemporaryStorage<T>,
-        storageDuration: number,
+        private inner: Provider<T>,
+        private storage: TemporaryStorage<T>,
+        private storageDuration: number,
     ) {
-        this.inner = inner;
-        this.storage = storage;
-        this.storageDuration = storageDuration;
-
         this.caching = true;
     }
 
