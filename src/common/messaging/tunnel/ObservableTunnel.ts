@@ -3,13 +3,11 @@ import { Observable, Subject } from "rxjs";
 import { DisconnectedTunnelError, Tunnel } from "./Tunnel";
 
 export class ObservableTunnel<I, O> {
-    private inner: Tunnel<I, O>;
     private stream: Subject<I>;
 
-    constructor(inner: Tunnel<I, O>) {
+    constructor(private inner: Tunnel<I, O>) {
         this.stream = new Subject();
 
-        this.inner = inner;
         this.inner.onReceive(async (im: I) => {
             this.stream.next(im);
         });
