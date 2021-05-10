@@ -34,13 +34,9 @@ export namespace InputHandler {
  * events based on criteria.
  */
 export class InputHandler {
-    private options: InputHandler.Options;
-
     private _registered: boolean;
 
-    constructor(options: InputHandler.Options) {
-        this.options = options;
-
+    constructor(private options: InputHandler.Options) {
         this._registered = false;
     }
 

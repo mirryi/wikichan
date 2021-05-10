@@ -12,11 +12,7 @@ type Result<T extends BackMessage> = Omit<T, "kind">;
 
 export type InnerExchange = FrontExchange<BackMessage, FrontMessage>;
 export class Exchange {
-    private inner: InnerExchange;
-
-    private constructor(inner: InnerExchange) {
-        this.inner = inner;
-    }
+    private constructor(private inner: InnerExchange) {}
 
     static async load(inner: InnerExchange): Promise<Exchange> {
         const self = new Exchange(inner);

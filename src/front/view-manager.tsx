@@ -5,16 +5,16 @@ import { Item } from "@providers";
 import { View, ViewProps } from "@view/View";
 
 export class ViewManager {
-    /**
-     * Props to be passed to created View.
-     */
-    private props: ViewProps;
     private viewRef: React.RefObject<View>;
 
     private _registered: boolean;
 
-    constructor(props: ViewProps) {
-        this.props = props;
+    constructor(
+        /**
+         * Props to be passed to created View.
+         */
+        private props: ViewProps,
+    ) {
         this.viewRef = React.createRef();
 
         this._registered = false;
