@@ -1,8 +1,4 @@
-export enum ExpandMode {
-    word,
-    character,
-}
-
+export type ExpandMode = "word" | "character";
 export class Selector {
     /**
      * expandNext returns a new TextSource with the next character or text until a break (space, period, etc.) incorporated.
@@ -38,10 +34,10 @@ export class Selector {
             }
         };
 
-        expandFor(ExpandMode.word, leftEx[0], false);
-        expandFor(ExpandMode.character, leftEx[1], false);
-        expandFor(ExpandMode.word, rightEx[0], true);
-        expandFor(ExpandMode.character, rightEx[1], true);
+        expandFor("word", leftEx[0], false);
+        expandFor("character", leftEx[1], false);
+        expandFor("word", rightEx[0], true);
+        expandFor("character", rightEx[1], true);
 
         return ts;
     }
@@ -50,7 +46,7 @@ export class Selector {
         const range = ts.range;
 
         // Return a new TextSource with same range but ending offset increased by one
-        if (mode === ExpandMode.character) {
+        if (mode === "character") {
             let newStartContainer = range.startContainer;
             let newStartOffset = range.startOffset;
             let newEndContainer = range.endContainer;
@@ -103,7 +99,7 @@ export class Selector {
             }
 
             return new TextSource(expandedRange);
-        } else if (mode === ExpandMode.word) {
+        } else if (mode === "word") {
             let expandedSource: TextSource = ts;
 
             const nextChar = right
@@ -114,7 +110,7 @@ export class Selector {
             }
 
             while (true) {
-                const exp = this.expand(expandedSource, ExpandMode.character, right);
+                const exp = this.expand(expandedSource, "character", right);
                 if (exp === null) {
                     break;
                 }
@@ -124,7 +120,7 @@ export class Selector {
                     ? this.nextRightChar(expandedSource)
                     : this.nextLeftChar(expandedSource);
                 if (!nextChar || matchBreak(nextChar)) {
-                    const exp = this.expand(expandedSource, ExpandMode.character, right);
+                    const exp = this.expand(expandedSource, "character", right);
                     if (exp) {
                         expandedSource = exp;
                     }
@@ -144,7 +140,7 @@ export class Selector {
             return null;
         }
 
-        const expandedSource = this.expandNext(ts, ExpandMode.character);
+        const expandedSource = this.expandNext(ts, "character");
         if (!expandedSource) {
             return null;
         }
@@ -163,7 +159,7 @@ export class Selector {
             return null;
         }
 
-        const expandedSource = this.expandPrev(ts, ExpandMode.character);
+        const expandedSource = this.expandPrev(ts, "character");
         if (!expandedSource) {
             return null;
         }
