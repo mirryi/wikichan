@@ -24,7 +24,18 @@ export type Validators<C> = {
     [K in keyof C]: (x: unknown) => x is C[K];
 };
 export class ValidatedKeyedStorage<C> {
-    constructor(private inner: KeyedStorage<C>, private validators: Validators<C>) {}
+    private inner: KeyedStorage<C>;
+
+    constructor(
+        inner: PlatformStorage<C[keyof C]> | KeyedStorage<C>,
+        private validators: Validators<C>,
+    ) {
+        if (inner instanceof KeyedStorage) {
+            this.inner = inner;
+        } else {
+            this.inner = new KeyedStorage(inner);
+        }
+    }
 
     async set<K extends keyof C>(entries: Pick<C, K>): Promise<void> {
         return await this.inner.set(entries);
