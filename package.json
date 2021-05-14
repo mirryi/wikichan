@@ -80,8 +80,7 @@
         "react-dom": "^16.13.1",
         "react-frame-component": "^5.0.0",
         "rxjs": "^6.5.5",
-        "webextension-polyfill-ts": "^0.15.0",
-        "zod": "^3.0.0-beta.1"
+        "webextension-polyfill-ts": "^0.15.0"
     },
     "husky": {
         "hooks": {
