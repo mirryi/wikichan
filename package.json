@@ -9,7 +9,7 @@
     "scripts": {
         "lint:eslint": "eslint --ext .ts,.tsx src",
         "lint:types": "tsc --noEmit --skipLibCheck -p .",
-        "lint": "yarn lint:eslint && yarn lint:types",
+        "lint": "yarn lint:types && yarn lint:eslint",
         "test": "mocha",
         "dev:userscript": "yarn dev userscript",
         "dev:firefox": "yarn dev firefox",
