@@ -1,13 +1,13 @@
-import { ProvidersOptions } from "@providers/loader";
+import s from "superstruct";
+
+import { ProvidersOptions, ValidationSchema } from "@providers/loader";
 
 export interface BackOptions {
     providers: ProvidersOptions;
 }
 
 export namespace BackOptions {
-    export function Default(): BackOptions {
-        return {
-            providers: ProvidersOptions.Default(),
-        };
-    }
+    export const Schema: ValidationSchema<BackOptions> = s.object({
+        providers: ProvidersOptions.Schema,
+    });
 }

@@ -19,21 +19,21 @@ export class OptionsManager {
     static async load(storageHandle: OptionsHandle): Promise<OptionsManager> {
         // TODO: less duplicate code
         const loaded = await storageHandle.get([OPTIONS_KEY]);
-        const options = loaded[OPTIONS_KEY] || Options.Default();
+        const options = Options.Schema.create(loaded[OPTIONS_KEY]);
 
         return new OptionsManager(options, storageHandle);
     }
 
     // TODO: reexport the newOptions type from message module.
     change(newOptions: DeepPartial<Options>): void {
-        // TODO: This is probably wrong; need to ensure that the new `options`
-        // is still being observed.
+        // TODO: This is wrong; need to ensure that the new `options` is still
+        // being observed.
         this.options = deepmerge(this.options, newOptions);
     }
 
     async load(): Promise<void> {
         const loaded = await this.storageHandle.get([OPTIONS_KEY]);
-        this.options = loaded[OPTIONS_KEY] || Options.Default();
+        this.options = Options.Schema.create(loaded[OPTIONS_KEY]);
     }
 
     async save(): Promise<void> {

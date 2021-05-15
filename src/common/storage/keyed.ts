@@ -43,10 +43,10 @@ export class ValidatedKeyedStorage<C> {
 
     async get<K extends Extract<keyof C, string>>(keys: K[]): Promise<Pick<C, K>> {
         const entries = await this.inner.get(keys);
-        const checked = Entries.from(entries).filter(([key, val]) =>
+        const checked = Entries.iter(entries).filter(([key, val]) =>
             this.validators[key](val),
         );
-        return Entries.into(checked);
+        return Entries.collect(checked);
     }
 
     async del<K extends Extract<keyof C, string>>(keys: K[]): Promise<void> {

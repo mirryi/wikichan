@@ -12,10 +12,18 @@ export type DeepPartial<T> = {
 export type Entries<T> = {
     [P in keyof T]: [P, T[P]];
 }[keyof T][];
+
 export namespace Entries {
     /* eslint-disable @typescript-eslint/consistent-type-assertions, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-return */
-    export const from = <T>(o: T): Entries<T> => Object.entries(o) as Entries<T>;
-    export const into = <T>(entries: Entries<T>): T => Object.fromEntries(entries) as any;
+    export const iter = <T>(o: T): Entries<T> => Object.entries(o) as Entries<T>;
+
+    export const collect = <T>(entries: Entries<T>): T =>
+        Object.fromEntries(entries) as any;
+
+    export const map = <T, U>(
+        o: T,
+        transform: ([k, v]: readonly [keyof T, T[keyof T]]) => [keyof U, U[keyof U]],
+    ): U => Entries.collect(Entries.iter(o).map(([k, v]) => transform([k, v])));
     /* eslint-enable @typescript-eslint/consistent-type-assertions, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-return */
 }
 

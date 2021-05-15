@@ -1,9 +1,24 @@
-import { Loader } from "..";
-import { OwlBotItem, OwlBotProvider } from ".";
-import { LoaderConfig } from "@providers/loader";
+import s from "superstruct";
 
-export interface OwlBotOptions {
+import { Loader, LoaderConfig, ProviderOptions, ValidationSchema } from "..";
+import { OwlBotItem, OwlBotProvider } from ".";
+
+export interface OwlBotOptions extends ProviderOptions {
     apiToken: string;
+}
+
+export namespace OwlBotOptions {
+    export const Schema: ValidationSchema<OwlBotOptions> = s.assign(
+        ProviderOptions.Schema,
+        s.defaulted(
+            s.object({
+                apiToken: s.string(),
+            }),
+            {
+                apiToken: () => "",
+            },
+        ),
+    );
 }
 
 export class OwlBotProviderLoader
@@ -12,19 +27,12 @@ export class OwlBotProviderLoader
         return new OwlBotProvider(opts.apiToken);
     }
 
-    reload(opts: OwlBotOptions, _provider: OwlBotProvider): OwlBotProvider {
-        return new OwlBotProvider(opts.apiToken);
+    optionsSchema(): ValidationSchema<OwlBotOptions> {
+        return OwlBotOptions.Schema;
     }
 
-    defaultOptions(): OwlBotOptions {
-        return { apiToken: "" };
-    }
-
-    // TODO: Implementation needed.
-    cachedValidator(): (x: unknown) => x is OwlBotItem {
-        return (x: unknown): x is OwlBotItem => {
-            return x !== undefined && x !== null && typeof x === "object";
-        };
+    itemSchema(): ValidationSchema<OwlBotItem> {
+        return OwlBotItem.Schema;
     }
 }
 

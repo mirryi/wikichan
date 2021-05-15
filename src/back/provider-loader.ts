@@ -13,14 +13,17 @@ export class ProviderLoader {
         const loader = LOADERS[name];
         // Safety: The types of the loader parameter and options must match.
         // eslint-disable-next-line @typescript-eslint/consistent-type-assertions, @typescript-eslint/no-explicit-any
-        const provider = loader.load(opts.specific as any);
+        const provider = loader.load(opts as any);
 
         if (opts.cached) {
             // TODO: Handle undefined case
             // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             const handler = this.storage.cacheHandle<ExtractItemType<typeof provider>>(
                 `provider::${name}`,
-                loader.cachedValidator(),
+                // Safety: The types of the loader and the schema it returns
+                // must match.
+                // eslint-disable-next-line @typescript-eslint/consistent-type-assertions, @typescript-eslint/no-explicit-any
+                loader.itemSchema() as any,
             )!;
             return new CachedProvider(provider, handler, opts.cacheDuration);
         } else {
@@ -29,7 +32,7 @@ export class ProviderLoader {
     }
 
     async loadAll(opts: ProvidersOptions): Promise<Provider[]> {
-        const entries = Entries.from(opts);
+        const entries = Entries.iter(opts);
         const promises = entries
             .filter(([, popts]) => popts.enabled)
             .map((pair) => this.load(pair[0], pair[1]));

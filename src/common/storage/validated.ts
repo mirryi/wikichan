@@ -1,6 +1,11 @@
+import s, { Describe as ValidationSchema } from "superstruct";
+
 import { PlatformStorage } from "./platform";
 
 type Validator<T> = ValidatedStorage.Validator<T>;
+export namespace ValidatedStorage {
+    export type Validator<T> = (val: unknown) => T | false;
+}
 
 export class ValidatedStorage<T> implements PlatformStorage<T> {
     constructor(private inner: PlatformStorage<T>, private validator: Validator<T>) {}
@@ -13,7 +18,7 @@ export class ValidatedStorage<T> implements PlatformStorage<T> {
         const pairs = await this.inner.get(keys);
         const entries = await Promise.all(
             Object.entries(pairs).map(async ([key, val]) => {
-                if (this.validator(val)) {
+                if (this.validator(val) !== false) {
                     return [key, val];
                 }
                 return undefined;
@@ -28,6 +33,18 @@ export class ValidatedStorage<T> implements PlatformStorage<T> {
     }
 }
 
-export namespace ValidatedStorage {
-    export type Validator<T> = (val: unknown) => val is T;
+export { ValidationSchema };
+export class SchemaValidatedStorage<T> extends ValidatedStorage<T> {
+    constructor(inner: PlatformStorage<T>, schema: ValidationSchema<T>) {
+        const validator = (x: unknown): T | false => {
+            try {
+                const v = s.create(x, schema);
+                return v;
+            } catch {
+                return false;
+            }
+        };
+
+        super(inner, validator);
+    }
 }

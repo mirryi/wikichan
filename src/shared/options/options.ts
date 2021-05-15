@@ -1,3 +1,8 @@
+import s from "superstruct";
+
+import { ValidationSchema } from "@common/storage";
+export { ValidationSchema };
+
 import { BackOptions } from "./back-options";
 import { FrontOptions } from "./front-options";
 
@@ -7,10 +12,8 @@ export interface Options {
 }
 
 export namespace Options {
-    export function Default(): Options {
-        return {
-            back: BackOptions.Default(),
-            front: FrontOptions.Default(),
-        };
-    }
+    export const Schema: ValidationSchema<Options> = s.object({
+        back: BackOptions.Schema,
+        front: FrontOptions.Schema,
+    });
 }

@@ -1,8 +1,17 @@
-import { Loader, LoaderConfig } from "..";
+import s from "superstruct";
+
+import { Loader, LoaderConfig, ProviderOptions, ValidationSchema } from "..";
 import { Lang, WikipediaItem, WikipediaProvider, wikipedias } from ".";
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface WikipediaOptions {}
+export interface WikipediaOptions extends ProviderOptions {}
+
+export namespace WikipediaOptions {
+    export const Schema: ValidationSchema<WikipediaOptions> = s.assign(
+        ProviderOptions.Schema,
+        s.defaulted(s.object({}), {}),
+    );
+}
 
 export class WikipediaProviderLoader<C extends Lang>
     implements Loader<WikipediaOptions, WikipediaItem, WikipediaProvider<C>> {
@@ -12,22 +21,12 @@ export class WikipediaProviderLoader<C extends Lang>
         return new WikipediaProvider(this.langcode);
     }
 
-    reload(
-        _opts: WikipediaOptions,
-        provider: WikipediaProvider<C>,
-    ): WikipediaProvider<C> {
-        return provider;
+    optionsSchema(): ValidationSchema<WikipediaOptions> {
+        return WikipediaOptions.Schema;
     }
 
-    defaultOptions(): WikipediaOptions {
-        return {};
-    }
-
-    // TODO: Implementation needed.
-    cachedValidator(): (x: unknown) => x is WikipediaItem {
-        return (x: unknown): x is WikipediaItem => {
-            return x !== undefined && x !== null && typeof x === "object";
-        };
+    itemSchema(): ValidationSchema<WikipediaItem> {
+        return WikipediaItem.Schema;
     }
 }
 

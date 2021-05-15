@@ -1,51 +1,61 @@
+import s from "superstruct";
+
+import { ValidationSchema } from "@shared/options";
+export { ValidationSchema };
+import { Entries } from "@util";
+
 import { Item, Provider } from ".";
 import { ALL as WIKIPEDIA_LOADERS } from "./wikipedia";
 import { ALL as OWLBOT_LOADERS } from "./owlbot";
 
+/**
+ * All provider loader configurations merged in one place.
+ */
 const ALL_CONFIGS = {
     ...WIKIPEDIA_LOADERS,
     ...OWLBOT_LOADERS,
 } as const;
 type AllConfigsType = typeof ALL_CONFIGS;
 
-export interface ProviderOptions<C> {
+export interface ProviderOptions {
     enabled: boolean;
 
     cached: boolean;
     cacheDuration: number;
-
-    specific: C;
 }
 
 export namespace ProviderOptions {
-    export function Default<C>(specificDefault: () => C): ProviderOptions<C> {
-        // TODO: Disable by default
-        return {
-            enabled: false,
-            cached: true,
-            cacheDuration: 24 * 60 * 60,
-            specific: specificDefault(),
-        };
-    }
+    export const Schema: ValidationSchema<ProviderOptions> = s.object({
+        enabled: s.defaulted(s.boolean(), () => false),
+        cached: s.defaulted(s.boolean(), () => true),
+        cacheDuration: s.defaulted(s.number(), () => 24 * 60 * 60),
+    });
 }
 
-export interface LoaderConfig<C, T extends Item, P extends Provider<T>> {
+export interface LoaderConfig<
+    C extends ProviderOptions,
+    T extends Item,
+    P extends Provider<T>
+> {
     /*
      * Get the loader for this provider type.
      */
     getLoader: () => Loader<C, T, P>;
 }
 
-export interface Loader<C, T extends Item, P extends Provider<T>> {
+export interface Loader<
+    C extends ProviderOptions,
+    T extends Item,
+    P extends Provider<T>
+> {
     load(opts: C): P;
-    reload(opts: C, provider: P): P;
-    defaultOptions: () => C;
 
-    cachedValidator: () => (x: unknown) => x is T;
+    optionsSchema(): ValidationSchema<C>;
+    itemSchema(): ValidationSchema<T>;
 }
 
-type ExtractLoaderPairType<L> = L extends LoaderConfig<unknown, Item, Provider<Item>>
-    ? ReturnType<L["getLoader"]>
+type ExtractLoaderPairType<L> = L extends LoaderConfig<infer C, infer T, infer P>
+    ? Loader<C, T, P>
     : never;
 type Loaders = {
     [Name in keyof AllConfigsType]: ExtractLoaderPairType<AllConfigsType[Name]>;
@@ -60,28 +70,27 @@ export const LOADERS: Loaders = (() => {
     return Object.fromEntries(pairs) as Loaders;
 })();
 
-type ExtractOptionsType<L> = L extends LoaderConfig<infer C, Item, Provider<Item>>
+// TODO: Prevent Typescript from emitting warning?
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+type ExtractOptionsType<L> = L extends LoaderConfig<infer C, infer T, infer P>
     ? C
     : never;
 export type ProvidersOptions = {
-    [Name in keyof AllConfigsType]: ProviderOptions<
-        ExtractOptionsType<AllConfigsType[Name]>
-    >;
+    [Name in keyof AllConfigsType]: ExtractOptionsType<AllConfigsType[Name]>;
 };
 
 export namespace ProvidersOptions {
-    export const Default: () => ProvidersOptions = (() => {
-        const pairs = Object.entries(LOADERS).map(([name, config]) => {
-            const opts = ProviderOptions.Default(() => config.defaultOptions());
-            // TODO: Temporary
-            if (name === "wiki.en") {
-                opts.enabled = true;
-            }
-            return [name, opts] as const;
-        });
+    type SchemaType = {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        [Name in keyof Loaders]: Loaders[Name] extends Loader<infer C, infer T, infer P>
+            ? ValidationSchema<C>
+            : never;
+    };
 
-        // Safety: Above mapping creates the correct pairs.
-        // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
-        return () => Object.fromEntries(pairs) as ProvidersOptions;
-    })();
+    export const Schema: ValidationSchema<ProvidersOptions> = s.object(
+        Entries.map<typeof LOADERS, SchemaType>(LOADERS, ([name, loader]) => [
+            name,
+            loader.optionsSchema(),
+        ]),
+    );
 }

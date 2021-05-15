@@ -8,7 +8,7 @@ export class MemoryStorage<T> implements PlatformStorage<T> {
 
     async set(entries: { [key: string]: T }): Promise<void> {
         await Promise.all(
-            Entries.from(entries).map(async ([key, val]) => this.map.set(key, val)),
+            Entries.iter(entries).map(async ([key, val]) => this.map.set(key, val)),
         );
     }
 
