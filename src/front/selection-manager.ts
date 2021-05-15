@@ -1,4 +1,4 @@
-import { Selector, ExpandMode, TextSource } from "./Selector";
+import { Selector, TextSource } from "./selector";
 
 export class SelectionManager {
     private lastSource?: TextSource;
@@ -56,7 +56,7 @@ function buildQueries(selector: Selector, ts: TextSource, n: number): string[] {
     let stopRight = false;
     for (let i = 0; i < n; i++) {
         if (!stopRight) {
-            const rex = selector.expandNext(ts, ExpandMode.word);
+            const rex = selector.expandNext(ts, "word");
             if (rex !== null) {
                 queries = queries.concat(getTexts(rex));
             } else {
@@ -65,7 +65,7 @@ function buildQueries(selector: Selector, ts: TextSource, n: number): string[] {
         }
 
         if (!stopLeft) {
-            const lex = selector.expandPrev(ts, ExpandMode.word);
+            const lex = selector.expandPrev(ts, "word");
             if (lex !== null) {
                 queries = queries.concat(getTexts(lex));
                 ts = lex;
@@ -75,7 +75,7 @@ function buildQueries(selector: Selector, ts: TextSource, n: number): string[] {
         }
 
         if (!stopRight) {
-            const rex = selector.expandNext(ts, ExpandMode.word);
+            const rex = selector.expandNext(ts, "word");
             if (rex !== null) {
                 queries = queries.concat(getTexts(rex));
                 ts = rex;
