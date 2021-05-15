@@ -83,16 +83,11 @@
         "superstruct": "^0.15.2",
         "webextension-polyfill-ts": "^0.15.0"
     },
-    "husky": {
-        "hooks": {
-            "pre-commit": "lint-staged"
-        }
-    },
     "lint-staged": {
-        "*.{js}": [
+        "**/*.{js}": [
             "eslint"
         ],
-        "*.{ts,tsx}": [
+        "**/*.{ts,tsx}": [
             "eslint --ext .ts,.tsx"
         ]
     }
