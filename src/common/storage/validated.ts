@@ -1,4 +1,5 @@
-import s, { Describe as ValidationSchema } from "superstruct";
+import * as s from "superstruct";
+import { Describe as ValidationSchema } from "superstruct";
 
 import { PlatformStorage } from "./platform";
 

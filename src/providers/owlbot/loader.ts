@@ -1,4 +1,4 @@
-import s from "superstruct";
+import * as s from "superstruct";
 
 import { Loader, LoaderConfig, ProviderOptions, ValidationSchema } from "..";
 import { OwlBotItem, OwlBotProvider } from ".";

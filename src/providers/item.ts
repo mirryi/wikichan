@@ -1,4 +1,4 @@
-import s from "superstruct";
+import * as s from "superstruct";
 
 export interface ItemMeta {
     uid: string;

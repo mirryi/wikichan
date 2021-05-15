@@ -1,4 +1,4 @@
-import s from "superstruct";
+import * as s from "superstruct";
 
 import { ProvidersOptions, ValidationSchema } from "@providers/loader";
 
