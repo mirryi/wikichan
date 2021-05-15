@@ -32,7 +32,7 @@
         "build:edge": "yarn build edge",
         "build:qutebrowser": "yarn build qutebrowser",
         "build": "cross-env TS_NODE_PROJECT=\\\"build/tsconfig.json\\\" ts-node build/build.ts build production",
-        "postinstall": "rm -rf node_modules/.cache/webpack"
+        "postinstall": "husky install ci/hooks"
     },
     "devDependencies": {
         "@types/chai": "^4.2.18",
