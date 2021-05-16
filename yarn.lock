@@ -4498,6 +4498,11 @@ run-parallel@^1.1.9:
   dependencies:
     queue-microtask "^1.2.2"
 
+rxjs-observe@^2.1.5:
+  version "2.1.5"
+  resolved "https://registry.yarnpkg.com/rxjs-observe/-/rxjs-observe-2.1.5.tgz#36f2dcd53f3dcb16c6a861fe456e1769f58f08e7"
+  integrity sha512-jHZ2Aze8oTWG07KTM6vViQIQVl2DchkQe2XgUIddSMaRLD5EZhutLkAeID9/uxFPdY3hjipFrPVlbtKcCRhxZw==
+
 rxjs@^6.5.5, rxjs@^6.6.0, rxjs@^6.6.7:
   version "6.6.7"
   resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-6.6.7.tgz#90ac018acabf491bf65044235d5863c4dab804c9"
