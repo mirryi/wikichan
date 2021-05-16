@@ -19,8 +19,9 @@ export class ValidatedStorage<T> implements PlatformStorage<T> {
         const pairs = await this.inner.get(keys);
         const entries = await Promise.all(
             Object.entries(pairs).map(async ([key, val]) => {
-                if (this.validator(val) !== false) {
-                    return [key, val];
+                const v = this.validator(val);
+                if (v !== false) {
+                    return [key, v];
                 }
                 return undefined;
             }),
