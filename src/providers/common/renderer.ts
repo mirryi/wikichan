@@ -38,4 +38,4 @@ export type RendererLoaderConfig<
     C extends RendererOptions,
     T extends Item,
     P extends Renderer<T>
-> = LoaderConfig<C, P>;
+> = LoaderConfig<C, P, RendererLoader<C, T, P>>;

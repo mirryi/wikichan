@@ -2,7 +2,7 @@ import * as s from "superstruct";
 
 import { Entries } from "@util";
 
-import { Loader, ValidationSchema } from "./common";
+import { Loader, RendererLoader, RendererLoaderConfig, ValidationSchema } from "./common";
 import { WikipediaRendererLoader } from "./wikipedia";
 import { OwlBotRendererLoader } from "./owlbot";
 
@@ -16,7 +16,13 @@ const ALL_CONFIGS = {
 type AllConfigsType = typeof ALL_CONFIGS;
 
 type Loaders = {
-    [N in keyof AllConfigsType]: ReturnType<AllConfigsType[N]["getLoader"]>;
+    [N in keyof AllConfigsType]: AllConfigsType[N] extends RendererLoaderConfig<
+        infer C,
+        infer T,
+        infer P
+    >
+        ? RendererLoader<C, T, P>
+        : never;
 };
 export const RENDERER_LOADERS: Loaders = Entries.map<typeof ALL_CONFIGS, Loaders>(
     ALL_CONFIGS,

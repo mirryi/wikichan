@@ -34,7 +34,7 @@ export type ProviderLoaderConfig<
     C extends ProviderOptions,
     T extends Item,
     P extends Provider<T>
-> = LoaderConfig<C, P>;
+> = LoaderConfig<C, P, ProviderLoader<C, T, P>>;
 
 export interface Provider<T extends Item = Item> {
     search(queries: string[]): Observable<T>;

@@ -1,11 +1,11 @@
 import { ValidationSchema } from "@shared/options";
 export { ValidationSchema };
 
-export interface LoaderConfig<C, P> {
+export interface LoaderConfig<C, P, L extends Loader<C, P>> {
     /*
      * Get the loader for this provider type.
      */
-    getLoader: () => Loader<C, P>;
+    getLoader: () => L;
 }
 
 export interface Loader<C, P> {
