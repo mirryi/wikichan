@@ -1,5 +1,5 @@
-import { autorun, observable } from "mobx";
 import { switchMap } from "rxjs/operators";
+import { observe } from "rxjs-observe";
 
 import { Options } from "@shared/options";
 import { debug, info } from "@util/logging";
@@ -12,6 +12,9 @@ import { ViewManager } from "./view-manager";
 
 export { InnerExchange, InnerTunnel };
 
+interface OptionsProxy {
+    options: Options;
+}
 export class Front {
     private view: ViewManager;
     private inputHandler: InputHandler;
@@ -20,7 +23,7 @@ export class Front {
     private queryItemManager: QueryItemManager;
     private exchange: Exchange;
 
-    private options: Options;
+    private proxy: OptionsProxy;
 
     private _registered: boolean;
 
@@ -48,11 +51,13 @@ export class Front {
         this.queryItemManager = queryItemManager;
 
         // When options change, propagate to back.
-        this.options = observable(options);
-        // TODO: use disopser?
-        autorun(async () => {
-            await this.exchange.changeOptions({ options: this.options });
-        });
+        const { observables, proxy } = observe({ options });
+        this.proxy = proxy;
+        observables.options
+            .pipe(
+                switchMap((options) => this.exchange.changeOptions({ options: options })),
+            )
+            .subscribe();
 
         this._registered = false;
     }
