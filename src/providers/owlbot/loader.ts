@@ -36,12 +36,12 @@ export class OwlBotProviderLoader
     }
 }
 
-type OwlBotLoaderConfig = ProviderLoaderConfig<
+type OwlBotProviderLoaderConfig = ProviderLoaderConfig<
     OwlBotProviderOptions,
     OwlBotItem,
     OwlBotProvider
 >;
-export const ALL: { owlbot: OwlBotLoaderConfig } = {
+export const ALL: { owlbot: OwlBotProviderLoaderConfig } = {
     owlbot: {
         getLoader: () => new OwlBotProviderLoader(),
     },

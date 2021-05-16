@@ -36,19 +36,19 @@ export class WikipediaProviderLoader<C extends Lang>
     }
 }
 
-type WikipediaLoaderConfig<C extends Lang> = ProviderLoaderConfig<
+type WikipediaProviderLoaderConfig<C extends Lang> = ProviderLoaderConfig<
     WikipediaProviderOptions,
     WikipediaItem,
     WikipediaProvider<C>
 >;
-export type WikipediaLoaderConfigs = {
-    [C in Lang as `wiki.${C}`]: WikipediaLoaderConfig<C>;
+export type WikipediaProviderLoaderConfigs = {
+    [C in Lang as `wiki.${C}`]: WikipediaProviderLoaderConfig<C>;
 };
 
-export const ALL = ((): WikipediaLoaderConfigs => {
+export const ALL = ((): WikipediaProviderLoaderConfigs => {
     const pairs = Object.entries(wikipedias).map(([code, wiki]) => {
         const key = `wiki.${code}`;
-        const config: WikipediaLoaderConfig<typeof wiki.code> = {
+        const config: WikipediaProviderLoaderConfig<typeof wiki.code> = {
             getLoader: () => new WikipediaProviderLoader<typeof wiki.code>(wiki.code),
         };
         return [key, config] as const;
@@ -56,5 +56,5 @@ export const ALL = ((): WikipediaLoaderConfigs => {
 
     // Safety: Above mapping maps to correct pairs.
     // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
-    return Object.fromEntries(pairs) as WikipediaLoaderConfigs;
+    return Object.fromEntries(pairs) as WikipediaProviderLoaderConfigs;
 })();
