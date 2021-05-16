@@ -1,13 +1,21 @@
 import React from "react";
 import { sanitize } from "dompurify";
 import htmlReactParse from "html-react-parser";
+import * as s from "superstruct";
 
-import { Renderer } from "../..";
+import { Renderer, RendererOptions, ValidationSchema } from "../..";
 import { OwlBotItem } from "..";
 import styles from "./renderer.module.scss";
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface OwlBotRendererOptions {}
+
+export namespace OwlBotRendererOptions {
+    export const Schema: ValidationSchema<OwlBotRendererOptions> = s.assign(
+        RendererOptions.Schema,
+        s.object({}),
+    );
+}
 
 export class OwlBotRenderer implements Renderer<OwlBotItem> {
     constructor(private opts: OwlBotRendererOptions) {}

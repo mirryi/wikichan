@@ -1,8 +1,9 @@
 import React from "react";
 import { sanitize } from "dompurify";
 import htmlReactParse from "html-react-parser";
+import * as s from "superstruct";
 
-import { Renderer } from "../..";
+import { Renderer, RendererOptions, ValidationSchema } from "../..";
 import { WikipediaItem } from "..";
 
 export interface WikipediaRendererOptions {
@@ -16,6 +17,15 @@ export interface WikipediaRendererOptions {
      * *Unused for now*.
      */
     disambiguations: "hide" | "separate" | "none";
+}
+
+export namespace WikipediaRendererOptions {
+    export const Schema: ValidationSchema<WikipediaRendererOptions> = s.assign(
+        RendererOptions.Schema,
+        s.object({
+            disambiguations: s.defaulted(s.enums(["hide", "separate", "none"]), "none"),
+        }),
+    );
 }
 
 export class WikipediaRenderer implements Renderer<WikipediaItem> {
