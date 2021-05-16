@@ -11,6 +11,7 @@ export interface Provider<T extends Item = Item> {
 }
 
 export class CachedProvider<T extends Item> implements Provider<T> {
+    // TODO: Remove (unneeded).
     private caching: boolean;
 
     constructor(

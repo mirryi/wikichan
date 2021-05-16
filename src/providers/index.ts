@@ -1,13 +1,10 @@
-export * from "./item";
-export * from "./provider";
-export * from "./renderer";
-export * from "./loader";
+export * from "./common";
 
 import * as s from "superstruct";
 
 import { Entries } from "@util";
 
-import { Loader, LoaderConfig, ValidationSchema } from "./loader";
+import { Loader, LoaderConfig, ValidationSchema } from "./common";
 import { ALL as WIKIPEDIA_LOADERS } from "./wikipedia";
 import { ALL as OWLBOT_LOADERS } from "./owlbot";
 
