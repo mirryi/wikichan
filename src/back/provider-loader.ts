@@ -6,7 +6,7 @@ type ExtractItemType<P> = P extends Provider<infer T> ? T : never;
 export class ProviderLoader {
     constructor(private storage: BackStorage) {}
 
-    async load<K extends keyof typeof LOADERS>(
+    async load<K extends keyof typeof LOADERS & string>(
         name: K,
         opts: ProvidersOptions[K],
     ): Promise<Provider> {
