@@ -41,8 +41,11 @@ type OwlBotProviderLoaderConfig = ProviderLoaderConfig<
     OwlBotItem,
     OwlBotProvider
 >;
-export const ALL: { owlbot: OwlBotProviderLoaderConfig } = {
-    owlbot: {
-        getLoader: () => new OwlBotProviderLoader(),
-    },
-};
+
+export namespace OwlBotProviderLoader {
+    export const ALL: { owlbot: OwlBotProviderLoaderConfig } = {
+        owlbot: {
+            getLoader: () => new OwlBotProviderLoader(),
+        },
+    };
+}

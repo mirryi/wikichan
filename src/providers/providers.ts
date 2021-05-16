@@ -3,15 +3,15 @@ import * as s from "superstruct";
 import { Entries } from "@util";
 
 import { ProviderLoader, ProviderLoaderConfig, ValidationSchema } from "./common";
-import { ALL as WIKIPEDIA_LOADERS } from "./wikipedia";
-import { ALL as OWLBOT_LOADERS } from "./owlbot";
+import { WikipediaProviderLoader } from "./wikipedia";
+import { OwlBotProviderLoader } from "./owlbot";
 
 /**
  * All provider loader configurations merged in one place.
  */
 const ALL_CONFIGS = {
-    ...WIKIPEDIA_LOADERS,
-    ...OWLBOT_LOADERS,
+    ...WikipediaProviderLoader.ALL,
+    ...OwlBotProviderLoader.ALL,
 } as const;
 type AllConfigsType = typeof ALL_CONFIGS;
 
