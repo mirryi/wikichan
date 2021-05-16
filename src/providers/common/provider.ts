@@ -1,9 +1,40 @@
 import { merge, Observable, from, of } from "rxjs";
 import { mergeMap, tap } from "rxjs/operators";
+import * as s from "superstruct";
 
 import { TemporaryStorage } from "@common/storage";
 
 import { Item } from "./item";
+import { Loader, LoaderConfig, ValidationSchema } from "./loader";
+
+export interface ProviderOptions {
+    enabled: boolean;
+
+    cached: boolean;
+    cacheDuration: number;
+}
+
+export namespace ProviderOptions {
+    export const Schema: ValidationSchema<ProviderOptions> = s.object({
+        enabled: s.defaulted(s.boolean(), false),
+        cached: s.defaulted(s.boolean(), true),
+        cacheDuration: s.defaulted(s.number(), 24 * 60 * 60),
+    });
+}
+
+export interface ProviderLoader<
+    C extends ProviderOptions,
+    T extends Item,
+    P extends Provider<T>
+> extends Loader<C, P> {
+    itemSchema(): ValidationSchema<T>;
+}
+
+export type ProviderLoaderConfig<
+    C extends ProviderOptions,
+    T extends Item,
+    P extends Provider<T>
+> = LoaderConfig<C, P>;
 
 export interface Provider<T extends Item = Item> {
     search(queries: string[]): Observable<T>;

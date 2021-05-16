@@ -1,6 +1,11 @@
 import * as s from "superstruct";
 
-import { Loader, LoaderConfig, ProviderOptions, ValidationSchema } from "..";
+import {
+    ProviderLoader,
+    ProviderLoaderConfig,
+    ProviderOptions,
+    ValidationSchema,
+} from "..";
 import { Lang, WikipediaItem, WikipediaProvider, wikipedias } from ".";
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
@@ -14,7 +19,7 @@ export namespace WikipediaOptions {
 }
 
 export class WikipediaProviderLoader<C extends Lang>
-    implements Loader<WikipediaOptions, WikipediaItem, WikipediaProvider<C>> {
+    implements ProviderLoader<WikipediaOptions, WikipediaItem, WikipediaProvider<C>> {
     constructor(private langcode: C) {}
 
     load(_opts: WikipediaOptions): WikipediaProvider<C> {
@@ -30,7 +35,7 @@ export class WikipediaProviderLoader<C extends Lang>
     }
 }
 
-type WikipediaLoaderConfig<C extends Lang> = LoaderConfig<
+type WikipediaLoaderConfig<C extends Lang> = ProviderLoaderConfig<
     WikipediaOptions,
     WikipediaItem,
     WikipediaProvider<C>

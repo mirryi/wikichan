@@ -1,6 +1,11 @@
 import * as s from "superstruct";
 
-import { Loader, LoaderConfig, ProviderOptions, ValidationSchema } from "..";
+import {
+    ProviderLoader,
+    ProviderLoaderConfig,
+    ProviderOptions,
+    ValidationSchema,
+} from "..";
 import { OwlBotItem, OwlBotProvider } from ".";
 
 export interface OwlBotOptions extends ProviderOptions {
@@ -17,7 +22,7 @@ export namespace OwlBotOptions {
 }
 
 export class OwlBotProviderLoader
-    implements Loader<OwlBotOptions, OwlBotItem, OwlBotProvider> {
+    implements ProviderLoader<OwlBotOptions, OwlBotItem, OwlBotProvider> {
     load(opts: OwlBotOptions): OwlBotProvider {
         return new OwlBotProvider(opts.apiToken);
     }
@@ -31,7 +36,7 @@ export class OwlBotProviderLoader
     }
 }
 
-type OwlBotLoaderConfig = LoaderConfig<OwlBotOptions, OwlBotItem, OwlBotProvider>;
+type OwlBotLoaderConfig = ProviderLoaderConfig<OwlBotOptions, OwlBotItem, OwlBotProvider>;
 export const ALL: { owlbot: OwlBotLoaderConfig } = {
     owlbot: {
         getLoader: () => new OwlBotProviderLoader(),

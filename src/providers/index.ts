@@ -4,7 +4,7 @@ import * as s from "superstruct";
 
 import { Entries } from "@util";
 
-import { Loader, LoaderConfig, ValidationSchema } from "./common";
+import { ProviderLoader, ProviderLoaderConfig, ValidationSchema } from "./common";
 import { ALL as WIKIPEDIA_LOADERS } from "./wikipedia";
 import { ALL as OWLBOT_LOADERS } from "./owlbot";
 
@@ -17,8 +17,8 @@ const ALL_CONFIGS = {
 } as const;
 type AllConfigsType = typeof ALL_CONFIGS;
 
-type ExtractLoaderPairType<L> = L extends LoaderConfig<infer C, infer T, infer P>
-    ? Loader<C, T, P>
+type ExtractLoaderPairType<L> = L extends ProviderLoaderConfig<infer C, infer T, infer P>
+    ? ProviderLoader<C, T, P>
     : never;
 type Loaders = {
     [Name in keyof AllConfigsType]: ExtractLoaderPairType<AllConfigsType[Name]>;
@@ -35,7 +35,7 @@ export const LOADERS: Loaders = (() => {
 
 // TODO: Prevent Typescript from emitting warning?
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-type ExtractOptionsType<L> = L extends LoaderConfig<infer C, infer T, infer P>
+type ExtractOptionsType<L> = L extends ProviderLoaderConfig<infer C, infer T, infer P>
     ? C
     : never;
 export type ProvidersOptions = {
@@ -45,7 +45,7 @@ export type ProvidersOptions = {
 export namespace ProvidersOptions {
     type SchemaType = {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        [Name in keyof Loaders]: Loaders[Name] extends Loader<infer C, infer T, infer P>
+        [L in keyof Loaders]: Loaders[L] extends ProviderLoader<infer C, infer T, infer P>
             ? ValidationSchema<C>
             : never;
     };

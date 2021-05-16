@@ -1,4 +1,7 @@
+import * as s from "superstruct";
+
 import { Item } from "./item";
+import { Loader, LoaderConfig, ValidationSchema } from "./loader";
 
 /**
  * Renderer implementation functions should return a JSX element.
@@ -17,3 +20,22 @@ export type Renderer<T extends Item> = {
 } & {
     [Property in keyof Omit<Item, "meta">]?: RenderFunc<T>;
 };
+
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+export interface RendererOptions {}
+
+export namespace RendererOptions {
+    export const Schema: ValidationSchema<RendererOptions> = s.object({});
+}
+
+export type RendererLoader<
+    C extends RendererOptions,
+    T extends Item,
+    P extends Renderer<T>
+> = Loader<C, P>;
+
+export type RendererLoaderConfig<
+    C extends RendererOptions,
+    T extends Item,
+    P extends Renderer<T>
+> = LoaderConfig<C, P>;
