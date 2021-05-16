@@ -9,25 +9,26 @@ import {
 import { Lang, WikipediaItem, WikipediaProvider, wikipedias } from ".";
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface WikipediaOptions extends ProviderOptions {}
+export interface WikipediaProviderOptions extends ProviderOptions {}
 
-export namespace WikipediaOptions {
-    export const Schema: ValidationSchema<WikipediaOptions> = s.assign(
+export namespace WikipediaProviderOptions {
+    export const Schema: ValidationSchema<WikipediaProviderOptions> = s.assign(
         ProviderOptions.Schema,
         s.defaulted(s.object({}), {}),
     );
 }
 
 export class WikipediaProviderLoader<C extends Lang>
-    implements ProviderLoader<WikipediaOptions, WikipediaItem, WikipediaProvider<C>> {
+    implements
+        ProviderLoader<WikipediaProviderOptions, WikipediaItem, WikipediaProvider<C>> {
     constructor(private langcode: C) {}
 
-    load(_opts: WikipediaOptions): WikipediaProvider<C> {
+    load(_opts: WikipediaProviderOptions): WikipediaProvider<C> {
         return new WikipediaProvider(this.langcode);
     }
 
-    optionsSchema(): ValidationSchema<WikipediaOptions> {
-        return WikipediaOptions.Schema;
+    optionsSchema(): ValidationSchema<WikipediaProviderOptions> {
+        return WikipediaProviderOptions.Schema;
     }
 
     itemSchema(): ValidationSchema<WikipediaItem> {
@@ -36,7 +37,7 @@ export class WikipediaProviderLoader<C extends Lang>
 }
 
 type WikipediaLoaderConfig<C extends Lang> = ProviderLoaderConfig<
-    WikipediaOptions,
+    WikipediaProviderOptions,
     WikipediaItem,
     WikipediaProvider<C>
 >;

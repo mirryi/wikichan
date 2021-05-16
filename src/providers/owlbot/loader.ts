@@ -8,12 +8,12 @@ import {
 } from "..";
 import { OwlBotItem, OwlBotProvider } from ".";
 
-export interface OwlBotOptions extends ProviderOptions {
+export interface OwlBotProviderOptions extends ProviderOptions {
     apiToken: string;
 }
 
-export namespace OwlBotOptions {
-    export const Schema: ValidationSchema<OwlBotOptions> = s.assign(
+export namespace OwlBotProviderOptions {
+    export const Schema: ValidationSchema<OwlBotProviderOptions> = s.assign(
         ProviderOptions.Schema,
         s.object({
             apiToken: s.defaulted(s.string(), ""),
@@ -22,13 +22,13 @@ export namespace OwlBotOptions {
 }
 
 export class OwlBotProviderLoader
-    implements ProviderLoader<OwlBotOptions, OwlBotItem, OwlBotProvider> {
-    load(opts: OwlBotOptions): OwlBotProvider {
+    implements ProviderLoader<OwlBotProviderOptions, OwlBotItem, OwlBotProvider> {
+    load(opts: OwlBotProviderOptions): OwlBotProvider {
         return new OwlBotProvider(opts.apiToken);
     }
 
-    optionsSchema(): ValidationSchema<OwlBotOptions> {
-        return OwlBotOptions.Schema;
+    optionsSchema(): ValidationSchema<OwlBotProviderOptions> {
+        return OwlBotProviderOptions.Schema;
     }
 
     itemSchema(): ValidationSchema<OwlBotItem> {
@@ -36,7 +36,11 @@ export class OwlBotProviderLoader
     }
 }
 
-type OwlBotLoaderConfig = ProviderLoaderConfig<OwlBotOptions, OwlBotItem, OwlBotProvider>;
+type OwlBotLoaderConfig = ProviderLoaderConfig<
+    OwlBotProviderOptions,
+    OwlBotItem,
+    OwlBotProvider
+>;
 export const ALL: { owlbot: OwlBotLoaderConfig } = {
     owlbot: {
         getLoader: () => new OwlBotProviderLoader(),
