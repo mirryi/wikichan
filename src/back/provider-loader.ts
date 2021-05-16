@@ -1,16 +1,17 @@
-import { CachedProvider, Provider, ProvidersOptions, LOADERS } from "@providers";
+import { CachedProvider, Provider, ProvidersOptions, PROVIDER_LOADERS } from "@providers";
 import { Entries } from "@util";
+
 import { BackStorage } from "./back-storage";
 
 type ExtractItemType<P> = P extends Provider<infer T> ? T : never;
 export class ProviderLoader {
     constructor(private storage: BackStorage) {}
 
-    async load<K extends keyof typeof LOADERS & string>(
+    async load<K extends keyof typeof PROVIDER_LOADERS & string>(
         name: K,
         opts: ProvidersOptions[K],
     ): Promise<Provider> {
-        const loader = LOADERS[name];
+        const loader = PROVIDER_LOADERS[name];
         // Safety: The types of the loader parameter and options must match.
         // eslint-disable-next-line @typescript-eslint/consistent-type-assertions, @typescript-eslint/no-explicit-any
         const provider = loader.load(opts as any);
