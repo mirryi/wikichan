@@ -1,9 +1,8 @@
 export * from "./renderer";
 
-import { RendererLoader } from "../..";
+import { RendererLoader, RendererLoaderConfig, ValidationSchema } from "../..";
 import { WikipediaItem } from "..";
 import { WikipediaRenderer, WikipediaRendererOptions } from "./renderer";
-import { Describe } from "superstruct";
 
 export class WikipediaRendererLoader
     implements
@@ -12,7 +11,17 @@ export class WikipediaRendererLoader
         return new WikipediaRenderer(opts);
     }
 
-    optionsSchema(): Describe<WikipediaRendererOptions> {
+    optionsSchema(): ValidationSchema<WikipediaRendererOptions> {
         return WikipediaRendererOptions.Schema;
     }
 }
+
+type WikipediaRendererLoaderConfig = RendererLoaderConfig<
+    WikipediaRendererOptions,
+    WikipediaItem,
+    WikipediaRenderer
+>;
+
+export const ALL: { wiki: WikipediaRendererLoaderConfig } = {
+    wiki: { getLoader: () => new WikipediaRendererLoader() },
+};

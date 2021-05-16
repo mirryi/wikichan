@@ -1,9 +1,8 @@
 export * from "./renderer";
 
-import { RendererLoader } from "../..";
+import { RendererLoader, RendererLoaderConfig, ValidationSchema } from "../..";
 import { OwlBotItem } from "..";
 import { OwlBotRenderer, OwlBotRendererOptions } from "./renderer";
-import { Describe } from "superstruct";
 
 export class OwlBotRendererLoader
     implements RendererLoader<OwlBotRendererOptions, OwlBotItem, OwlBotRenderer> {
@@ -11,7 +10,17 @@ export class OwlBotRendererLoader
         return new OwlBotRenderer(opts);
     }
 
-    optionsSchema(): Describe<OwlBotRendererOptions> {
+    optionsSchema(): ValidationSchema<OwlBotRendererOptions> {
         return OwlBotRendererOptions.Schema;
     }
 }
+
+type OwlBotRendererLoaderConfig = RendererLoaderConfig<
+    OwlBotRendererOptions,
+    OwlBotItem,
+    OwlBotRenderer
+>;
+
+export const ALL: { owlbot: OwlBotRendererLoaderConfig } = {
+    owlbot: { getLoader: () => new OwlBotRendererLoader() },
+};
