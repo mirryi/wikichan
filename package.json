@@ -75,7 +75,6 @@
         "axios": "^0.21.1",
         "dompurify": "^2.0.10",
         "html-react-parser": "^0.10.3",
-        "mobx": "^6.2.0",
         "react": "^16.13.1",
         "react-dom": "^16.13.1",
         "react-frame-component": "^5.0.0",
