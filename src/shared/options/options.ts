@@ -13,7 +13,7 @@ export interface Options {
 
 export namespace Options {
     export const Schema: ValidationSchema<Options> = s.object({
-        back: BackOptions.Schema,
-        front: FrontOptions.Schema,
+        back: s.defaulted(BackOptions.Schema, BackOptions.Schema.create({})),
+        front: s.defaulted(FrontOptions.Schema, FrontOptions.Schema.create({})),
     });
 }

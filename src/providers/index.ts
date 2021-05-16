@@ -54,9 +54,10 @@ export namespace ProvidersOptions {
     };
 
     export const Schema: ValidationSchema<ProvidersOptions> = s.object(
-        Entries.map<typeof LOADERS, SchemaType>(LOADERS, ([name, loader]) => [
-            name,
-            loader.optionsSchema(),
-        ]),
+        Entries.map<typeof LOADERS, SchemaType>(LOADERS, ([name, loader]) => {
+            const optionsSchema = loader.optionsSchema();
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/consistent-type-assertions
+            return [name, s.defaulted(optionsSchema as any, optionsSchema.create({}))];
+        }),
     );
 }

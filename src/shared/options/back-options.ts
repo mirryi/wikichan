@@ -8,6 +8,9 @@ export interface BackOptions {
 
 export namespace BackOptions {
     export const Schema: ValidationSchema<BackOptions> = s.object({
-        providers: ProvidersOptions.Schema,
+        providers: s.defaulted(
+            ProvidersOptions.Schema,
+            ProvidersOptions.Schema.create({}),
+        ),
     });
 }

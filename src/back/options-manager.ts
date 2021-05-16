@@ -19,7 +19,7 @@ export class OptionsManager {
     static async load(storageHandle: OptionsHandle): Promise<OptionsManager> {
         // TODO: less duplicate code
         const loaded = await storageHandle.get([OPTIONS_KEY]);
-        const options = Options.Schema.create(loaded[OPTIONS_KEY]);
+        const options = Options.Schema.create(loaded[OPTIONS_KEY] || {});
 
         return new OptionsManager(options, storageHandle);
     }

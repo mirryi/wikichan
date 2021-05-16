@@ -14,9 +14,9 @@ export interface ProviderOptions {
 
 export namespace ProviderOptions {
     export const Schema: ValidationSchema<ProviderOptions> = s.object({
-        enabled: s.defaulted(s.boolean(), () => false),
-        cached: s.defaulted(s.boolean(), () => true),
-        cacheDuration: s.defaulted(s.number(), () => 24 * 60 * 60),
+        enabled: s.defaulted(s.boolean(), false),
+        cached: s.defaulted(s.boolean(), true),
+        cacheDuration: s.defaulted(s.number(), 24 * 60 * 60),
     });
 }
 

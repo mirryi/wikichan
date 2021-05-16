@@ -10,14 +10,9 @@ export interface OwlBotOptions extends ProviderOptions {
 export namespace OwlBotOptions {
     export const Schema: ValidationSchema<OwlBotOptions> = s.assign(
         ProviderOptions.Schema,
-        s.defaulted(
-            s.object({
-                apiToken: s.string(),
-            }),
-            {
-                apiToken: () => "",
-            },
-        ),
+        s.object({
+            apiToken: s.defaulted(s.string(), ""),
+        }),
     );
 }
 

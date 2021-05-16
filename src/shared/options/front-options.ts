@@ -6,5 +6,5 @@ import { ValidationSchema } from ".";
 export interface FrontOptions {}
 
 export namespace FrontOptions {
-    export const Schema: ValidationSchema<FrontOptions> = s.object({});
+    export const Schema: ValidationSchema<FrontOptions> = s.defaulted(s.object({}), {});
 }
