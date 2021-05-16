@@ -21,6 +21,8 @@ type OwlBotRendererLoaderConfig = RendererLoaderConfig<
     OwlBotRenderer
 >;
 
-export const ALL: { owlbot: OwlBotRendererLoaderConfig } = {
-    owlbot: { getLoader: () => new OwlBotRendererLoader() },
-};
+export namespace OwlBotRendererLoader {
+    export const ALL: { owlbot: OwlBotRendererLoaderConfig } = {
+        owlbot: { getLoader: () => new OwlBotRendererLoader() },
+    };
+}

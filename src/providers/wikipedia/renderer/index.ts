@@ -22,6 +22,8 @@ type WikipediaRendererLoaderConfig = RendererLoaderConfig<
     WikipediaRenderer
 >;
 
-export const ALL: { wiki: WikipediaRendererLoaderConfig } = {
-    wiki: { getLoader: () => new WikipediaRendererLoader() },
-};
+export namespace WikipediaRendererLoader {
+    export const ALL: { wiki: WikipediaRendererLoaderConfig } = {
+        wiki: { getLoader: () => new WikipediaRendererLoader() },
+    };
+}
