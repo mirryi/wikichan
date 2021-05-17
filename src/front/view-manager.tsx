@@ -7,8 +7,6 @@ import { View, ViewProps } from "@view/View";
 export class ViewManager {
     private viewRef: React.RefObject<View>;
 
-    private _registered: boolean;
-
     constructor(
         /**
          * Props to be passed to created View.
@@ -16,16 +14,9 @@ export class ViewManager {
         private props: ViewProps,
     ) {
         this.viewRef = React.createRef();
-
-        this._registered = false;
     }
 
     register(w: Window): void {
-        if (this._registered) {
-            return;
-        }
-        this._registered = true;
-
         const doc = w.document;
         const inlineStyles = Array.from(
             doc.querySelectorAll(".wikichan-styles"),
@@ -49,13 +40,6 @@ export class ViewManager {
 
     private component(props: ViewProps): JSX.Element {
         return <View {...props} ref={this.viewRef} />;
-    }
-
-    /**
-     * Returns true if this View is registered.
-     */
-    registered(): boolean {
-        return this._registered;
     }
 
     setItems(items: Item[]): void {

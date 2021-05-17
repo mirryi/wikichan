@@ -25,8 +25,6 @@ export class Front {
 
     private proxy: OptionsProxy;
 
-    private _registered: boolean;
-
     private constructor(
         exchange: Exchange,
         queryItemManager: QueryItemManager,
@@ -58,8 +56,6 @@ export class Front {
                 switchMap((options) => this.exchange.changeOptions({ options: options })),
             )
             .subscribe();
-
-        this._registered = false;
     }
 
     static async load(
@@ -84,12 +80,6 @@ export class Front {
     }
 
     async register(w: Window): Promise<void> {
-        // If already registered, do nothing.
-        if (this._registered) {
-            return;
-        }
-        this._registered = true;
-
         // Register the UI into the window.
         this.view.register(w);
 
@@ -108,10 +98,6 @@ export class Front {
         // Register the input handler and define handler for input events.
         const inputStream = this.inputHandler.register(w);
         inputStream?.subscribe((e) => this.handleInputEvent(e));
-    }
-
-    registered(): boolean {
-        return this._registered;
     }
 
     private handleInputEvent(e: InputEvent): void {
