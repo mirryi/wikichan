@@ -1,6 +1,8 @@
 import * as s from "superstruct";
 
-import { ProvidersOptions, ValidationSchema } from "@providers";
+import { ProvidersOptions } from "@providers";
+
+import { ValidationSchema } from ".";
 
 export interface BackOptions {
     providers: ProvidersOptions;
