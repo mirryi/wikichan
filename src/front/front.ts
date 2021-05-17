@@ -37,13 +37,7 @@ export class Front {
         });
         this.selectionManager = new SelectionManager();
         // TODO: get options from back
-        this.inputHandler = new InputHandler({
-            holdkeys: {
-                ctrl: true,
-                shift: false,
-                alt: false,
-            },
-        });
+        this.inputHandler = new InputHandler(options.front.input);
 
         this.exchange = exchange;
         this.queryItemManager = queryItemManager;

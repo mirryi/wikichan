@@ -1,6 +1,8 @@
 import { fromEvent, Observable, merge } from "rxjs";
 import { map, filter } from "rxjs/operators";
 
+import { InputOptions } from "@shared/options";
+
 export type InputEvent = InputEvent.Mousemove | InputEvent.Mouseclick;
 
 export namespace InputEvent {
@@ -19,22 +21,12 @@ export namespace InputEvent {
     }
 }
 
-export namespace InputHandler {
-    export interface Options {
-        holdkeys: {
-            ctrl: boolean;
-            alt: boolean;
-            shift: boolean;
-        };
-    }
-}
-
 /**
  * Handler for user input. Produces a stream of input events, filtering out
  * events based on criteria.
  */
 export class InputHandler {
-    constructor(private options: InputHandler.Options) {}
+    constructor(private options: InputOptions) {}
 
     /**
      * Registers event handlers in the given window and returns a stream of
@@ -75,7 +67,7 @@ export class InputHandler {
         return merge(moveEvents, clickEvents);
     }
 
-    setOptions(options: InputHandler.Options): void {
+    setOptions(options: InputOptions): void {
         this.options = options;
     }
 }
