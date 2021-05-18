@@ -2,13 +2,13 @@ import * as s from "superstruct";
 
 import { Entries } from "@util";
 
+import { Lang, WikipediaItem, WikipediaProvider, wikipedias } from ".";
 import {
     ProviderLoader,
     ProviderLoaderConfig,
     ProviderOptions,
     ValidationSchema,
 } from "..";
-import { Lang, WikipediaItem, WikipediaProvider, wikipedias } from ".";
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface WikipediaProviderOptions extends ProviderOptions {}

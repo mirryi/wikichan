@@ -3,8 +3,8 @@ import * as s from "superstruct";
 import { Entries } from "@util";
 
 import { Loader, RendererLoader, RendererLoaderConfig, ValidationSchema } from "./common";
-import { WikipediaRendererLoader } from "./wikipedia";
 import { OwlBotRendererLoader } from "./owlbot";
+import { WikipediaRendererLoader } from "./wikipedia";
 
 /**
  * All provider loader configurations merged in one place.

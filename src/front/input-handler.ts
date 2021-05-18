@@ -1,5 +1,5 @@
-import { fromEvent, Observable, merge } from "rxjs";
-import { map, filter } from "rxjs/operators";
+import { fromEvent, merge, Observable } from "rxjs";
+import { filter, map } from "rxjs/operators";
 
 import { InputOptions } from "@shared/options";
 

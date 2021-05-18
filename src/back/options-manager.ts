@@ -1,5 +1,5 @@
-import { switchMap } from "rxjs/operators";
 import { observe } from "rxjs-observe";
+import { switchMap } from "rxjs/operators";
 
 import { Options } from "@shared/options";
 import { DeepPartial } from "@util";

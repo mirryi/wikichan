@@ -1,10 +1,10 @@
-import React from "react";
 import { sanitize } from "dompurify";
 import htmlReactParse from "html-react-parser";
+import React from "react";
 import * as s from "superstruct";
 
-import { Renderer, RendererOptions, ValidationSchema } from "../..";
 import { OwlBotItem } from "..";
+import { Renderer, RendererOptions, ValidationSchema } from "../..";
 import styles from "./renderer.module.scss";
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface

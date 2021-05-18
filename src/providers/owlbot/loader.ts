@@ -1,12 +1,12 @@
 import * as s from "superstruct";
 
+import { OwlBotItem, OwlBotProvider } from ".";
 import {
     ProviderLoader,
     ProviderLoaderConfig,
     ProviderOptions,
     ValidationSchema,
 } from "..";
-import { OwlBotItem, OwlBotProvider } from ".";
 
 export interface OwlBotProviderOptions extends ProviderOptions {
     apiToken: string;

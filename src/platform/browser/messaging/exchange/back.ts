@@ -1,11 +1,11 @@
+import { browser } from "webextension-polyfill-ts";
+
 import {
     BackExchange,
     DisconnectedExchangeError,
     Receiver,
     UnsupportedOperationError,
 } from "@common/messaging/exchange";
-
-import { browser } from "webextension-polyfill-ts";
 
 export class BrowserBackExchange<I, O> implements BackExchange<I, O> {
     private _connected: boolean;

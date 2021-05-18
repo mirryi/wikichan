@@ -5,7 +5,7 @@ import { BackStorage, InnerStorage } from "./back-storage";
 import { Exchange, InnerExchange } from "./exchange";
 import { OptionsManager } from "./options-manager";
 import { ProviderLoader } from "./provider-loader";
-import { QueryItemManager, InnerTunnel } from "./query-item-manager";
+import { InnerTunnel, QueryItemManager } from "./query-item-manager";
 
 export { InnerStorage, InnerExchange, InnerTunnel };
 

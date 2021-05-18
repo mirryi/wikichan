@@ -1,8 +1,8 @@
-export * from "./renderer";
-
-import { RendererLoader, RendererLoaderConfig, ValidationSchema } from "../..";
 import { OwlBotItem } from "..";
+import { RendererLoader, RendererLoaderConfig, ValidationSchema } from "../..";
 import { OwlBotRenderer, OwlBotRendererOptions } from "./renderer";
+
+export * from "./renderer";
 
 export class OwlBotRendererLoader
     implements RendererLoader<OwlBotRendererOptions, OwlBotItem, OwlBotRenderer> {

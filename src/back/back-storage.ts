@@ -1,9 +1,9 @@
 import {
     CentralStorage,
     PlatformStorage,
+    SchemaValidatedStorage,
     TemporaryStorage,
     ValidatedStorage,
-    SchemaValidatedStorage,
     ValidationSchema,
 } from "@common/storage";
 import { Options } from "@shared/options";

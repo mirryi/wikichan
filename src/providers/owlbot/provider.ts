@@ -5,7 +5,7 @@ import { distinct, filter, map } from "rxjs/operators";
 import { isNotUndefined } from "@util/guards";
 
 import { Provider } from "..";
-import { OwlBotItem, OwlBotDefinition } from "./item";
+import { OwlBotDefinition, OwlBotItem } from "./item";
 
 const UID = "owlbot";
 const NAME = "OwlBot";

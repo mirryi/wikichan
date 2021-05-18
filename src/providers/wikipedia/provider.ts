@@ -4,8 +4,8 @@ import { distinct, filter, map } from "rxjs/operators";
 
 import { isNotUndefined } from "@util/guards";
 
+import { Lang, Wikipedia, WikipediaItem, wikipedias } from ".";
 import { Provider } from "..";
-import { Lang, WikipediaItem, Wikipedia, wikipedias } from ".";
 
 const RENDERER = "WIKI";
 

@@ -1,4 +1,4 @@
-import { Sender, Receiver } from ".";
+import { Receiver, Sender } from ".";
 
 export interface Exchange<I, O> extends Sender<I, O>, Receiver<I, O> {
     connect(): Promise<void>;

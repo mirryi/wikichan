@@ -2,8 +2,8 @@ import { browser, Runtime } from "webextension-polyfill-ts";
 
 import {
     BackTunnel,
-    FrontTunnel,
     DisconnectedTunnelError,
+    FrontTunnel,
     Receiver,
 } from "@common/messaging/tunnel";
 

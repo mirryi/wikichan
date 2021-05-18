@@ -1,8 +1,8 @@
-export * from "./renderer";
-
-import { RendererLoader, RendererLoaderConfig, ValidationSchema } from "../..";
 import { WikipediaItem } from "..";
+import { RendererLoader, RendererLoaderConfig, ValidationSchema } from "../..";
 import { WikipediaRenderer, WikipediaRendererOptions } from "./renderer";
+
+export * from "./renderer";
 
 export class WikipediaRendererLoader
     implements

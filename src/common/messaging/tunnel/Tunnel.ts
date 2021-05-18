@@ -1,4 +1,4 @@
-import { Sender, Receiver } from ".";
+import { Receiver, Sender } from ".";
 
 export interface Tunnel<I, O> extends Sender<void, O>, Receiver<I> {
     /**

@@ -1,12 +1,12 @@
-import { switchMap } from "rxjs/operators";
 import { observe } from "rxjs-observe";
+import { switchMap } from "rxjs/operators";
 
 import { Options } from "@shared/options";
 import { debug, info } from "@util/logging";
 
 import { Exchange, InnerExchange } from "./exchange";
 import { InputEvent, InputHandler } from "./input-handler";
-import { QueryItemManager, InnerTunnel } from "./query-item-manager";
+import { InnerTunnel, QueryItemManager } from "./query-item-manager";
 import { SelectionManager } from "./selection-manager";
 import { ViewManager } from "./view-manager";
 

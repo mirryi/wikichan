@@ -2,8 +2,8 @@ import { merge } from "rxjs";
 import { map } from "rxjs/operators";
 
 import { BackTunnel, ObservableTunnel } from "@common/messaging/tunnel";
-import { QueryRequest, QueryResponse } from "@shared/messaging";
 import { Provider } from "@providers";
+import { QueryRequest, QueryResponse } from "@shared/messaging";
 
 export type InnerTunnel = BackTunnel<QueryRequest, QueryResponse>;
 export class QueryItemManager {

@@ -1,10 +1,11 @@
 import * as s from "superstruct";
 
 import { ValidationSchema } from "@common/storage";
-export { ValidationSchema };
 
 import { BackOptions } from "./back-options";
 import { FrontOptions } from "./front-options";
+
+export { ValidationSchema };
 
 export interface OptionsV1 {
     version: "v1";

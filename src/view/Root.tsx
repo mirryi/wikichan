@@ -2,9 +2,9 @@ import React from "react";
 
 import { Item } from "@providers";
 
-import { Search } from "./Search";
-import styles from "./Root.module.scss";
 import { ItemDetails } from "./ItemDetails";
+import styles from "./Root.module.scss";
+import { Search } from "./Search";
 
 export interface RootProps {
     items: Item[];

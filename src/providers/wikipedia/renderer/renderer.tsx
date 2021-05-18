@@ -1,10 +1,10 @@
-import React from "react";
 import { sanitize } from "dompurify";
 import htmlReactParse from "html-react-parser";
+import React from "react";
 import * as s from "superstruct";
 
-import { Renderer, RendererOptions, ValidationSchema } from "../..";
 import { WikipediaItem } from "..";
+import { Renderer, RendererOptions, ValidationSchema } from "../..";
 
 export interface WikipediaRendererOptions {
     /**

@@ -1,4 +1,4 @@
-import { merge, Observable, from, of } from "rxjs";
+import { from, merge, Observable, of } from "rxjs";
 import { mergeMap, tap } from "rxjs/operators";
 import * as s from "superstruct";
 

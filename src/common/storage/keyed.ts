@@ -1,4 +1,5 @@
 import { Entries } from "@util";
+
 import { PlatformStorage } from "./platform";
 
 export class KeyedStorage<C> {

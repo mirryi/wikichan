@@ -1,10 +1,10 @@
+import { browser } from "webextension-polyfill-ts";
+
 import {
     BackExchange,
     DisconnectedExchangeError,
     Receiver,
 } from "@common/messaging/exchange";
-
-import { browser } from "webextension-polyfill-ts";
 
 // TODO: validate input and output messages.
 export class BrowserFrontExchange<I, O> implements BackExchange<I, O> {
