@@ -6,12 +6,12 @@
     "trailingComma": "all",
     "overrides": [
         {
-            "files": [
-                ".eslintrc.js"
-            ],
+            "files": [".eslintrc.js"],
             "options": {
                 "printWidth": 100
             }
         }
-    ]
+    ],
+    "importOrder": ["^@", "^[./]"],
+    "importOrderSeparation": true
 }
