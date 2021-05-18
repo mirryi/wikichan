@@ -77,6 +77,8 @@ Pass in the desired target value:
 
 ### To-Do
 
+Current work is being done on the `rearch` branch.
+
 -   [x] Manifest and build WebExtension
 -   [x] Cache results (per provider)
 -   [ ] More provider choices
