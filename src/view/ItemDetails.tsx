@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import { Item } from "@providers";
 
-import styles from "./Item.module.scss";
+import styles from "./ItemDetails.module.scss";
 
 export interface ItemProps {
     data: Item;
@@ -13,28 +13,20 @@ export const ItemDetails = (props: ItemProps): JSX.Element => {
 
     const data = props.data;
 
-    const tagsRender = renderTags(data);
-
-    let body = undefined;
-    if (expanded) {
-        const longDescription = (
-            <div className={styles.longDescription}>
-                <span>{data.longDescription ?? "No summary available."}</span>
+    const body = (
+        <div className={styles.content} style={{ display: expanded ? "block" : "none" }}>
+            <div className={styles.description}>
+                <span>{data.description}</span>
             </div>
-        );
-
-        const urlsRender = renderURLs(data);
-        body = (
-            <div className={styles.content}>
-                <div className={styles.description}>
-                    <span>{data.description}</span>
+            <div>
+                <div className={styles.longDescription}>
+                    <span>{data.longDescription ?? "No summary available."}</span>
                 </div>
-                <div>{longDescription}</div>
-
-                <div>{urlsRender}</div>
             </div>
-        );
-    }
+
+            <div>{renderURLs(data)}</div>
+        </div>
+    );
 
     return (
         <div>
@@ -60,7 +52,7 @@ export const ItemDetails = (props: ItemProps): JSX.Element => {
                         >
                             -
                         </button>
-                        {tagsRender}
+                        {renderTags(data)}
                     </div>
                 </div>
                 <span>
