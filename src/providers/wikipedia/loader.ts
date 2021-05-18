@@ -1,5 +1,7 @@
 import * as s from "superstruct";
 
+import { Entries } from "@util";
+
 import {
     ProviderLoader,
     ProviderLoaderConfig,
@@ -46,17 +48,17 @@ export type WikipediaProviderLoaderConfigs = {
 };
 
 export namespace WikipediaProviderLoader {
-    export const ALL = ((): WikipediaProviderLoaderConfigs => {
-        const pairs = Object.entries(wikipedias).map(([code, wiki]) => {
-            const key = `wiki.${code}`;
+    export const ALL = Entries.map<typeof wikipedias, WikipediaProviderLoaderConfigs>(
+        wikipedias,
+        ([code, wiki]) => {
+            const key = `wiki.${code}` as const;
             const config: WikipediaProviderLoaderConfig<typeof wiki.code> = {
                 getLoader: () => new WikipediaProviderLoader<typeof wiki.code>(wiki.code),
             };
-            return [key, config] as const;
-        });
 
-        // Safety: Above mapping maps to correct pairs.
-        // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
-        return Object.fromEntries(pairs) as WikipediaProviderLoaderConfigs;
-    })();
+            // TODO: Better way to type this?
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/consistent-type-assertions, @typescript-eslint/no-unsafe-return
+            return [key, config as any];
+        },
+    );
 }
