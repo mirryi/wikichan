@@ -1,4 +1,4 @@
-import { observe } from "rxjs-observe";
+import { observe, Observables } from "rxjs-observe";
 import { switchMap } from "rxjs/operators";
 
 import { Options } from "@shared/options";
@@ -17,17 +17,15 @@ interface OptionsProxy {
 }
 export class Front {
     private view: ViewManager;
-    private inputHandler: InputHandler;
-    private selectionManager: SelectionManager;
 
-    private queryItemManager: QueryItemManager;
-    private exchange: Exchange;
-
-    private proxy: OptionsProxy;
+    private optionsProxy: OptionsProxy;
+    private optionsObservables: Observables<{ options: Options }>;
 
     private constructor(
-        exchange: Exchange,
-        queryItemManager: QueryItemManager,
+        private exchange: Exchange,
+        private queryItemManager: QueryItemManager,
+        private inputHandler: InputHandler,
+        private selectionManager: SelectionManager,
         options: Options,
     ) {
         this.view = new ViewManager({
@@ -35,21 +33,10 @@ export class Front {
             width: 600,
             handleQueries: (queries: string[]) => this.handleQueries(queries),
         });
-        this.selectionManager = new SelectionManager();
-        // TODO: get options from back
-        this.inputHandler = new InputHandler(options.front.input);
 
-        this.exchange = exchange;
-        this.queryItemManager = queryItemManager;
-
-        // When options change, propagate to back.
         const { observables, proxy } = observe({ options });
-        this.proxy = proxy;
-        observables.options
-            .pipe(
-                switchMap((options) => this.exchange.changeOptions({ options: options })),
-            )
-            .subscribe();
+        this.optionsProxy = proxy;
+        this.optionsObservables = observables;
     }
 
     static async load(
@@ -69,11 +56,30 @@ export class Front {
         debug("Connecting tunnel...");
         const queryItemManager = await QueryItemManager.load(platformTunnel);
 
+        // Initialize user input handler.
+        const inputHandler = new InputHandler(options.front.input);
+
+        // Initialize selection manager.
+        const selectionManager = new SelectionManager();
+
         info("Finished initializing!");
-        return new Front(exchange, queryItemManager, options);
+        return new Front(
+            exchange,
+            queryItemManager,
+            inputHandler,
+            selectionManager,
+            options,
+        );
     }
 
     async register(w: Window): Promise<void> {
+        // When options change, propagate to back.
+        this.optionsObservables.options
+            .pipe(
+                switchMap((options) => this.exchange.changeOptions({ options: options })),
+            )
+            .subscribe();
+
         // Register the UI into the window.
         this.view.register(w);
 
@@ -94,6 +100,9 @@ export class Front {
         inputStream?.subscribe((e) => this.handleInputEvent(e));
     }
 
+    /**
+     * Handle input events from the DOM.
+     */
     private handleInputEvent(e: InputEvent): void {
         switch (e.kind) {
             // Pass mousemove events to the selection manager.
@@ -120,6 +129,9 @@ export class Front {
         }
     }
 
+    /**
+     * Handle the search queries received from the UI.
+     */
     private handleQueries(queries: string[]): void {
         void this.queryItemManager.send(queries);
     }
