@@ -35,7 +35,6 @@
         "postinstall": "husky install ci/hooks"
     },
     "devDependencies": {
-        "@trivago/prettier-plugin-sort-imports": "^2.0.2",
         "@types/chai": "^4.2.18",
         "@types/dompurify": "^2.0.1",
         "@types/greasemonkey": "^4.0.0",
