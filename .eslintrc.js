@@ -10,7 +10,7 @@ module.exports = {
         },
     },
     extends: ["plugin:react/recommended", "plugin:no-unsanitized/DOM"],
-    plugins: ["react-hooks"],
+    plugins: ["react-hooks", "simple-import-sort"],
     settings: {
         react: {
             version: "detect",
