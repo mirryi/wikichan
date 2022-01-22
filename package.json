@@ -55,7 +55,7 @@
         "eslint-plugin-react": "^7.19.0",
         "husky": "^4.2.5",
         "lint-staged": "^10.1.7",
-        "postcss": "^8.1.13",
+        "postcss": "^8.2.13",
         "postcss-initial": "^4.0.0",
         "postcss-loader": "^5.2.0",
         "postcss-modules": "^4.0.0",
