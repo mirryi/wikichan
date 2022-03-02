@@ -44,6 +44,7 @@
         "@types/react-dom": "^16.9.6",
         "@types/react-frame-component": "^4.1.1",
         "@types/sass": "^1.16.0",
+        "@types/webextension-polyfill": "^0.8.2",
         "@typescript-eslint/eslint-plugin": "^4.22.0",
         "@typescript-eslint/parser": "^4.22.0",
         "autoprefixer": "^10.0.4",
@@ -83,7 +84,7 @@
         "rxjs": "^6.5.5",
         "rxjs-observe": "^2.1.5",
         "superstruct": "^0.15.2",
-        "webextension-polyfill-ts": "^0.15.0"
+        "webextension-polyfill": "^0.8.0"
     },
     "lint-staged": {
         "**/*.{js}": [
