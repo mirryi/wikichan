@@ -35,10 +35,7 @@ const plugin = (opts?: Opts): esbuild.Plugin => {
                 // If sass file, process it. Otherwise, simply read the contents in.
                 let contents: string;
                 if (extension === "sass" || extension == "scss") {
-                    const sassOpts = {
-                        file: filepath,
-                    };
-                    contents = sass.renderSync(sassOpts).css.toString();
+                    contents = sass.compile(filepath).css.toString();
                 } else {
                     contents = (await fs.promises.readFile(filepath)).toString();
                 }
@@ -52,7 +49,7 @@ const plugin = (opts?: Opts): esbuild.Plugin => {
                     ...(isModule
                         ? [
                               postcssModules({
-                                  scopeBehavior: "local",
+                                  scopeBehaviour: "local",
                                   // Save module code into CSS.
                                   getJSON(
                                       inpath: string,
