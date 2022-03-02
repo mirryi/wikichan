@@ -31,11 +31,11 @@ export namespace RendererOptions {
 export type RendererLoader<
     C extends RendererOptions,
     T extends Item,
-    P extends Renderer<T>
+    P extends Renderer<T>,
 > = Loader<C, P>;
 
 export type RendererLoaderConfig<
     C extends RendererOptions,
     T extends Item,
-    P extends Renderer<T>
+    P extends Renderer<T>,
 > = LoaderConfig<C, P, RendererLoader<C, T, P>>;

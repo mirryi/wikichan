@@ -5,8 +5,8 @@ import { WikipediaRenderer, WikipediaRendererOptions } from "./renderer";
 export * from "./renderer";
 
 export class WikipediaRendererLoader
-    implements
-        RendererLoader<WikipediaRendererOptions, WikipediaItem, WikipediaRenderer> {
+    implements RendererLoader<WikipediaRendererOptions, WikipediaItem, WikipediaRenderer>
+{
     load(opts: WikipediaRendererOptions): WikipediaRenderer {
         return new WikipediaRenderer(opts);
     }

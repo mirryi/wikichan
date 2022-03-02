@@ -46,22 +46,18 @@ export class InputHandler {
                     (holdkeys.alt && !e.altKey)
                 );
             }),
-            map(
-                (e): InputEvent.Mousemove => {
-                    return { kind: "MOUSEMOVE", x: e.clientX, y: e.clientY, inner: e };
-                },
-            ),
+            map((e): InputEvent.Mousemove => {
+                return { kind: "MOUSEMOVE", x: e.clientX, y: e.clientY, inner: e };
+            }),
         );
 
         const clickEvents = fromEvent(w, "click").pipe(
-            map(
-                (e): InputEvent.Mouseclick => {
-                    // Safety: event should be a MouseEvent.
-                    // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
-                    const me = e as MouseEvent;
-                    return { kind: "MOUSECLICK", x: me.x, y: me.y, inner: me };
-                },
-            ),
+            map((e): InputEvent.Mouseclick => {
+                // Safety: event should be a MouseEvent.
+                // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+                const me = e as MouseEvent;
+                return { kind: "MOUSECLICK", x: me.x, y: me.y, inner: me };
+            }),
         );
 
         return merge(moveEvents, clickEvents);

@@ -25,7 +25,7 @@ export namespace ProviderOptions {
 export interface ProviderLoader<
     C extends ProviderOptions,
     T extends Item,
-    P extends Provider<T>
+    P extends Provider<T>,
 > extends Loader<C, P> {
     itemSchema(): ValidationSchema<T>;
 }
@@ -33,7 +33,7 @@ export interface ProviderLoader<
 export type ProviderLoaderConfig<
     C extends ProviderOptions,
     T extends Item,
-    P extends Provider<T>
+    P extends Provider<T>,
 > = LoaderConfig<C, P, ProviderLoader<C, T, P>>;
 
 export interface Provider<T extends Item = Item> {
@@ -61,20 +61,18 @@ export class CachedProvider<T extends Item> implements Provider<T> {
             });
 
             const stream = merge(...promises.map((p) => from(p))).pipe(
-                mergeMap(
-                    (v): Observable<T> => {
-                        if (typeof v !== "string") {
-                            return of(v);
-                        }
+                mergeMap((v): Observable<T> => {
+                    if (typeof v !== "string") {
+                        return of(v);
+                    }
 
-                        return this.inner.search([v]).pipe(
-                            tap((item: T): void => {
-                                // Branch off to store value.
-                                void this.setCached(item);
-                            }),
-                        );
-                    },
-                ),
+                    return this.inner.search([v]).pipe(
+                        tap((item: T): void => {
+                            // Branch off to store value.
+                            void this.setCached(item);
+                        }),
+                    );
+                }),
             );
 
             return this.uniq(stream);

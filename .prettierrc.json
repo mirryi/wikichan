@@ -6,9 +6,7 @@
     "trailingComma": "all",
     "overrides": [
         {
-            "files": [
-                ".eslintrc.js"
-            ],
+            "files": [".eslintrc.js"],
             "options": {
                 "printWidth": 100
             }

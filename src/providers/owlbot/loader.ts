@@ -22,7 +22,8 @@ export namespace OwlBotProviderOptions {
 }
 
 export class OwlBotProviderLoader
-    implements ProviderLoader<OwlBotProviderOptions, OwlBotItem, OwlBotProvider> {
+    implements ProviderLoader<OwlBotProviderOptions, OwlBotItem, OwlBotProvider>
+{
     load(opts: OwlBotProviderOptions): OwlBotProvider {
         return new OwlBotProvider(opts.apiToken);
     }

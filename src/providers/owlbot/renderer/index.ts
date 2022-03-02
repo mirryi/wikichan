@@ -5,7 +5,8 @@ import { OwlBotRenderer, OwlBotRendererOptions } from "./renderer";
 export * from "./renderer";
 
 export class OwlBotRendererLoader
-    implements RendererLoader<OwlBotRendererOptions, OwlBotItem, OwlBotRenderer> {
+    implements RendererLoader<OwlBotRendererOptions, OwlBotItem, OwlBotRenderer>
+{
     load(opts: OwlBotRendererOptions): OwlBotRenderer {
         return new OwlBotRenderer(opts);
     }

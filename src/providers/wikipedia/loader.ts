@@ -22,7 +22,8 @@ export namespace WikipediaProviderOptions {
 
 export class WikipediaProviderLoader<C extends Lang>
     implements
-        ProviderLoader<WikipediaProviderOptions, WikipediaItem, WikipediaProvider<C>> {
+        ProviderLoader<WikipediaProviderOptions, WikipediaItem, WikipediaProvider<C>>
+{
     constructor(private langcode: C) {}
 
     load(_opts: WikipediaProviderOptions): WikipediaProvider<C> {
