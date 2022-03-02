@@ -1,4 +1,4 @@
-import { Storage } from "webextension-polyfill-ts";
+import { Storage } from "webextension-polyfill";
 
 import { PlatformStorage } from "@common/storage";
 
