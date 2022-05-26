@@ -2,8 +2,8 @@
     "name": "wikichan",
     "version": "3.0.0",
     "description": "A WebExtension and userscript to show an info popup on hovering words or phrases.",
-    "repository": "https://github.com/Dophin2009/wikichan.git",
-    "homepage": "https://github.com/Dophin2009/wikichan",
+    "repository": "https://github.com/mirryi/wikichan.git",
+    "homepage": "https://github.com/mirryi/wikichan",
     "author": "Eric Zhao",
     "license": "GPL-3.0",
     "scripts": {

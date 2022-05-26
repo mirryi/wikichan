@@ -3,7 +3,7 @@
     "name": "Wikichan",
     "version": "3.0.0",
     "description": "A WebExtension and userscript to show an info popup on hovering words or phrases.",
-    "homepage_url": "https://github.com/Dophin2009/wikichan",
+    "homepage_url": "https://github.com/mirryi/wikichan",
     "content_scripts": [
         {
             "matches": ["http://*/*", "https://*/*"],
